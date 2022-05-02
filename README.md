@@ -30,6 +30,8 @@ yarn
 yarn dev
 ```
 
+เปิด browser ขึ้นมา เข้าไปยัง url ที่ `http://localhost:3000/`
+
 ## backend
 
 ### สิ่งที่ต้องมี
@@ -64,3 +66,5 @@ bundle exec rails db:migrate
 ```
 bundle exec rails s -p 4000
 ```
+
+เปิด browser ขึ้นมา เข้าไปยัง url ที่ `http://localhost:4000/`
