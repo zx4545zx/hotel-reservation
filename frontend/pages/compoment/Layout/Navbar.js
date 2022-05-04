@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 import Modal from "../Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHotel, faArchway } from "@fortawesome/free-solid-svg-icons";
@@ -9,13 +10,12 @@ const Navbar = () => {
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <a
-          className="navbar-item is-size-3 is-uppercase has-text-weight-bold is-family-code has-text-primary"
-          href="/"
-        >
-          <FontAwesomeIcon icon={faArchway} className="mr-2" />
-          hotel
-        </a>
+        <Link href="/">
+          <a className="navbar-item is-size-3 is-uppercase has-text-weight-bold is-family-code has-text-primary">
+            <FontAwesomeIcon icon={faArchway} className="mr-2" />
+            hotel
+          </a>
+        </Link>
 
         <a
           role="button"
@@ -32,7 +32,9 @@ const Navbar = () => {
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          <a className="navbar-item">Home</a>
+          <Link href="/" passHref>
+            <a className="navbar-item">Home</a>
+          </Link>
 
           <a className="navbar-item">Offer</a>
 

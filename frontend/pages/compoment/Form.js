@@ -68,7 +68,7 @@ const Form = () => {
           <label className="label" for="cancel"></label>
           <div className="control is-flex is-justify-content-center">
             <button id="cancel" name="cancel" className="button is-danger mx-3">
-              <Link href={'/'} passHref>Cancel</Link>
+              <Link href="/">Cancel</Link>
             </button>
             <button id="submit" name="submit" className="button is-primary mx-3">
               Sign Up
