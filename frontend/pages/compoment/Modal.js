@@ -30,11 +30,14 @@ const Modal = ({ modal, setModal }) => {
           </div>
 
           <div className="is-flex is-justify-content-space-between is-align-items-center">
-            <a className=" has-text-link">Forgot password?</a>
-            <div className="is-flex is-align-items-center">
-              <a className="has-text-link px-5">Sign up</a>
-              <button className="button is-primary">Sign in</button>
+            <div>
+              <u className=" has-text-link is-size-7"><a>Forgot password?</a></u>
+              <div className="is-flex is-size-7">
+                <p className="m-0 p-0">Not a member yet?</p>
+                <u className="has-text-link px-1"><a>Create an account.</a></u>
+              </div>
             </div>
+            <button className="button is-primary">Sign in</button>
           </div>
         </form>
       </div>
