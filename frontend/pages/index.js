@@ -5,7 +5,7 @@ import Content from "./compoment/Content";
 export default function Home() {
   return (
     <div className="pt-5">
-      <div class="block">
+      <div className="block">
         <div className="card-image">
           <Image src={hotel} alt="hotel" />
         </div>

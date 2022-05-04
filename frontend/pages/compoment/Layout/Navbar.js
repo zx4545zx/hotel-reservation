@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Modal from "../Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHotel, faArchway } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const [modal, setModal] = useState("");
@@ -7,12 +9,12 @@ const Navbar = () => {
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <a className="navbar-item" href="/">
-          <img
-            src="https://bulma.io/images/bulma-logo.png"
-            width="112"
-            height="28"
-          />
+        <a
+          className="navbar-item is-size-3 is-uppercase has-text-weight-bold is-family-code has-text-primary"
+          href="/"
+        >
+          <FontAwesomeIcon icon={faArchway} className="mr-2" />
+          hotel
         </a>
 
         <a

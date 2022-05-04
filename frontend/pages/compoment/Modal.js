@@ -12,7 +12,7 @@ const Modal = ({ modal, setModal }) => {
                 className="input"
                 type="email"
                 placeholder="e.g. alex@example.com"
-                autocomplete="off"
+                autoComplete="off"
               />
             </div>
           </div>
@@ -24,7 +24,7 @@ const Modal = ({ modal, setModal }) => {
                 className="input"
                 type="password"
                 placeholder="********"
-                autocomplete="off"
+                autoComplete="off"
               />
             </div>
           </div>
