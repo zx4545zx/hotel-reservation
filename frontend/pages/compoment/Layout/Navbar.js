@@ -55,7 +55,7 @@ const Navbar = () => {
                 className="button is-light"
                 onClick={() => setModal("is-active")}
               >
-                Log in
+                Sign in
               </a>
               <a className="button is-primary">
                 <strong>BOOK NOW</strong>
