@@ -16,6 +16,9 @@
 - fontawesome ( https://fontawesome.com/ ) Internet's icon library.
 - axios ( https://axios-http.com/ ) Fetch API library.
 - react hook form ( https://react-hook-form.com/ ) Management form.
+- moment.js ( https://momentjs.com/ ) Parse, validate, manipulate, and display dates and times.
+- flatpickr.js ( https://flatpickr.js.org/ ) is a lightweight and powerful datetime picker.
+- Framer Motion ( https://www.framer.com/motion/ ) A production-ready motion library for React.
 
 เมื่อทำการ clone repositories ทำการเข้าโฟลเดอร์ใน terminal ด้วยคำสั่ง
 ```
