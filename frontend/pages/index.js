@@ -1,5 +1,5 @@
 import Image from "next/image";
-import hotel from "./public/me2.jpeg";
+import hotel from "./public/cover.jpeg";
 import Content from "./compoment/Content";
 
 export default function Home() {
