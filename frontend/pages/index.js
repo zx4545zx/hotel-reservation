@@ -1,24 +1,22 @@
 import Image from "next/image";
 import hotel from "./public/me2.jpeg";
-import Mock from "./compoment/Mock";
+import Content from "./compoment/Content";
 
 export default function Home() {
   return (
     <div>
-      <div class="card">
-        <div class="card-image">
-          <Image src={hotel} alt="hotel" />
-        </div>
+      <div className="block card-image">
+        <Image src={hotel} alt="hotel" />
       </div>
 
-      <section class="block card hero is-primary">
-        <div class="hero-body">
-          <p class="title">Hello World</p>
-          <p class="subtitle">Second level</p>
+      <section className="block card hero is-primary">
+        <div className="hero-body">
+          <p className="title">Hello World</p>
+          <p className="subtitle">Second level</p>
         </div>
       </section>
 
-      <Mock />
+      <Content />
     </div>
   );
 }

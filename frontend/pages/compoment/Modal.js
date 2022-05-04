@@ -4,26 +4,38 @@ const Modal = ({ modal, setModal }) => {
       <div className="modal-background" onClick={() => setModal("")}></div>
 
       <div className="modal-content">
-        <form class="box">
-          <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
+        <form className="box">
+          <div className="field">
+            <label className="label">Email</label>
+            <div className="control">
               <input
-                class="input"
+                className="input"
                 type="email"
                 placeholder="e.g. alex@example.com"
+                autocomplete="off"
               />
             </div>
           </div>
 
-          <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-              <input class="input" type="password" placeholder="********" />
+          <div className="field">
+            <label className="label">Password</label>
+            <div className="control">
+              <input
+                className="input"
+                type="password"
+                placeholder="********"
+                autocomplete="off"
+              />
             </div>
           </div>
 
-          <button class="button is-primary">Sign in</button>
+          <div className="is-flex is-justify-content-space-between is-align-items-center">
+            <a className=" has-text-link">Forgot password?</a>
+            <div classNameName="is-flex is-align-items-center">
+              <a className=" has-text-link px-5">Sign up</a>
+              <button className="button is-primary">Sign in</button>
+            </div>
+          </div>
         </form>
       </div>
 

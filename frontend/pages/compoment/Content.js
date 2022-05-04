@@ -1,6 +1,6 @@
-const Mock = () => {
+const Content = () => {
   return (
-    <div class="content">
+    <div className="content">
       <h1>Hello World</h1>
       <p>
         Lorem ipsum
@@ -153,4 +153,4 @@ const Mock = () => {
   );
 };
 
-export default Mock
+export default Content;
