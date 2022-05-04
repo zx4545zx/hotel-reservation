@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Modal = ({ modal, setModal }) => {
   return (
     <div id="modal-js-example" className={`modal ${modal}`}>
@@ -31,10 +33,16 @@ const Modal = ({ modal, setModal }) => {
 
           <div className="is-flex is-justify-content-space-between is-align-items-center">
             <div>
-              <u className=" has-text-link is-size-7"><a>Forgot password?</a></u>
+              <u className=" has-text-link is-size-7">
+                <a>Forgot password?</a>
+              </u>
               <div className="is-flex is-size-7">
                 <p className="m-0 p-0">Not a member yet?</p>
-                <u className="has-text-link px-1"><a>Create an account.</a></u>
+                <u className="has-text-link px-1" onClick={() => setModal("")}>
+                  <Link href={"/register"} passHref>
+                    Create an account.
+                  </Link>
+                </u>
               </div>
             </div>
             <button className="button is-primary">Sign in</button>
