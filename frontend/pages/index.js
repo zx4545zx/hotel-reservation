@@ -1,20 +1,24 @@
-import SwiperImg from "./compoment/SwiperImg";
+import Image from "next/image";
+import hotel from "./public/me2.jpeg";
+import Mock from "./compoment/Mock";
 
 export default function Home() {
   return (
     <div>
-      <SwiperImg />
+      <div class="card">
+        <div class="card-image">
+          <Image src={hotel} alt="hotel" />
+        </div>
+      </div>
 
-      <section class="hero is-primary">
+      <section class="block card hero is-primary">
         <div class="hero-body">
-          <p class="title">title</p>
-          <p class="subtitle">subtitle</p>
+          <p class="title">Hello World</p>
+          <p class="subtitle">Second level</p>
         </div>
       </section>
 
-      <section class="section is-large is-white-bis"></section>
-
-      <section class="section is-large"></section>
+      <Mock />
     </div>
   );
 }
