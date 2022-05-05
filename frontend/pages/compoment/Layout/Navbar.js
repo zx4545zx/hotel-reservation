@@ -12,8 +12,7 @@ const Navbar = () => {
       <div className="navbar-brand">
         <Link href="/">
           <a className="navbar-item is-size-3 is-uppercase has-text-weight-bold is-family-code has-text-primary">
-            <FontAwesomeIcon icon={faArchway} className="mr-2" />
-            hotel
+            <FontAwesomeIcon icon={faArchway} className="mx-2" />
           </a>
         </Link>
 
