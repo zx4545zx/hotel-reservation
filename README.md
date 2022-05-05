@@ -4,6 +4,9 @@
 - เพิ่มห้องพักได้
 - ทำใบเสนอราคาได้
 
+## mockup
+เราจะใช้ [Figma](https://www.figma.com/file/VXLAOMEa6USKYWAXqOOgag/Untitled?node-id=0%3A1) ในการทำ mockup เพราะ figma เป็น web base จึงง่ายต่อการงานเป็นทีม และที่สำคัญคือ ***ฟรี!!!***
+
 ## frontend
 
 ### สิ่งที่ต้องมี
