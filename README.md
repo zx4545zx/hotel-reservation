@@ -5,7 +5,7 @@
 - ทำใบเสนอราคาได้
 
 ## mockup
-เราจะใช้ [Figma](https://www.figma.com/file/VXLAOMEa6USKYWAXqOOgag/Untitled?node-id=0%3A1) ในการทำ mockup เพราะ figma เป็น web base จึงง่ายต่อการงานเป็นทีม
+เราจะใช้ [Figma](https://www.figma.com/file/VXLAOMEa6USKYWAXqOOgag/Untitled?node-id=0%3A1) ในการทำ mockup เพราะ figma เป็น web base จึงง่ายต่อการทำงานเป็นทีม
 
 ## frontend
 
