@@ -20,6 +20,7 @@
 - flatpickr.js ( https://flatpickr.js.org/ ) is a lightweight and powerful datetime picker.
 - Framer Motion ( https://www.framer.com/motion/ ) A production-ready motion library for React.
 - Omise ( https://www.omise.co/th/thailand ) ระบบรับชำระเงินออนไลน์สำหรับอีคอมเมิร์ซ.
+- emailjs ( https://www.emailjs.com/ ) Send Email Directly From JavaScript.
 
 เมื่อทำการ clone repositories ทำการเข้าโฟลเดอร์ใน terminal ด้วยคำสั่ง
 ```
