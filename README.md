@@ -24,6 +24,7 @@
 - Framer Motion ( https://www.framer.com/motion/ ) A production-ready motion library for React.
 - Omise ( https://www.omise.co/th/thailand ) ระบบรับชำระเงินออนไลน์สำหรับอีคอมเมิร์ซ.
 - emailjs ( https://www.emailjs.com/ ) Send Email Directly From JavaScript.
+- Uppy ( https://uppy.io/ ) Sleek, modular open source JavaScript file uploader.
 
 เมื่อทำการ clone repositories ทำการเข้าโฟลเดอร์ใน terminal ด้วยคำสั่ง
 ```
