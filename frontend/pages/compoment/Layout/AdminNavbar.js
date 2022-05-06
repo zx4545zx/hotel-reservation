@@ -54,7 +54,7 @@ const AdminNavbar = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <Link href="/admin/login" passHref>
+              <Link href="/admin" passHref>
                 <a className="button is-danger">Sign Out</a>
               </Link>
             </div>
