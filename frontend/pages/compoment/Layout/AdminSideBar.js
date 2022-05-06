@@ -1,55 +1,63 @@
 const AdminSideBar = () => {
   return (
     <>
-      <aside className="menu box">
+      <aside className="menu pt-5 admin-sidebar">
         <p className="menu-label">General</p>
         <ul className="menu-list">
           <li>
             <a>Dashboard</a>
           </li>
           <li>
-            <a>Customers</a>
+            <a>Role Acsses</a>
           </li>
         </ul>
-        <p className="menu-label">Administration</p>
+        <p className="menu-label">Management</p>
         <ul className="menu-list">
           <li>
-            <a>Team Settings</a>
-          </li>
-          <li>
-            <a>Manage Your Team</a>
+            <a>Meeting Rooms</a>
             <ul>
               <li>
-                <a>Members</a>
+                <a>Equipments</a>
               </li>
               <li>
-                <a>Plugins</a>
-              </li>
-              <li>
-                <a>Add a member</a>
+                <a>Services</a>
               </li>
             </ul>
           </li>
           <li>
-            <a>Invitations</a>
+            <a>Rooms</a>
+            <ul>
+              <li>
+                <a>Equipments</a>
+              </li>
+              <li>
+                <a>Services</a>
+              </li>
+            </ul>
           </li>
           <li>
-            <a>Cloud Storage Environment Settings</a>
+            <a>Packages</a>
           </li>
           <li>
-            <a>Authentication</a>
+            <a>Customers</a>
+          </li>
+          <li>
+            <a>Reservations</a>
+          </li>
+          <li>
+            <a>Quotations</a>
           </li>
         </ul>
-        <p className="menu-label">Transactions</p>
+        <p className="menu-label">Others</p>
         <ul className="menu-list">
           <li>
-            <a>Payments</a>
+            <a>Bills Check</a>
           </li>
           <li>
-            <a>Transfers</a>
+            <a>Facilities</a>
           </li>
           <li>
-            <a>Balance</a>
+            <a>Setting</a>
           </li>
         </ul>
       </aside>
