@@ -23,6 +23,27 @@ const Dashboard = () => {
         pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta.
         Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.
       </p>
+
+      <div id="quickviewDefault" class="quickview is-active">
+        <header class="quickview-header">
+          <p class="title">Quickview title</p>
+          <span class="delete" data-dismiss="quickview"></span>
+        </header>
+
+        <div class="quickview-body">
+          <div class="quickview-block">...</div>
+        </div>
+
+        <footer class="quickview-footer"></footer>
+      </div>
+
+      <button
+        class="button is-primary"
+        data-show="quickview"
+        data-target="quickviewDefault"
+      >
+        Show quickview
+      </button>
     </main>
   );
 };
