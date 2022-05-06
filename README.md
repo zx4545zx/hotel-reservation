@@ -3,6 +3,11 @@
 - จองห้องประชุมได้
 - เพิ่มห้องพักได้
 - ทำใบเสนอราคาได้
+- สิทธิ์การเข้าถึง
+- โปรไฟล์ลูกค้า
+- การจัดการในส่วนพนักงาน
+- ส่งอีเมล์หาลูกค้าได้
+- ส่งใบเสร็จยืนยันการชำระเงิน
 
 ## mockup
 เราจะใช้ [Figma](https://www.figma.com/file/VXLAOMEa6USKYWAXqOOgag/Untitled?node-id=0%3A1) ในการทำ mockup เพราะ figma เป็น web base จึงง่ายต่อการทำงานเป็นทีม
@@ -24,6 +29,7 @@
 - Framer Motion ( https://www.framer.com/motion/ ) A production-ready motion library for React.
 - Omise ( https://www.omise.co/th/thailand ) ระบบรับชำระเงินออนไลน์สำหรับอีคอมเมิร์ซ.
 - emailjs ( https://www.emailjs.com/ ) Send Email Directly From JavaScript.
+- Uppy ( https://uppy.io/ ) Sleek, modular open source JavaScript file uploader.
 
 เมื่อทำการ clone repositories ทำการเข้าโฟลเดอร์ใน terminal ด้วยคำสั่ง
 ```
