@@ -27,6 +27,10 @@ export default function Home() {
           </div>
         </section>
 
+
+
+
+
         <Content />
       </main>
     </div>
