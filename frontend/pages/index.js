@@ -4,6 +4,14 @@ import Content from "./compoment/Content";
 
 export default function Home() {
   return (
+
+
+
+
+
+
+
+
     <div className="pt-5">
       <div className="block">
         <div className="card-image">
