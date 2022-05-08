@@ -1,11 +1,8 @@
-import MenuService from "../../compoment/Admin/MeetingRoom/MenuService";
-
-const ServiceMeetingRooms = () => {
+const Setting = () => {
   return (
     <>
-      <div className="title m-3">Service Meeting Rooms</div>
-      <MenuService />
-
+      <div className="title mt-5">Setting</div>
+      <hr />
       <p className="block">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper
         diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat
@@ -31,4 +28,4 @@ const ServiceMeetingRooms = () => {
   );
 };
 
-export default ServiceMeetingRooms;
+export default Setting;

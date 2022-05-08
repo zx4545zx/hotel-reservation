@@ -16,6 +16,9 @@ const AdminSideBar = () => {
           <Link href="/admin/role" passHref>
             <a>Role Acsses</a>
           </Link>
+          <Link href="/admin/staff" passHref>
+            <a>Staff</a>
+          </Link>
         </ul>
 
         <p className="menu-label">Management</p>

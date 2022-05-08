@@ -1,28 +1,10 @@
-import Link from "next/link";
+import MenuEquipments from "../../compoment/Admin/MeetingRoom/MenuEquipments";
 
 const EquipmentsMeetingRooms = () => {
   return (
     <>
       <div className="title m-3">Equipments Meeting Rooms</div>
-      <div className="tabs">
-        <ul>
-          <li>
-            <Link href="/admin/meetingroom" passHref>
-              <a>Meeting Rooms</a>
-            </Link>
-          </li>
-          <li className="is-active">
-            <Link href="/admin/meetingroom/equipments" passHref>
-              <a>Equipments</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/admin/meetingroom/service" passHref>
-              <a>Service</a>
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <MenuEquipments />
 
       <p className="block">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper
