@@ -1,12 +1,29 @@
-import { useState } from 'react'
+import Link from "next/link";
 
-const Dashboard = () => {
-  const [quickview, setQuickview] = useState(false)
-
+const EquipmentsMeetingRooms = () => {
   return (
-    <main className="container">
-      <p className="title mt-5">Dashboard</p>
-      <hr />
+    <>
+      <div className="title m-3">Equipments Meeting Rooms</div>
+      <div className="tabs">
+        <ul>
+          <li>
+            <Link href="/admin/meetingroom" passHref>
+              <a>Meeting Rooms</a>
+            </Link>
+          </li>
+          <li className="is-active">
+            <Link href="/admin/meetingroom/equipments" passHref>
+              <a>Equipments</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/meetingroom/service" passHref>
+              <a>Service</a>
+            </Link>
+          </li>
+        </ul>
+      </div>
+
       <p className="block">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper
         diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat
@@ -28,37 +45,8 @@ const Dashboard = () => {
         pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta.
         Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.
       </p>
+    </>
+  );
+};
 
-      <div
-        id="quickviewDefault"
-        className={`quickview ${quickview && 'is-active'}`}
-      >
-        <header className="quickview-header">
-          <p className="title">Quickview title</p>
-          <span
-            className="delete"
-            data-dismiss="quickview"
-            onClick={() => setQuickview(false)}
-          ></span>
-        </header>
-
-        <div className="quickview-body">
-          <div className="quickview-block">...</div>
-        </div>
-
-        <footer className="quickview-footer"></footer>
-      </div>
-
-      <button
-        className="button is-primary"
-        data-show="quickview"
-        data-target="quickviewDefault"
-        onClick={() => setQuickview(!quickview)}
-      >
-        Show quickview
-      </button>
-    </main>
-  )
-}
-
-export default Dashboard
+export default EquipmentsMeetingRooms;

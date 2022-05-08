@@ -7,6 +7,7 @@ const AdminSideBar = () => {
         <a className="button is-primary is-flex is-justify-content-center">
           <strong>BOOK NOW</strong>
         </a>
+
         <p className="menu-label">General</p>
         <ul className="menu-list">
           <Link href="/admin/dashboard" passHref>
@@ -16,54 +17,33 @@ const AdminSideBar = () => {
             <a>Role Acsses</a>
           </Link>
         </ul>
+
         <p className="menu-label">Management</p>
         <ul className="menu-list">
-          <li>
-            <Link href="/admin/meetingroom" passHref>
-              <a>Meeting Rooms</a>
-            </Link>
-            <ul>
-              <Link href="/admin/meetingroom/equipments" passHref>
-                <a>Equipments</a>
-              </Link>
-              <Link href="/admin/meetingroom/service" passHref>
-                <a>Services</a>
-              </Link>
-            </ul>
-          </li>
-          <li>
-            <Link href="/admin/room" passHref>
-              <a>Rooms</a>
-            </Link>
-            <ul>
-              <Link href="/admin/room/bedtype" passHref>
-                <a>Bed Type</a>
-              </Link>
-              <Link href="/admin/room/equipments" passHref>
-                <a>Equipments</a>
-              </Link>
-              <Link href="/admin/room/service" passHref>
-                <a>Services</a>
-              </Link>
-            </ul>
-          </li>
+          <Link href="/admin/meetingroom" passHref>
+            <a>Meeting Rooms</a>
+          </Link>
+          <Link href="/admin/room" passHref>
+            <a>Rooms</a>
+          </Link>
           <Link href="/admin/package" passHref>
             <a>Packages</a>
           </Link>
           <Link href="/admin/customer" passHref>
             <a>Customers</a>
           </Link>
-          <Link href="/admin/reservations" passHref>
+          <Link href="/admin/reservation" passHref>
             <a>Reservations</a>
           </Link>
-          <Link href="/admin/quotatins" passHref>
+          <Link href="/admin/quotation" passHref>
             <a>Quotations</a>
           </Link>
         </ul>
+
         <p className="menu-label">Others</p>
         <ul className="menu-list">
           <Link href="/admin/bills" passHref>
-            <a>Bills Check</a>
+            <a>Bills</a>
           </Link>
           <Link href="/admin/facilities" passHref>
             <a>Facilities</a>

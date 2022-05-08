@@ -1,11 +1,7 @@
-import { useState } from 'react'
-
-const Dashboard = () => {
-  const [quickview, setQuickview] = useState(false)
-
+const RoleAcsses = () => {
   return (
-    <main className="container">
-      <p className="title mt-5">Dashboard</p>
+    <>
+      <div className="title mt-5">Role Acsses</div>
       <hr />
       <p className="block">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper
@@ -28,37 +24,8 @@ const Dashboard = () => {
         pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta.
         Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.
       </p>
+    </>
+  );
+};
 
-      <div
-        id="quickviewDefault"
-        className={`quickview ${quickview && 'is-active'}`}
-      >
-        <header className="quickview-header">
-          <p className="title">Quickview title</p>
-          <span
-            className="delete"
-            data-dismiss="quickview"
-            onClick={() => setQuickview(false)}
-          ></span>
-        </header>
-
-        <div className="quickview-body">
-          <div className="quickview-block">...</div>
-        </div>
-
-        <footer className="quickview-footer"></footer>
-      </div>
-
-      <button
-        className="button is-primary"
-        data-show="quickview"
-        data-target="quickviewDefault"
-        onClick={() => setQuickview(!quickview)}
-      >
-        Show quickview
-      </button>
-    </main>
-  )
-}
-
-export default Dashboard
+export default RoleAcsses;
