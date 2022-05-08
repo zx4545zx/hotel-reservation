@@ -1,64 +1,76 @@
+import Link from "next/link";
+
 const AdminSideBar = () => {
   return (
     <>
       <aside className="menu pt-3 mt-3 admin-sidebar box">
+        <a className="button is-primary is-flex is-justify-content-center">
+          <strong>BOOK NOW</strong>
+        </a>
         <p className="menu-label">General</p>
         <ul className="menu-list">
-          <li>
+          <Link href="/admin/dashboard" passHref>
             <a>Dashboard</a>
-          </li>
-          <li>
+          </Link>
+          <Link href="/admin/role" passHref>
             <a>Role Acsses</a>
-          </li>
+          </Link>
         </ul>
         <p className="menu-label">Management</p>
         <ul className="menu-list">
           <li>
-            <a>Meeting Rooms</a>
+            <Link href="/admin/meetingroom" passHref>
+              <a>Meeting Rooms</a>
+            </Link>
             <ul>
-              <li>
+              <Link href="/admin/meetingroom/equipments" passHref>
                 <a>Equipments</a>
-              </li>
-              <li>
+              </Link>
+              <Link href="/admin/meetingroom/service" passHref>
                 <a>Services</a>
-              </li>
+              </Link>
             </ul>
           </li>
           <li>
-            <a>Rooms</a>
+            <Link href="/admin/room" passHref>
+              <a>Rooms</a>
+            </Link>
             <ul>
-              <li>
+              <Link href="/admin/room/bedtype" passHref>
+                <a>Bed Type</a>
+              </Link>
+              <Link href="/admin/room/equipments" passHref>
                 <a>Equipments</a>
-              </li>
-              <li>
+              </Link>
+              <Link href="/admin/room/service" passHref>
                 <a>Services</a>
-              </li>
+              </Link>
             </ul>
           </li>
-          <li>
+          <Link href="/admin/package" passHref>
             <a>Packages</a>
-          </li>
-          <li>
+          </Link>
+          <Link href="/admin/customer" passHref>
             <a>Customers</a>
-          </li>
-          <li>
+          </Link>
+          <Link href="/admin/reservations" passHref>
             <a>Reservations</a>
-          </li>
-          <li>
+          </Link>
+          <Link href="/admin/quotatins" passHref>
             <a>Quotations</a>
-          </li>
+          </Link>
         </ul>
         <p className="menu-label">Others</p>
         <ul className="menu-list">
-          <li>
+          <Link href="/admin/bills" passHref>
             <a>Bills Check</a>
-          </li>
-          <li>
+          </Link>
+          <Link href="/admin/facilities" passHref>
             <a>Facilities</a>
-          </li>
-          <li>
+          </Link>
+          <Link href="/admin/setting" passHref>
             <a>Setting</a>
-          </li>
+          </Link>
         </ul>
       </aside>
     </>
