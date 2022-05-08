@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-
 import LoginForm from "../compoment/Admin/LoginForm";
 
 const axios = require("axios");
@@ -22,8 +21,7 @@ const Admin = () => {
         password: d.password,
       })
       .then((res) => {
-        console.log(res.data);
-        // router.replace("/admin/dashboard");
+        router.replace("/admin/dashboard");
       })
       .catch((e) => {
         setError("notRegistered", e.response.data);
