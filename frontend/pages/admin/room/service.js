@@ -1,33 +1,10 @@
-import Link from "next/link";
+import MenuService from "../../compoment/Admin/Room/MenuService";
 
 const ServiceRooms = () => {
   return (
     <>
       <div className="title m-3">Service Rooms</div>
-      <div className="tabs">
-        <ul>
-          <li>
-            <Link href="/admin/room" passHref>
-              <a>Rooms</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/admin/room/bedtype" passHref>
-              <a>Bed Type</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/admin/room/equipments" passHref>
-              <a>Equipments</a>
-            </Link>
-          </li>
-          <li className="is-active">
-            <Link href="/admin/room/service" passHref>
-              <a>Service</a>
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <MenuService />
 
       <p className="block">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper
