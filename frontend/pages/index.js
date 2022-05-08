@@ -4,14 +4,6 @@ import Content from "./compoment/Content";
 
 export default function Home() {
   return (
-
-
-
-
-
-
-
-
     <div className="pt-5">
       <div className="block">
         <div className="card-image">
@@ -26,10 +18,6 @@ export default function Home() {
             <p className="subtitle">Second level</p>
           </div>
         </section>
-
-
-
-
 
         <Content />
       </main>

@@ -1,53 +1,48 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+
+import LoginForm from "../compoment/Admin/LoginForm";
+
+const axios = require("axios");
 
 const Admin = () => {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm();
+
+  const login = (d) => {
+    axios
+      .post("http://localhost:3000/api/admin", {
+        username: d.username,
+        password: d.password,
+      })
+      .then((res) => {
+        console.log(res.data);
+        // router.replace("/admin/dashboard");
+      })
+      .catch((e) => {
+        setError("notRegistered", e.response.data);
+      });
+  };
+
   return (
     <section className="hero is-primary is-fullheight box">
       <div className="hero-body">
         <div className="container">
           <div className="columns is-centered">
             <div className="column is-5-tablet is-4-desktop is-3-widescreen">
-              <form action="" className="box">
-                <div className="field">
-                  <label htmlFor="" className="label">
-                    Email
-                  </label>
-                  <div className="control has-icons-left">
-                    <input
-                      type="email"
-                      placeholder="e.g. bobsmith@gmail.com"
-                      className="input"
-                      required
-                    />
-                    <span className="icon is-small is-left">
-                      <i className="fa fa-envelope"></i>
-                    </span>
-                  </div>
-                </div>
-                <div className="field">
-                  <label htmlFor="" className="label">
-                    Password
-                  </label>
-                  <div className="control has-icons-left">
-                    <input
-                      type="password"
-                      placeholder="*******"
-                      className="input"
-                      required
-                    />
-                    <span className="icon is-small is-left">
-                      <i className="fa fa-lock"></i>
-                    </span>
-                  </div>
-                </div>
-                <div className="field is-flex is-justify-content-center mt-5">
-                  <button className="button is-success">
-                    <Link href="/admin/dashboard" passHref>
-                      Login
-                    </Link>
-                  </button>
-                </div>
-              </form>
+              <LoginForm
+                register={register}
+                handleSubmit={handleSubmit}
+                errors={errors}
+                clearErrors={clearErrors}
+                login={login}
+              />
             </div>
           </div>
         </div>
