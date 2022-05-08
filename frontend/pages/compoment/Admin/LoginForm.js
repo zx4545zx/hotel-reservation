@@ -5,7 +5,7 @@ const LoginForm = ({ register, handleSubmit, errors, clearErrors, login }) => {
         <label htmlFor="" className="label">
           Username
         </label>
-        <div className="control has-icons-left">
+        <div className="control">
           <input
             type="text"
             placeholder="username"
@@ -13,16 +13,13 @@ const LoginForm = ({ register, handleSubmit, errors, clearErrors, login }) => {
             required
             {...register("username")}
           />
-          <span className="icon is-small is-left">
-            <i className="fa fa-envelope"></i>
-          </span>
         </div>
       </div>
       <div className="field">
         <label htmlFor="" className="label">
           Password
         </label>
-        <div className="control has-icons-left">
+        <div className="control">
           <input
             type="password"
             placeholder="*******"
@@ -30,9 +27,6 @@ const LoginForm = ({ register, handleSubmit, errors, clearErrors, login }) => {
             required
             {...register("password")}
           />
-          <span className="icon is-small is-left">
-            <i className="fa fa-lock"></i>
-          </span>
         </div>
       </div>
 
