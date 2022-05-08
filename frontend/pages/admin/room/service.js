@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const ServiceRooms = () => {
   return (
     <>
@@ -5,19 +7,28 @@ const ServiceRooms = () => {
       <div className="tabs">
         <ul>
           <li>
-            <a>Rooms</a>
+            <Link href="/admin/room" passHref>
+              <a>Rooms</a>
+            </Link>
           </li>
           <li>
-            <a>Bed Type</a>
+            <Link href="/admin/room/bedtype" passHref>
+              <a>Bed Type</a>
+            </Link>
           </li>
           <li>
-            <a>Equipments</a>
+            <Link href="/admin/room/equipments" passHref>
+              <a>Equipments</a>
+            </Link>
           </li>
           <li className="is-active">
-            <a>Service</a>
+            <Link href="/admin/room/service" passHref>
+              <a>Service</a>
+            </Link>
           </li>
         </ul>
       </div>
+
       <p className="block">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper
         diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat

@@ -1,24 +1,34 @@
+import Link from "next/link";
+
 const BedType = () => {
   return (
     <>
-      {/* <div className="title mt-5">Bed Type</div> */}
-      <div className="title m-3">Service Rooms</div>
+      <div className="title m-3">Bed Type</div>
       <div className="tabs">
         <ul>
           <li>
-            <a>Rooms</a>
-          </li>
-          <li>
-            <a>Bed Type</a>
-          </li>
-          <li>
-            <a>Equipments</a>
+            <Link href="/admin/room" passHref>
+              <a>Rooms</a>
+            </Link>
           </li>
           <li className="is-active">
-            <a>Service</a>
+            <Link href="/admin/room/bedtype" passHref>
+              <a>Bed Type</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/room/equipments" passHref>
+              <a>Equipments</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/room/service" passHref>
+              <a>Service</a>
+            </Link>
           </li>
         </ul>
       </div>
+
       <p className="block">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper
         diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat
