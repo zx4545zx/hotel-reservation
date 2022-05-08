@@ -1,4 +1,8 @@
+import { useState } from 'react'
+
 const Dashboard = () => {
+  const [quickview, setQuickview] = useState(false)
+
   return (
     <main className="container">
       <p className="title">Dashboard</p>
@@ -24,28 +28,36 @@ const Dashboard = () => {
         Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.
       </p>
 
-      <div id="quickviewDefault" class="quickview is-active">
-        <header class="quickview-header">
-          <p class="title">Quickview title</p>
-          <span class="delete" data-dismiss="quickview"></span>
+      <div
+        id="quickviewDefault"
+        className={`quickview ${quickview && 'is-active'}`}
+      >
+        <header className="quickview-header">
+          <p className="title">Quickview title</p>
+          <span
+            className="delete"
+            data-dismiss="quickview"
+            onClick={() => setQuickview(false)}
+          ></span>
         </header>
 
-        <div class="quickview-body">
-          <div class="quickview-block">...</div>
+        <div className="quickview-body">
+          <div className="quickview-block">...</div>
         </div>
 
-        <footer class="quickview-footer"></footer>
+        <footer className="quickview-footer"></footer>
       </div>
 
       <button
-        class="button is-primary"
+        className="button is-primary"
         data-show="quickview"
         data-target="quickviewDefault"
+        onClick={() => setQuickview(!quickview)}
       >
         Show quickview
       </button>
     </main>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

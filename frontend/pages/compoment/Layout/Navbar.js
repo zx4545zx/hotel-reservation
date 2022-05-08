@@ -36,7 +36,7 @@ const Navbar = () => {
       </div>
 
       {burger && (
-        <div class="navbar-dropdown is-right">
+        <div className="navbar-dropdown is-right">
           <Link href="/" passHref>
             <a className="navbar-item">Home</a>
           </Link>

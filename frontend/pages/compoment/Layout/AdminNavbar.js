@@ -13,7 +13,7 @@ const AdminNavbar = () => {
       aria-label="main navigation"
     >
       <div className="navbar-brand">
-        <Link href="/admin">
+        <Link href="/admin/dashboard">
           <a className="navbar-item has-text-primary is-size-3">
             <FontAwesomeIcon icon={faArchway} className="mx-1" />
           </a>
@@ -34,23 +34,14 @@ const AdminNavbar = () => {
       </div>
 
       {burger && (
-        <div class="navbar-dropdown is-right">
+        <div className="navbar-dropdown is-right">
           <Link href="/admin" passHref>
-            <a className="navbar-item">Home</a>
-          </Link>
-          <Link href="/admin/login" passHref>
             <a className="navbar-item">Sign Out</a>
           </Link>
         </div>
       )}
 
       <div id="navbarBasicExample" className="navbar-menu">
-        <div className="navbar-start">
-          <Link href="/admin" passHref>
-            <a className="navbar-item">Home</a>
-          </Link>
-        </div>
-
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
