@@ -21,7 +21,7 @@ const Admin = () => {
         password: d.password,
       })
       .then((res) => {
-        router.replace("/admin/dashboard");
+        router.replace("/admin/reservation");
       })
       .catch((e) => {
         setError("notRegistered", e.response.data);

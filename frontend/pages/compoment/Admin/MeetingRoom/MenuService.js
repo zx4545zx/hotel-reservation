@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const MenuService = () => {
   return (
-    <div className="tabs">
+    <div className="tabs is-fullwidth">
       <ul>
         <li>
           <Link href="/admin/meetingroom" passHref>

@@ -3,7 +3,9 @@ import MenuService from "../../compoment/Admin/Room/MenuService";
 const ServiceRooms = () => {
   return (
     <>
-      <div className="title m-3">Service Rooms</div>
+      <div className="title m-3 has-text-centered notification is-primary">
+        Service Rooms
+      </div>
       <MenuService />
 
       <p className="block">

@@ -10,14 +10,17 @@ const AdminSideBar = () => {
 
         <p className="menu-label">General</p>
         <ul className="menu-list">
-          <Link href="/admin/dashboard" passHref>
-            <a>Dashboard</a>
+          <Link href="/admin/reservation" passHref>
+            <a>Reservations</a>
           </Link>
-          <Link href="/admin/role" passHref>
-            <a>Role Acsses</a>
+          <Link href="/admin/quotation" passHref>
+            <a>Quotations</a>
           </Link>
-          <Link href="/admin/staff" passHref>
-            <a>Staff</a>
+          <Link href="/admin/customer" passHref>
+            <a>Customers</a>
+          </Link>
+          <Link href="/admin/bills" passHref>
+            <a>Bills</a>
           </Link>
         </ul>
 
@@ -32,25 +35,20 @@ const AdminSideBar = () => {
           <Link href="/admin/package" passHref>
             <a>Packages</a>
           </Link>
-          <Link href="/admin/customer" passHref>
-            <a>Customers</a>
-          </Link>
-          <Link href="/admin/reservation" passHref>
-            <a>Reservations</a>
-          </Link>
-          <Link href="/admin/quotation" passHref>
-            <a>Quotations</a>
+          <Link href="/admin/facilities" passHref>
+            <a>Facilities</a>
           </Link>
         </ul>
 
         <p className="menu-label">Others</p>
         <ul className="menu-list">
-          <Link href="/admin/bills" passHref>
-            <a>Bills</a>
+          <Link href="/admin/role" passHref>
+            <a>Role Acsses</a>
           </Link>
-          <Link href="/admin/facilities" passHref>
-            <a>Facilities</a>
+          <Link href="/admin/staff" passHref>
+            <a>Staff</a>
           </Link>
+
           <Link href="/admin/setting" passHref>
             <a>Setting</a>
           </Link>

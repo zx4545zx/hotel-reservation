@@ -13,7 +13,7 @@ const AdminNavbar = () => {
       aria-label="main navigation"
     >
       <div className="navbar-brand">
-        <Link href="/admin/dashboard">
+        <Link href="/admin/reservation">
           <a className="navbar-item has-text-primary is-size-3">
             <FontAwesomeIcon icon={faArchway} className="mx-1" />
           </a>

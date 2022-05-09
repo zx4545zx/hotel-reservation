@@ -3,7 +3,9 @@ import MenuBedType from "../../compoment/Admin/Room/MenuBedType";
 const BedType = () => {
   return (
     <>
-      <div className="title m-3">Bed Type</div>
+      <div className="title m-3 has-text-centered notification is-primary">
+        Bed Type
+      </div>
       <MenuBedType />
 
       <p className="block">
