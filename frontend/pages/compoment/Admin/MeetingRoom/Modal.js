@@ -30,9 +30,23 @@ const Modal = ({ modal, setModal }) => {
             placeholder="number of tables"
           />
 
-          <button type="submit" className="button is-success">
-            Save
-          </button>
+          <div className="file is-flex is-justify-content-center mb-5">
+            <label className="file-label">
+              <input className="file-input" type="file" name="image" />
+              <span className="file-cta">
+                <span className="file-icon">
+                  <i className="fas fa-upload"></i>
+                </span>
+                <span className="file-label">Choose a file…</span>
+              </span>
+            </label>
+          </div>
+
+          <div className="is-flex is-justify-content-center ">
+            <button type="submit" className="button is-success">
+              Save
+            </button>
+          </div>
         </form>
       </div>
 
