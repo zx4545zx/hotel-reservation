@@ -2,25 +2,54 @@ import Link from "next/link";
 
 const Form = () => {
   return (
-    <form className="form-horizontal section is-medium container is-max-desktop">
+    <form className="form-horizontal section container is-max-desktop p-6">
       <fieldset>
         <div className="field">
-          <label className="label" for="username">
-            Username
+          <label className="label" htmlFor="fristname">
+            Frist Name
           </label>
           <div className="control">
             <input
-              id="username"
-              name="username"
+              id="fristname"
+              name="fristname"
               type="text"
-              placeholder="username"
+              placeholder="fristname"
+              className="input"
+            />
+          </div>
+        </div>
+        <div className="field">
+          <label className="label" htmlFor="lastname">
+            Last Name
+          </label>
+          <div className="control">
+            <input
+              id="lastname"
+              name="lastname"
+              type="text"
+              placeholder="lastname"
               className="input"
             />
           </div>
         </div>
 
         <div className="field">
-          <label className="label" for="email">
+          <label className="label" htmlFor="phone">
+            Phone Number
+          </label>
+          <div className="control">
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              placeholder="0000000000"
+              maxLength="10"
+              className="input"
+            />
+          </div>
+        </div>
+        <div className="field">
+          <label className="label" htmlFor="email">
             Email
           </label>
           <div className="control">
@@ -35,7 +64,7 @@ const Form = () => {
         </div>
 
         <div className="field">
-          <label className="label" for="password">
+          <label className="label" htmlFor="password">
             Password
           </label>
           <div className="control">
@@ -49,8 +78,8 @@ const Form = () => {
           </div>
         </div>
 
-        <div className="field">
-          <label className="label" for="confrim-password">
+        {/* <div className="field">
+          <label className="label" htmlFor="confrim-password">
             Confrim Password
           </label>
           <div className="control">
@@ -62,15 +91,19 @@ const Form = () => {
               className="input"
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="field mt-6">
-          <label className="label" for="cancel"></label>
+          <label className="label" htmlFor="cancel"></label>
           <div className="control is-flex is-justify-content-center">
             <button id="cancel" name="cancel" className="button is-danger mx-3">
               <Link href="/">Cancel</Link>
             </button>
-            <button id="submit" name="submit" className="button is-primary mx-3">
+            <button
+              id="submit"
+              name="submit"
+              className="button is-primary mx-3"
+            >
               Sign Up
             </button>
           </div>
@@ -80,4 +113,4 @@ const Form = () => {
   );
 };
 
-export default Form
+export default Form;

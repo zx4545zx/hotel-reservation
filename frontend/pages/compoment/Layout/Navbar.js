@@ -43,9 +43,6 @@ const Navbar = () => {
           <Link href="/offer" passHref>
             <a className="navbar-item">Offer</a>
           </Link>
-          <Link href="/about" passHref>
-            <a className="navbar-item">About</a>
-          </Link>
           <Link href="/contact" passHref>
             <a className="navbar-item">Contact</a>
           </Link>
@@ -68,9 +65,6 @@ const Navbar = () => {
             <a className="navbar-link">More</a>
 
             <div className="navbar-dropdown">
-              <Link href="/about" passHref>
-                <a className="navbar-item">About</a>
-              </Link>
               <Link href="/contact" passHref>
                 <a className="navbar-item">Contact</a>
               </Link>
@@ -85,6 +79,7 @@ const Navbar = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
+              <a className="button is-light">Track</a>
               <a
                 className="button is-light"
                 onClick={() => setModal("is-active")}
