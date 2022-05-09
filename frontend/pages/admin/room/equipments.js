@@ -3,7 +3,7 @@ import MenuEquipments from "../../compoment/Admin/Room/MenuEquipments";
 const EquipmentsRooms = () => {
   return (
     <>
-      <div className="title m-3 has-text-centered notification is-primary">
+      <div className="title m-3 has-text-centered notification is-light">
         Equipments Rooms
       </div>
       <MenuEquipments />

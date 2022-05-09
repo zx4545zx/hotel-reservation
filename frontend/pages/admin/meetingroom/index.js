@@ -9,7 +9,7 @@ const MeetingRooms = () => {
 
   return (
     <>
-      <div className="title m-3 has-text-centered notification is-primary">
+      <div className="title m-3 has-text-centered notification is-light">
         Meeting Rooms
       </div>
       <MenuMeetingRoom />

@@ -8,7 +8,7 @@ const EquipmentsMeetingRooms = () => {
 
   return (
     <>
-      <div className="title m-3 has-text-centered notification is-primary">
+      <div className="title m-3 has-text-centered notification is-light">
         Equipments Meeting Rooms
       </div>
       <MenuEquipments />

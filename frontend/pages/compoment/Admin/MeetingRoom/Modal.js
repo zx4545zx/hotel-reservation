@@ -15,7 +15,19 @@ const Modal = ({ modal, setModal }) => {
           <input
             className="input box"
             type="number"
-            placeholder="price / item"
+            placeholder="price / day"
+          />
+          <label>People Number</label>
+          <input
+            className="input box"
+            type="number"
+            placeholder="number of people"
+          />
+          <label>Tables Number</label>
+          <input
+            className="input box"
+            type="number"
+            placeholder="number of tables"
           />
 
           <button type="submit" className="button is-success">
