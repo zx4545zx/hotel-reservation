@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState} from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchway } from "@fortawesome/free-solid-svg-icons";
 
-const AdminNavbar = () => {
+const AdminNavbar = ({user}) => {
   const [burger, setBurger] = useState(false);
 
   return (
@@ -13,7 +13,7 @@ const AdminNavbar = () => {
       aria-label="main navigation"
     >
       <div className="navbar-brand">
-        <Link href="/admin/reservation">
+        <Link href="/admin">
           <a className="navbar-item has-text-primary is-size-3">
             <FontAwesomeIcon icon={faArchway} className="mx-1" />
           </a>
@@ -43,6 +43,7 @@ const AdminNavbar = () => {
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-end">
+          <div>{user.email}</div>
           <div className="navbar-item">
             <div className="buttons">
               <Link href="/admin" passHref>

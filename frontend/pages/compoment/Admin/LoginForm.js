@@ -1,6 +1,6 @@
-const LoginForm = ({ register, handleSubmit, errors, clearErrors, login }) => {
+const LoginForm = ({ register, handleSubmit, errors, clearErrors, onSubmit }) => {
   return (
-    <form action="" className="box" onSubmit={handleSubmit(login)}>
+    <form action="" className="box" onSubmit={handleSubmit(onSubmit)}>
       <div className="field">
         <label htmlFor="" className="label">
           Username
@@ -11,7 +11,7 @@ const LoginForm = ({ register, handleSubmit, errors, clearErrors, login }) => {
             placeholder="username"
             className="input"
             required
-            {...register("username")}
+            {...register("email")}
           />
         </div>
       </div>
@@ -30,9 +30,9 @@ const LoginForm = ({ register, handleSubmit, errors, clearErrors, login }) => {
         </div>
       </div>
 
-      {errors.notRegistered && (
+      {errors.submit && (
         <div className="notification is-danger p-2">
-          {errors.notRegistered.message}
+          {errors.submit.message}
         </div>
       )}
 
