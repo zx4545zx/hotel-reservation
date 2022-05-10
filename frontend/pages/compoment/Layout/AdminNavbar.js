@@ -4,10 +4,12 @@ import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchway } from "@fortawesome/free-solid-svg-icons";
 
+import useUser from "../../../data/use-user";
 import { logout } from "../../../libs/auth";
 
-const AdminNavbar = ({ user }) => {
+const AdminNavbar = () => {
   const [burger, setBurger] = useState(false);
+  const { user, loading } = useUser();
 
   return (
     <nav
@@ -48,7 +50,7 @@ const AdminNavbar = ({ user }) => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <div className="button is-light">{user.email}</div>
+              {/* <div className="button is-light">{user.email}</div> */}
               <Link href="/admin" passHref>
                 <a
                   className="button is-danger"
