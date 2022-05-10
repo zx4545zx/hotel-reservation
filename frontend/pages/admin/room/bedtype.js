@@ -1,8 +1,9 @@
 import MenuBedType from "../../compoment/Admin/Room/MenuBedType";
+import AdminLayout from "../../compoment/Layout/AdminLayout"
 
 const BedType = () => {
   return (
-    <>
+    <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
         Bed Type
       </div>
@@ -29,7 +30,7 @@ const BedType = () => {
         pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta.
         Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.
       </p>
-    </>
+    </AdminLayout>
   );
 };
 

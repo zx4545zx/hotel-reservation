@@ -1,28 +1,18 @@
-import { useRouter } from "next/router";
-import Layout from "./compoment/Layout/Layout";
-import AdminLayout from "./compoment/Layout/AdminLayout";
-import findRouterAdmin from "./utils/findRouterAdmin";
 import "../styles/globals.scss";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-function MyApp({ Component, pageProps }) {
-  const router = useRouter();
+//log in
+import { SWRConfig } from "swr";
+import fetchJson from "../libs/fetchJson";
 
-  if (router.pathname === "/admin") {
-    return <Component {...pageProps} />;
-  } else if (findRouterAdmin(router.pathname, "/admin/")) {
-    return (
-      <AdminLayout>
-        <Component {...pageProps} />
-      </AdminLayout>
-    );
-  } else {
-    return (
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    );
-  }
+function MyApp({ Component, pageProps }) {
+  return (
+    <SWRConfig
+      value={{ fetcher: fetchJson, onError: (err) => console.log(err) }}
+    >
+      <Component {...pageProps} />
+    </SWRConfig>
+  );
 }
 
 export default MyApp;

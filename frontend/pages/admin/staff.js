@@ -1,6 +1,8 @@
+import AdminLayout from "../compoment/Layout/AdminLayout"
+
 const Staff = () => {
   return (
-    <>
+    <AdminLayout>
       <div className="title mt-5">Staff</div>
       <hr />
       <p className="block">
@@ -24,7 +26,7 @@ const Staff = () => {
         pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta.
         Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.
       </p>
-    </>
+    </AdminLayout>
   );
 };
 

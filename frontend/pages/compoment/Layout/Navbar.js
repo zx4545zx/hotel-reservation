@@ -2,10 +2,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchway } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../Modal";
 
 const Navbar = () => {
-  const [modal, setModal] = useState("");
   const [burger, setBurger] = useState(false);
 
   return (
@@ -80,12 +78,9 @@ const Navbar = () => {
           <div className="navbar-item">
             <div className="buttons">
               <a className="button is-light">Track</a>
-              <a
-                className="button is-light"
-                onClick={() => setModal("is-active")}
-              >
-                Sign in
-              </a>
+              <Link href="/login" passHref>
+                <a className="button is-light">Sign in</a>
+              </Link>
               <a className="button is-primary">
                 <strong>BOOK NOW</strong>
               </a>
@@ -93,8 +88,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
-      <Modal modal={modal} setModal={setModal} />
     </nav>
   );
 };

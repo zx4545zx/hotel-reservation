@@ -1,8 +1,9 @@
 import MenuRoom from "../../compoment/Admin/Room/MenuRoom";
+import AdminLayout from "../../compoment/Layout/AdminLayout"
 
 const Rooms = () => {
   return (
-    <>
+    <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
         Rooms
       </div>
@@ -29,7 +30,7 @@ const Rooms = () => {
         pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta.
         Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.
       </p>
-    </>
+    </AdminLayout>
   );
 };
 

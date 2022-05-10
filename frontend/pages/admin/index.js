@@ -1,52 +1,33 @@
-import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-import LoginForm from "../compoment/Admin/LoginForm";
+import AdminLayout from "../compoment/Layout/AdminLayout"
 
-const axios = require("axios");
-
-const Admin = () => {
-  const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-    clearErrors,
-  } = useForm();
-
-  const login = (d) => {
-    axios
-      .post("http://localhost:3000/api/admin", {
-        username: d.username,
-        password: d.password,
-      })
-      .then((res) => {
-        router.replace("/admin/reservation");
-      })
-      .catch((e) => {
-        setError("notRegistered", e.response.data);
-      });
-  };
-
+const Reservations = () => {
   return (
-    <section className="hero is-primary is-fullheight box">
-      <div className="hero-body">
-        <div className="container">
-          <div className="columns is-centered">
-            <div className="column is-5-tablet is-4-desktop is-3-widescreen">
-              <LoginForm
-                register={register}
-                handleSubmit={handleSubmit}
-                errors={errors}
-                clearErrors={clearErrors}
-                login={login}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <AdminLayout>
+      <div className="title mt-5">Reservations</div>
+      <hr />
+      <p className="block">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper
+        diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat
+        tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit
+        amet vehicula eleifend, nunc dui porta orci, quis semper odio felis ut
+        quam.
+      </p>
+      <p className="block">
+        Suspendisse varius ligula in molestie lacinia. Maecenas varius eget
+        ligula a sagittis. Pellentesque interdum, nisl nec interdum maximus,
+        augue diam porttitor lorem, et sollicitudin felis neque sit amet erat.
+        Maecenas imperdiet felis nisi, fringilla luctus felis hendrerit sit
+        amet. Aenean vitae gravida diam, finibus dignissim turpis. Sed eget
+        varius ligula, at volutpat tortor.
+      </p>
+      <p className="block">
+        Integer sollicitudin, tortor a mattis commodo, velit urna rhoncus erat,
+        vitae congue lectus dolor consequat libero. Donec leo ligula, maximus et
+        pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta.
+        Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.
+      </p>
+    </AdminLayout>
   );
 };
 
-export default Admin;
+export default Reservations;

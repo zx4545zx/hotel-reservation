@@ -10,7 +10,7 @@ const AdminSideBar = () => {
 
         <p className="menu-label">General</p>
         <ul className="menu-list">
-          <Link href="/admin/reservation" passHref>
+          <Link href="/admin" passHref>
             <a>Reservations</a>
           </Link>
           <Link href="/admin/quotation" passHref>
@@ -34,9 +34,6 @@ const AdminSideBar = () => {
           </Link>
           <Link href="/admin/package" passHref>
             <a>Packages</a>
-          </Link>
-          <Link href="/admin/facilities" passHref>
-            <a>Facilities</a>
           </Link>
         </ul>
 

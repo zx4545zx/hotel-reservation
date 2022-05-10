@@ -1,6 +1,8 @@
+import AdminLayout from "../compoment/Layout/AdminLayout"
+
 const Quotations = () => {
   return (
-    <>
+    <AdminLayout>
       <div className="title mt-5">Quotations</div>
       <hr />
       <div>
@@ -27,7 +29,7 @@ const Quotations = () => {
           semper leo.
         </div>
       </div>
-    </>
+    </AdminLayout>
   );
 };
 

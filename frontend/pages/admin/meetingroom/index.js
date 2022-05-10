@@ -4,11 +4,13 @@ import MenuMeetingRoom from "../../compoment/Admin/MeetingRoom/Menu/MenuMeetingR
 import Modal from "../../compoment/Admin/MeetingRoom/Modal";
 import ListTable from "../../compoment/Admin/MeetingRoom/ListTable";
 
+import AdminLayout from "../../compoment/Layout/AdminLayout"
+
 const MeetingRooms = () => {
   const [modal, setModal] = useState(false);
 
   return (
-    <>
+    <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
         Meeting Rooms
       </div>
@@ -30,7 +32,7 @@ const MeetingRooms = () => {
       <hr className="mt-0" />
 
       <ListTable />
-    </>
+    </AdminLayout>
   );
 };
 
