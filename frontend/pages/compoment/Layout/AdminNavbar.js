@@ -1,9 +1,12 @@
-import { useState} from "react";
+import { useState } from "react";
 import Link from "next/link";
+import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchway } from "@fortawesome/free-solid-svg-icons";
 
-const AdminNavbar = ({user}) => {
+import { logout } from "../../../libs/auth";
+
+const AdminNavbar = ({ user }) => {
   const [burger, setBurger] = useState(false);
 
   return (
@@ -43,11 +46,19 @@ const AdminNavbar = ({user}) => {
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-end">
-          <div>{user.email}</div>
           <div className="navbar-item">
             <div className="buttons">
+              <div className="button is-light">{user.email}</div>
               <Link href="/admin" passHref>
-                <a className="button is-danger">Sign Out</a>
+                <a
+                  className="button is-danger"
+                  onClick={() => {
+                    logout();
+                    Router.replace("/admin/login");
+                  }}
+                >
+                  Sign Out
+                </a>
               </Link>
             </div>
           </div>

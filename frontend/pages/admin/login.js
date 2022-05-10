@@ -1,11 +1,8 @@
 import LoginForm from "../compoment/Admin/LoginForm";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
 
 import Router from "next/router";
 import axios from "axios";
-
-import useUser from "../../data/use-user";
 import { login } from "../../libs/auth";
 
 const Admin = () => {
@@ -16,20 +13,11 @@ const Admin = () => {
     setError,
     clearErrors,
   } = useForm();
-  const { user, mutate, loggedOut } = useUser();
-
-  useEffect(() => {
-    if (user && !loggedOut) {
-      Router.replace("/admin");
-    }
-  }, [user, loggedOut]);
 
   const onSubmit = (data) => {
     axios
       .post(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs/login`, data)
       .then((res) => {
-        // setAdmin(res.data);
-        mutate();
         login(res.data);
         Router.replace("/admin");
       })

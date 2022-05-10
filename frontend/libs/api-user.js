@@ -5,14 +5,14 @@ export default async () => {
 
   if (document.cookie.includes("swr-test-token=swr")) {
     // authorized
-    const email = sessionStorage.getItem("email")
-    const password = sessionStorage.getItem("password")
+    const email = sessionStorage.getItem("email");
+    const password = sessionStorage.getItem("password");
 
     const data = {
       email,
-      password
-    }
-    return data
+      password,
+    };
+    return data;
   }
 
   // not authorized

@@ -1,18 +1,10 @@
 import AdminNavbar from "./AdminNavbar";
 import AdminSideBar from "./AdminSideBar";
 import useUser from "../../../data/use-user";
-import { useEffect } from "react";
 import Router from "next/router";
 
 const AdminLayout = ({ children }) => {
-  const { user, loading, loggedOut } = useUser();
-
-  useEffect(() => {
-    if (loggedOut) {
-      Router.replace("/admin/login");
-    }
-  }, [loggedOut]);
-  if (loggedOut) return "redirecting...";
+  const { user, loading } = useUser();
 
   return (
     <div>
