@@ -1,10 +1,14 @@
 import AdminNavbar from "./AdminNavbar";
 import AdminSideBar from "./AdminSideBar";
+import useUser from "../../../data/use-user";
+import Router from "next/router";
 
 const AdminLayout = ({ children }) => {
+  const { user, loading } = useUser();
 
   return (
     <div>
+      {loading != true && (
         <div>
           <AdminNavbar user={user} />
           <main className="container py-6">
@@ -17,6 +21,7 @@ const AdminLayout = ({ children }) => {
             </div>
           </main>
         </div>
+      )}
     </div>
   );
 };

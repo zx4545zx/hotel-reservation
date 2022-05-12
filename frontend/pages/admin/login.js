@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 
 import Router from "next/router";
 import axios from "axios";
+import { login } from "../../libs/auth";
 
 const Admin = () => {
   const {
@@ -17,6 +18,7 @@ const Admin = () => {
     axios
       .post(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs/login`, data)
       .then((res) => {
+        login(res.data);
         Router.replace("/admin");
       })
       .catch((e) => {

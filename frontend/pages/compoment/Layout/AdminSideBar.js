@@ -26,15 +26,26 @@ const AdminSideBar = () => {
 
         <p className="menu-label">Management</p>
         <ul className="menu-list">
-          <Link href="/admin/meetingroom" passHref>
-            <a>Meeting Rooms</a>
-          </Link>
+          <li>
+            <Link href="/admin/meetingroom" passHref>
+              <a className="list-meeting-room">Meeting Rooms</a>
+            </Link>
+            <ul>
+              <Link href="/admin/meetingroom/equipments" passHref>
+                <a>Equipments</a>
+              </Link>
+              <Link href="/admin/meetingroom/service" passHref>
+                <a>Service</a>
+              </Link>
+            </ul>
+          </li>
           <Link href="/admin/room" passHref>
             <a>Rooms</a>
           </Link>
           <Link href="/admin/package" passHref>
             <a>Packages</a>
           </Link>
+          
         </ul>
 
         <p className="menu-label">Others</p>

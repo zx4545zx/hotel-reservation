@@ -1,12 +1,17 @@
 import AdminLayout from "../compoment/Layout/AdminLayout";
+import useUser from "../../data/use-user";
 
 const Reservations = () => {
+  const { user, loading } = useUser();
+
   return (
     <AdminLayout>
-      <div>
-        <div className="title mt-5">Reservations </div>
-        <hr />
-      </div>
+      {loading != true && (
+        <div>
+          <div className="title mt-5">Reservations </div>
+          <hr />
+        </div>
+      )}
     </AdminLayout>
   );
 };
