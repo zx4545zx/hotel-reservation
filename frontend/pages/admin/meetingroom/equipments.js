@@ -11,7 +11,7 @@ const EquipmentsMeetingRooms = () => {
   return (
     <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
-        Equipments Meeting Rooms
+        Equipments
       </div>
       <MenuEquipments />
 
