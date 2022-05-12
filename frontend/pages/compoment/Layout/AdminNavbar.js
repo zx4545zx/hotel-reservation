@@ -4,12 +4,8 @@ import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchway } from "@fortawesome/free-solid-svg-icons";
 
-import useUser from "../../../data/use-user";
-import { logout } from "../../../libs/auth";
-
 const AdminNavbar = () => {
   const [burger, setBurger] = useState(false);
-  const { user, loading } = useUser();
 
   return (
     <nav
@@ -50,12 +46,10 @@ const AdminNavbar = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              {/* <div className="button is-light">{user.email}</div> */}
               <Link href="/admin" passHref>
                 <a
                   className="button is-danger"
                   onClick={() => {
-                    logout();
                     Router.replace("/admin/login");
                   }}
                 >

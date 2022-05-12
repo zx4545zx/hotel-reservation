@@ -1,16 +1,12 @@
 import AdminNavbar from "./AdminNavbar";
 import AdminSideBar from "./AdminSideBar";
-import useUser from "../../../data/use-user";
-import Router from "next/router";
 
 const AdminLayout = ({ children }) => {
-  const { user, loading } = useUser();
 
   return (
     <div>
-      {loading != true && (
         <div>
-          <AdminNavbar user={user} />
+          <AdminNavbar/>
           <main className="container py-6">
             <div className="tile is-ancestor pt-5">
               <AdminSideBar />
@@ -21,7 +17,6 @@ const AdminLayout = ({ children }) => {
             </div>
           </main>
         </div>
-      )}
     </div>
   );
 };
