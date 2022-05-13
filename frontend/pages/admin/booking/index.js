@@ -7,10 +7,10 @@ import "flatpickr/dist/themes/material_green.css";
 const Booking = () => {
   const [tab, setTab] = useState(true);
   const [detail, setDetail] = useState(false);
+  const [show, setShow] = useState(null);
   const options = {
     mode: "range",
     minDate: "today",
-    // inline: true,
     altInput: true,
     altInputClass: "input has-text-centered pointer",
     altFormat: "j F Y",
@@ -29,16 +29,28 @@ const Booking = () => {
         >
           <div className="column is-three-fifths">
             <BookingHeader options={options} />
-            <BookingTabs tab={tab} setTab={setTab} />
-            {tab ? (
-              <BookingMeetingRooms setDetail={setDetail} />
+
+            {show === "e" ? (
+              <BookingEquipments setShow={setShow} />
+            ) : show === "s" ? (
+              <BookingServices setShow={setShow} />
             ) : (
-              <BookingRooms />
+              <div>
+                <BookingTabs tab={tab} setTab={setTab} />
+                {tab ? (
+                  <BookingMeetingRooms setDetail={setDetail} />
+                ) : (
+                  <BookingRooms />
+                )}
+              </div>
             )}
           </div>
 
           <div className="column">
-            <BookingSummary />
+            <BookingSummary>
+              <OrderCard setShow={setShow} />
+              <hr className="my-2" />
+            </BookingSummary>
           </div>
 
           <DetailModal detail={detail} setDetail={setDetail} />
@@ -102,18 +114,18 @@ const BookingMeetingRooms = ({ setDetail }) => {
             <div className="media-left">
               <figure className="image is-128x128">
                 <img
-                  src="https://bulma.io/images/placeholders/128x128.png"
+                  src="https://media.istockphoto.com/photos/conference-room-with-a-long-table-and-lots-of-chairs-picture-id98395721?k=20&m=98395721&s=612x612&w=0&h=aLPhhimrM4OYCsoFiK2EbMQqgKvNVSkPBl1M9Od0BYc="
                   alt="Placeholder image"
                 />
               </figure>
             </div>
 
             <div className="media-content">
-              <div className="columns mb-0">
-                <div className="title mb-0 is-4 column is-9">
-                  Luna Meeting Room
+              <div className="is-flex is-align-items-center is-justify-content-space-between mb-1">
+                <div className="title m-0 is-5">Luna Meeting Room</div>
+                <div className="has-text-success title m-0 is-5">
+                  10 Available
                 </div>
-                <div className="column">10 available</div>
               </div>
 
               <p className="subtitle is-6 has-text-grey mb-2">
@@ -141,9 +153,7 @@ const BookingMeetingRooms = ({ setDetail }) => {
             </div>
             <div className="column pr-5">
               <div className="has-text-right mb-2">15,000 THB</div>
-              <button className="button is-primary is-fullwidth">
-                BOOK NOW
-              </button>
+              <button className="button is-primary is-fullwidth">ADD</button>
             </div>
           </div>
 
@@ -163,9 +173,7 @@ const BookingMeetingRooms = ({ setDetail }) => {
               <div className="has-text-right mb-2 has-text-grey">
                 <strike>15,000 THB</strike>
               </div>
-              <button className="button is-primary is-fullwidth">
-                BOOK NOW
-              </button>
+              <button className="button is-primary is-fullwidth">ADD</button>
             </div>
           </div>
 
@@ -184,9 +192,7 @@ const BookingMeetingRooms = ({ setDetail }) => {
               <div className="has-text-right mb-2 has-text-grey">
                 <strike>15,000 THB</strike>
               </div>
-              <button className="button is-primary is-fullwidth">
-                BOOK NOW
-              </button>
+              <button className="button is-primary is-fullwidth">ADD</button>
             </div>
           </div>
 
@@ -205,9 +211,7 @@ const BookingMeetingRooms = ({ setDetail }) => {
               <div className="has-text-right mb-2 has-text-grey">
                 <strike>15,000 THB</strike>
               </div>
-              <button className="button is-primary is-fullwidth">
-                BOOK NOW
-              </button>
+              <button className="button is-primary is-fullwidth">ADD</button>
             </div>
           </div>
         </div>
@@ -220,7 +224,7 @@ const BookingRooms = ({ setDetail }) => {
   return <div className="container"></div>;
 };
 
-const BookingSummary = () => {
+const BookingSummary = ({ children }) => {
   return (
     <div className="box">
       <div className="title is-4 mb-3">
@@ -245,10 +249,17 @@ const BookingSummary = () => {
       </div>
       <hr className="my-2" />
 
+      <div>{children}</div>
+
       <div className="columns">
-        <div className="column">Total:</div>
-        <div className="column has-text-right">{"15,000"} THB</div>
+        <div className="column is-size-4">
+          <strong>Total:</strong>
+        </div>
+        <div className="column has-text-right is-size-4">
+          <strong>{"16,050"} THB</strong>
+        </div>
       </div>
+      <button className="button is-success is-fullwidth">Confirm</button>
     </div>
   );
 };
@@ -273,7 +284,7 @@ const DetailModal = ({ detail, setDetail }) => {
               <div className="card-image">
                 <figure className="image is-4by3">
                   <img
-                    src="https://bulma.io/images/placeholders/1280x960.png"
+                    src="https://media.istockphoto.com/photos/conference-room-with-a-long-table-and-lots-of-chairs-picture-id98395721?k=20&m=98395721&s=612x612&w=0&h=aLPhhimrM4OYCsoFiK2EbMQqgKvNVSkPBl1M9Od0BYc="
                     alt="Placeholder image"
                   />
                 </figure>
@@ -319,12 +330,147 @@ const DetailModal = ({ detail, setDetail }) => {
               className="button is-danger is-fullwidth"
               onClick={() => setDetail(false)}
             >
-              Cancel
+              CANCEL
             </button>
-            <button className="button is-primary is-fullwidth">BOOK NOW</button>
+            <button className="button is-primary is-fullwidth">ADD</button>
           </footer>
         </div>
       </div>
+    </>
+  );
+};
+
+const BookingEquipments = ({ setShow }) => {
+  return (
+    <div>
+      <button className="button is-link is-light" onClick={() => setShow(null)}>
+        Back
+      </button>
+      <hr className="my-3" />
+
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image 64x64">
+                <img
+                  src="https://bulma.io/images/placeholders/96x96.png"
+                  alt="Placeholder image"
+                />
+              </figure>
+            </div>
+
+            <div class="media-content">
+              <div className="is-flex is-align-items-center is-justify-content-space-between mb-2">
+                <div className="title m-0 is-4">
+                  Projector
+                  <div className="subtitle is-6">
+                    <strong className="has-text-grey">
+                      Price/item 100 THB
+                    </strong>
+                  </div>
+                </div>
+                <div className="title m-0 is-5">
+                  <input class="input" type="number" placeholder="0"></input>
+                </div>
+              </div>
+              <div class="is-flex is-align-items-flex-end is-justify-content-space-between">
+                <div>Equipments for Meeting Rooms</div>
+                <div>
+                  <button className="button is-primary is-fullwidth">
+                    ADD
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const BookingServices = ({ setShow }) => {
+  return (
+    <div>
+      <button className="button is-link is-light" onClick={() => setShow(null)}>
+        Back
+      </button>
+      <hr className="my-3" />
+
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image 64x64">
+                <img
+                  src="https://bulma.io/images/placeholders/96x96.png"
+                  alt="Placeholder image"
+                />
+              </figure>
+            </div>
+
+            <div class="media-content">
+              <div className="is-flex is-align-items-center is-justify-content-space-between mb-2">
+                <div className="title m-0 is-4">
+                  Break Small set
+                  <div className="subtitle is-6">
+                    <strong className="has-text-grey">
+                      Price/item 1,500 THB
+                    </strong>
+                  </div>
+                </div>
+                <div className="title m-0 is-5">
+                  <input class="input" type="number" placeholder="0"></input>
+                </div>
+              </div>
+              <div class="is-flex is-align-items-flex-end is-justify-content-space-between">
+                <div>Services for Meeting Rooms</div>
+                <div>
+                  <button className="button is-primary is-fullwidth">
+                    ADD
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const OrderCard = ({ setShow }) => {
+  return (
+    <>
+      <nav class="panel is-info message">
+        <p class="panel-heading message-header">
+          Luna Meeting Room
+          <button class="delete" aria-label="delete"></button>
+        </p>
+        <div class="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+          <div>Nomal Package</div>
+          <div>15,000 THB</div>
+        </div>
+        <div class="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+          <div>Taxes & Fees 7%</div>
+          <div>1,050 THB</div>
+        </div>
+        <div class="panel-block">
+          <button
+            class="button is-link is- is-fullwidth mr-1"
+            onClick={() => setShow("e")}
+          >
+            Add Equipments
+          </button>
+          <button
+            class="button is-link is-fullwidth ml-1"
+            onClick={() => setShow("s")}
+          >
+            Add Services
+          </button>
+        </div>
+      </nav>
     </>
   );
 };
