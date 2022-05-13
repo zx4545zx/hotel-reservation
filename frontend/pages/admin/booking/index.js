@@ -40,9 +40,9 @@ const Booking = () => {
           <div className="column">
             <BookingSummary />
           </div>
-        </form>
 
-        <DetailModal detail={detail} setDetail={setDetail} />
+          <DetailModal detail={detail} setDetail={setDetail} />
+        </form>
       </div>
     </AdminLayout>
   );
@@ -77,7 +77,7 @@ const BookingHeader = ({ options }) => {
 
 const BookingTabs = ({ tab, setTab }) => {
   return (
-    <div className="tabs is-boxed is-fullwidth">
+    <div className="tabs is-toggle is-fullwidth">
       <ul>
         <li className={tab ? "is-active" : ""} onClick={() => setTab(true)}>
           <a>Meeting Rooms</a>
@@ -109,7 +109,13 @@ const BookingMeetingRooms = ({ setDetail }) => {
             </div>
 
             <div className="media-content">
-              <p className="title is-4">Luna Meeting Room</p>
+              <div className="columns mb-0">
+                <div className="title mb-0 is-4 column is-9">
+                  Luna Meeting Room
+                </div>
+                <div className="column">10 available</div>
+              </div>
+
               <p className="subtitle is-6 has-text-grey mb-2">
                 Suport <u>60</u> guest
               </p>
@@ -250,42 +256,45 @@ const BookingSummary = () => {
 const DetailModal = ({ detail, setDetail }) => {
   return (
     <>
-      <div class={`modal ${detail ? "is-active" : ""}`}>
-        <div class="modal-background" onClick={() => setDetail(false)}></div>
+      <div className={`modal ${detail ? "is-active" : ""}`}>
+        <div
+          className="modal-background"
+          onClick={() => setDetail(false)}
+        ></div>
         <button
-          class="modal-close is-large"
+          className="modal-close is-large"
           aria-label="close"
           onClick={() => setDetail(false)}
         ></button>
-        <div class="modal-card">
-          <header class="modal-card-head"></header>
-          <section class=" modal-card-body">
-            <div class="card">
-              <div class="card-image">
-                <figure class="image is-4by3">
+        <div className="modal-card">
+          <header className="modal-card-head"></header>
+          <section className=" modal-card-body">
+            <div className="card">
+              <div className="card-image">
+                <figure className="image is-4by3">
                   <img
                     src="https://bulma.io/images/placeholders/1280x960.png"
                     alt="Placeholder image"
                   />
                 </figure>
               </div>
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-left">
-                    <figure class="image is-48x48">
+              <div className="card-content">
+                <div className="media">
+                  <div className="media-left">
+                    <figure className="image is-48x48">
                       <img
                         src="https://bulma.io/images/placeholders/96x96.png"
                         alt="Placeholder image"
                       />
                     </figure>
                   </div>
-                  <div class="media-content">
-                    <p class="title is-4">John Smith</p>
-                    <p class="subtitle is-6">@johnsmith</p>
+                  <div className="media-content">
+                    <p className="title is-4">John Smith</p>
+                    <p className="subtitle is-6">@johnsmith</p>
                   </div>
                 </div>
 
-                <div class="content">
+                <div className="content">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Phasellus nec iaculis mauris. Lorem ipsum dolor sit amet,
                   consectetur adipiscing elit. Phasellus nec iaculis mauris.
@@ -301,20 +310,18 @@ const DetailModal = ({ detail, setDetail }) => {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Phasellus nec iaculis mauris. Lorem ipsum dolor sit amet,
                   consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                  <br />
-                  <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
                 </div>
               </div>
             </div>
           </section>
-          <footer class="modal-card-foot">
+          <footer className="modal-card-foot">
             <button
-              class="button is-danger is-fullwidth"
+              className="button is-danger is-fullwidth"
               onClick={() => setDetail(false)}
             >
               Cancel
             </button>
-            <button class="button is-primary is-fullwidth">BOOK NOW</button>
+            <button className="button is-primary is-fullwidth">BOOK NOW</button>
           </footer>
         </div>
       </div>
