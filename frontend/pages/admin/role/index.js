@@ -1,4 +1,4 @@
-import AdminLayout from "../compoment/Layout/AdminLayout"
+import AdminLayout from "../../compoment/Layout/AdminLayout"
 
 const RoleAcsses = () => {
   return (
