@@ -17,7 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_061600) do
   create_table "staffs", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.integer "phone_number", null: false
+    t.string "phone_number", null: false
     t.string "email", null: false
     t.string "password", null: false
     t.string "status", default: "offline", null: false

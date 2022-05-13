@@ -1,5 +1,4 @@
 import { useState } from "react";
-import MenuService from "../../compoment/Admin/MeetingRoom/Menu/MenuService";
 
 import Modal from "../../compoment/Admin/MeetingRoom/Service/Modal";
 import ListTable from "../../compoment/Admin/MeetingRoom/Service/ListTable";
@@ -14,7 +13,7 @@ const ServiceMeetingRooms = () => {
       <div className="title m-3 has-text-centered notification is-light">
         Service Meeting Rooms
       </div>
-      <MenuService />
+      
 
       <Modal modal={modal} setModal={setModal} />
 

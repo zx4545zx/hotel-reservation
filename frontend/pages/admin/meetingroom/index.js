@@ -1,5 +1,4 @@
 import { useState } from "react";
-import MenuMeetingRoom from "../../compoment/Admin/MeetingRoom/Menu/MenuMeetingRoom";
 
 import Modal from "../../compoment/Admin/MeetingRoom/Modal";
 import ListTable from "../../compoment/Admin/MeetingRoom/ListTable";
@@ -14,7 +13,7 @@ const MeetingRooms = () => {
       <div className="title m-3 has-text-centered notification is-light">
         Meeting Rooms
       </div>
-      <MenuMeetingRoom />
+      
 
       <Modal modal={modal} setModal={setModal} />
 

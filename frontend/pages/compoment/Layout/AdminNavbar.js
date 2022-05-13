@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchway } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,7 +14,7 @@ const AdminNavbar = () => {
       aria-label="main navigation"
     >
       <div className="navbar-brand">
-        <Link href="/admin/reservation">
+        <Link href="/admin">
           <a className="navbar-item has-text-primary is-size-3">
             <FontAwesomeIcon icon={faArchway} className="mx-1" />
           </a>
@@ -46,7 +47,14 @@ const AdminNavbar = () => {
           <div className="navbar-item">
             <div className="buttons">
               <Link href="/admin" passHref>
-                <a className="button is-danger">Sign Out</a>
+                <a
+                  className="button is-danger"
+                  onClick={() => {
+                    Router.replace("/admin/login");
+                  }}
+                >
+                  Sign Out
+                </a>
               </Link>
             </div>
           </div>

@@ -1,6 +1,16 @@
 class StaffsController < ApplicationController
   before_action :set_staff, only: %i[ show update destroy ]
 
+  # POST Log index
+  def login
+    staff = Staff.find_by_email(params[:email])
+    if staff.password == params[:password]
+      render json: staff
+    else
+      render json: staff.errors, status: :unprocessable_entity
+    end
+  end
+
   # GET /staffs
   def index
     @staffs = Staff.all
