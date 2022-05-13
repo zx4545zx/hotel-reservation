@@ -224,6 +224,7 @@ const BookingRooms = ({ setDetail }) => {
   return <div className="container"></div>;
 };
 
+
 const BookingSummary = ({ children }) => {
   return (
     <div className="box">
