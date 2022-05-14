@@ -1,16 +1,16 @@
-import ListTable from "../../compoment/Admin/Room/bedtype/ListTable";
-import Modal from "../../compoment/Admin/Room/bedtype/Modal";
+import ListTable from "../../compoment/Admin/Room/addonservice/ListTable";
+import Modal from "../../compoment/Admin/Room/addonservice/Modal";
 import { useState } from "react";
 
 import AdminLayout from "../../compoment/Layout/AdminLayout"
 
-const BedtypeRooms = () => {
+const AddonServiceRooms = () => {
   const [modal, setModal] = useState(false);
 
   return (
     <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
-      Bedtype Rooms
+        Add-on Service Rooms
       </div>
       
 
@@ -28,4 +28,4 @@ const BedtypeRooms = () => {
   );
 };
 
-export default BedtypeRooms;
+export default AddonServiceRooms;

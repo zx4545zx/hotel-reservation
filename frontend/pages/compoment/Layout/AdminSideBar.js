@@ -39,9 +39,26 @@ const AdminSideBar = () => {
               </Link>
             </ul>
           </li>
+          <li>
           <Link href="/admin/room" passHref>
-            <a>Rooms</a>
+          <a className="list-room">Rooms</a>
           </Link>
+          <ul>
+              <Link href="/admin/room/bedtype" passHref>
+                <a>Bedtype</a>
+              </Link>
+              <Link href="/admin/room/equipments" passHref>
+                <a>Equipments</a>
+              </Link>
+              <Link href="/admin/room/service" passHref>
+                <a>Service</a>
+              </Link>
+              <Link href="/admin/room/addonservice" passHref>
+                <a>Add-on Service</a>
+              </Link>
+            </ul>
+          </li>
+          
           <Link href="/admin/package" passHref>
             <a>Packages</a>
           </Link>
