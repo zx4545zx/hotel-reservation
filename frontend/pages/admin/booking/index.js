@@ -1,6 +1,12 @@
 import { useState } from "react";
 import Flatpickr from "react-flatpickr";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAnglesDown,
+  faSearch,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 import "flatpickr/dist/themes/material_green.css";
 
@@ -63,9 +69,89 @@ const Booking = () => {
 export default Booking;
 
 const BookingHeader = ({ options }) => {
+  const [modal, setModal] = useState(false);
+  const [add, setAdd] = useState(false);
+
   return (
     <div className="box">
       <div className="control">
+        <div className="field">
+          <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
+            <div>
+              <strong>Customer</strong>
+            </div>
+            <div>
+              <button
+                className="button is-primary is-fullwidth is-small"
+                onClick={() => setAdd(true)}
+              >
+                ADD
+              </button>
+            </div>
+          </div>
+
+          <AddCustomer add={add} setAdd={setAdd} />
+
+          <hr className="m-2" />
+
+          <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth mb-0">
+            <thead>
+              <tr>
+                <th>*</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th>
+                  <div className="checkbox">
+                    <input type="checkbox" />
+                  </div>
+                </th>
+                <td>Natto</td>
+                <td>Freever</td>
+                <td>test@mail.com</td>
+                <td>0900000000</td>
+              </tr>
+              <tr>
+                <th>
+                  <div className="checkbox">
+                    <input type="checkbox" />
+                  </div>
+                </th>
+                <td>Bunny</td>
+                <td>Eng</td>
+                <td>alf@test.com</td>
+                <td>0949589304</td>
+              </tr>
+              <tr>
+                <th>
+                  <div className="checkbox">
+                    <input type="checkbox" />
+                  </div>
+                </th>
+                <td>Name</td>
+                <td>Last</td>
+                <td>me@example.com</td>
+                <td>0999567865</td>
+              </tr>
+            </tbody>
+          </table>
+          <button
+            className="button is-link is-inverted is-fullwidth is-small"
+            onClick={() => setModal(true)}
+          >
+            <strong>
+              <FontAwesomeIcon icon={faAnglesDown} className="mx-1" />
+              See More
+            </strong>
+          </button>
+        </div>
+
         <div className="field">
           <label className="label">Guest</label>
           <div className="control">
@@ -82,6 +168,8 @@ const BookingHeader = ({ options }) => {
             />
           </div>
         </div>
+
+        <CustomerList modal={modal} setModal={setModal} />
       </div>
     </div>
   );
@@ -224,12 +312,11 @@ const BookingRooms = ({ setDetail }) => {
   return <div className="container"></div>;
 };
 
-
 const BookingSummary = ({ children }) => {
   return (
     <div className="box">
       <div className="title is-4 mb-3">
-        <strong>Your Stay</strong>
+        <strong>Customer Stay</strong>
       </div>
       <hr className="my-2" />
       <div className="content block is-outlined">
@@ -349,11 +436,11 @@ const BookingEquipments = ({ setShow }) => {
       </button>
       <hr className="my-3" />
 
-      <div class="card">
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image 64x64">
+      <div className="card">
+        <div className="card-content">
+          <div className="media">
+            <div className="media-left">
+              <figure className="image 64x64">
                 <img
                   src="https://bulma.io/images/placeholders/96x96.png"
                   alt="Placeholder image"
@@ -361,7 +448,7 @@ const BookingEquipments = ({ setShow }) => {
               </figure>
             </div>
 
-            <div class="media-content">
+            <div className="media-content">
               <div className="is-flex is-align-items-center is-justify-content-space-between mb-2">
                 <div className="title m-0 is-4">
                   Projector
@@ -372,10 +459,14 @@ const BookingEquipments = ({ setShow }) => {
                   </div>
                 </div>
                 <div className="title m-0 is-5">
-                  <input class="input" type="number" placeholder="0"></input>
+                  <input
+                    className="input"
+                    type="number"
+                    placeholder="0"
+                  ></input>
                 </div>
               </div>
-              <div class="is-flex is-align-items-flex-end is-justify-content-space-between">
+              <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
                 <div>Equipments for Meeting Rooms</div>
                 <div>
                   <button className="button is-primary is-fullwidth">
@@ -399,11 +490,11 @@ const BookingServices = ({ setShow }) => {
       </button>
       <hr className="my-3" />
 
-      <div class="card">
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image 64x64">
+      <div className="card">
+        <div className="card-content">
+          <div className="media">
+            <div className="media-left">
+              <figure className="image 64x64">
                 <img
                   src="https://bulma.io/images/placeholders/96x96.png"
                   alt="Placeholder image"
@@ -411,7 +502,7 @@ const BookingServices = ({ setShow }) => {
               </figure>
             </div>
 
-            <div class="media-content">
+            <div className="media-content">
               <div className="is-flex is-align-items-center is-justify-content-space-between mb-2">
                 <div className="title m-0 is-4">
                   Break Small set
@@ -422,10 +513,14 @@ const BookingServices = ({ setShow }) => {
                   </div>
                 </div>
                 <div className="title m-0 is-5">
-                  <input class="input" type="number" placeholder="0"></input>
+                  <input
+                    className="input"
+                    type="number"
+                    placeholder="0"
+                  ></input>
                 </div>
               </div>
-              <div class="is-flex is-align-items-flex-end is-justify-content-space-between">
+              <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
                 <div>Services for Meeting Rooms</div>
                 <div>
                   <button className="button is-primary is-fullwidth">
@@ -444,34 +539,171 @@ const BookingServices = ({ setShow }) => {
 const OrderCard = ({ setShow }) => {
   return (
     <>
-      <nav class="panel is-info message">
-        <p class="panel-heading message-header">
+      <nav className="panel is-info message">
+        <p className="panel-heading message-header">
           Luna Meeting Room
-          <button class="delete" aria-label="delete"></button>
+          <button className="delete" aria-label="delete"></button>
         </p>
-        <div class="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+        <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
           <div>Nomal Package</div>
           <div>15,000 THB</div>
         </div>
-        <div class="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+        <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
           <div>Taxes & Fees 7%</div>
           <div>1,050 THB</div>
         </div>
-        <div class="panel-block">
+        <div className="panel-block">
           <button
-            class="button is-link is- is-fullwidth mr-1"
+            className="button is-link is- is-fullwidth mr-1"
             onClick={() => setShow("e")}
           >
             Add Equipments
           </button>
           <button
-            class="button is-link is-fullwidth ml-1"
+            className="button is-link is-fullwidth ml-1"
             onClick={() => setShow("s")}
           >
             Add Services
           </button>
         </div>
       </nav>
+    </>
+  );
+};
+
+const CustomerList = ({ modal, setModal }) => {
+  return (
+    <div className={`modal ${modal && "is-active"}`}>
+      <div className="modal-background" onClick={() => setModal(false)}></div>
+      <button
+        className="modal-close is-large"
+        aria-label="close"
+        onClick={() => setModal(false)}
+      ></button>
+      <div className="modal-card card">
+        <section className=" modal-card-body">
+          <p className="control has-icons-left">
+            <input className="input block" type="text" placeholder="Search" />
+            <span className="icon is-left">
+              <FontAwesomeIcon icon={faSearch} className="mx-1" />
+            </span>
+          </p>
+          <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth mb-0">
+            <thead>
+              <tr>
+                <th>*</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th>
+                  <div className="checkbox">
+                    <input type="checkbox" />
+                  </div>
+                </th>
+                <td>Natto</td>
+                <td>Freever</td>
+                <td>test@mail.com</td>
+                <td>0900000000</td>
+              </tr>
+              <tr>
+                <th>
+                  <div className="checkbox">
+                    <input type="checkbox" />
+                  </div>
+                </th>
+                <td>Bunny</td>
+                <td>Eng</td>
+                <td>alf@test.com</td>
+                <td>0949589304</td>
+              </tr>
+              <tr>
+                <th>
+                  <div className="checkbox">
+                    <input type="checkbox" />
+                  </div>
+                </th>
+                <td>Name</td>
+                <td>Last</td>
+                <td>me@example.com</td>
+                <td>0999567865</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <footer className="modal-card-foot">
+          <button
+            className="button is-danger is-fullwidth"
+            onClick={() => setModal(false)}
+          >
+            CANCEL
+          </button>
+          <button className="button is-primary is-fullwidth">CONFIRM</button>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+const AddCustomer = ({ add, setAdd }) => {
+  return (
+    <>
+      <from>
+        <div className={`modal ${add && "is-active"}`}>
+          <div className="modal-background" onClick={() => setAdd(false)}></div>
+          <button
+            className="modal-close is-large"
+            aria-label="close"
+            onClick={() => setAdd(false)}
+          ></button>
+          <div className="modal-card card">
+            <header className="modal-card-head title is-5 m-0">
+              <FontAwesomeIcon icon={faUser} className="mx-2" />
+              New Customer
+            </header>
+            <section className=" modal-card-body">
+              <div className="columns">
+                <div className="column">
+                  First Name
+                  <input className="input" type="text"></input>
+                </div>
+                <div className="column">
+                  Last Name
+                  <input className="input" type="text"></input>
+                </div>
+              </div>
+              <div className="columns">
+                <div className="column">
+                  Email
+                  <input className="input" type="email"></input>
+                </div>
+                <div className="column">
+                  Phone Number
+                  <input className="input" type="tel"></input>
+                </div>
+              </div>
+            </section>
+
+            <footer className="modal-card-foot">
+              <button
+                className="button is-danger is-fullwidth"
+                onClick={() => setAdd(false)}
+              >
+                CANCEL
+              </button>
+              <button className="button is-primary is-fullwidth" type="submit">
+                ADD
+              </button>
+            </footer>
+          </div>
+        </div>
+      </from>
     </>
   );
 };
