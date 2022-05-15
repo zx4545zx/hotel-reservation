@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_10_061600) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_15_145817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "departments", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "position_id"
+    t.index ["position_id"], name: "index_departments_on_position_id"
+  end
+
+  create_table "positions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "staffs", force: :cascade do |t|
     t.string "first_name", null: false
@@ -23,6 +37,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_061600) do
     t.string "status", default: "offline", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "department_id"
+    t.index ["department_id"], name: "index_staffs_on_department_id"
   end
 
+  add_foreign_key "departments", "positions"
+  add_foreign_key "staffs", "departments"
 end
