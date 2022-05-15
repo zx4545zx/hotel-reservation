@@ -19,7 +19,6 @@ const Staff = () => {
         <h1 className="is-size-4">List</h1>
         <button
           className="button is-success mb-1 js-modal-trigger"
-          data-target="modal-js-example"
           onClick={() => setModal(true)}
         >
           Add New Staff
@@ -37,15 +36,65 @@ export default Staff;
 
 const Modal = ({ modal, setModal }) => {
   return (
-    <div id="modal-js-example" className={`modal ${modal && "is-active"}`}>
+    <div className={`modal ${modal && "is-active"}`}>
       <div className="modal-background" onClick={() => setModal(false)}></div>
 
       <div className="modal-content is-flex is-justify-content-center">
         <form className="box">
           <div className="is-flex is-justify-content-center ">
-            <button type="submit" className="button is-success">
-              Save
-            </button>
+            <div class="field mr-1">
+              <label class="label">First Name</label>
+              <div class="control">
+                <input class="input" type="text" />
+              </div>
+            </div>
+            <div class="field ml-1">
+              <label class="label">Last Name</label>
+              <div class="control">
+                <input class="input" type="text" />
+              </div>
+            </div>
+          </div>
+
+          <div className="is-flex is-justify-content-center ">
+            <div class="field mr-1">
+              <label class="label">Phone Number</label>
+              <div class="control">
+                <input class="input" type="tel" />
+              </div>
+            </div>
+            <div class="field ml-1">
+              <label class="label">Email</label>
+              <div class="control">
+                <input class="input" type="email" />
+              </div>
+            </div>
+          </div>
+
+          <div className="is-flex is-justify-content-center ">
+            <div class="field mr-1">
+              <label class="label">Password</label>
+              <div class="control">
+                <input class="input" type="tel" />
+              </div>
+            </div>
+            <div class="field ml-1">
+              <label class="label">Confirm Password</label>
+              <div class="control">
+                <input class="input" type="email" />
+              </div>
+            </div>
+          </div>
+
+          <div class="field is-grouped">
+            <p class="control">
+              <button class="button is-danger" onClick={() => setModal(false)}>
+                Cancel
+              </button>
+            </p>
+            <p class="control">
+              <button class="button is-success">Save</button>
+            </p>
           </div>
         </form>
       </div>
