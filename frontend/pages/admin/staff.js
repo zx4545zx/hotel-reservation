@@ -41,6 +41,22 @@ const Modal = ({ modal, setModal }) => {
 
       <div className="modal-content is-flex is-justify-content-center">
         <form className="box">
+          <label class="label">Department</label>
+          <div class="select mb-2 is-fullwidth">
+            <select>
+              <option>Select department</option>
+              <option>With options</option>
+            </select>
+          </div>
+
+          <label class="label">Position</label>
+          <div class="select mb-2 is-fullwidth">
+            <select>
+              <option>Select position</option>
+              <option>With options</option>
+            </select>
+          </div>
+
           <div className="is-flex is-justify-content-center ">
             <div class="field mr-1">
               <label class="label">First Name</label>
@@ -120,6 +136,8 @@ const ListTable = () => {
           <th>Last Name</th>
           <th>Email</th>
           <th>Phone Number</th>
+          <th>Department</th>
+          <th>Position</th>
           <th className="has-text-centered">Status</th>
           <th className="has-text-centered">Action</th>
         </tr>
@@ -131,6 +149,8 @@ const ListTable = () => {
           <td>Sword</td>
           <td>mmm@example.com</td>
           <td>0912337555</td>
+          <td>การขาย</td>
+          <td>หัวหน้าแผนก</td>
           <td className="has-text-centered">
             <FontAwesomeIcon
               icon={faCat}
@@ -150,6 +170,8 @@ const ListTable = () => {
           <td>Katsuya</td>
           <td>DDD@example.com</td>
           <td>0946689123</td>
+          <td>การขาย</td>
+          <td>พนักงานทั่วไป</td>
           <td className="has-text-centered">
             <FontAwesomeIcon
               icon={faCat}

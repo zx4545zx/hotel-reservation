@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,16 +12,13 @@ const RoleAcsses = () => {
         Role Acsses
       </div>
 
-      {/* <Modal modal={modal} setModal={setModal} /> */}
-
       <div className="is-flex is-justify-content-space-between is-align-items-flex-end">
         <h1 className="is-size-4">List</h1>
-        <button
-          className="button is-success mb-1 js-modal-trigger"
-          // onClick={() => setModal(true)}
-        >
-          Add
-        </button>
+        <Link href="/admin/role/new" passHref>
+          <button className="button is-success mb-1 js-modal-trigger">
+            Add
+          </button>
+        </Link>
       </div>
 
       <hr className="mb-3 mt-2" />

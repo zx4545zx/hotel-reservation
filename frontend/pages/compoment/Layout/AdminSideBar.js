@@ -51,6 +51,9 @@ const AdminSideBar = () => {
 
         <p className="menu-label">Others</p>
         <ul className="menu-list">
+          <Link href="/admin/staff" passHref>
+            <a>Staff</a>
+          </Link>
           <li>
             <Link href="/admin/role" passHref>
               <a>Role Acsses</a>
@@ -64,10 +67,6 @@ const AdminSideBar = () => {
               </Link>
             </ul>
           </li>
-          <Link href="/admin/staff" passHref>
-            <a>Staff</a>
-          </Link>
-
           <Link href="/admin/setting" passHref>
             <a>Setting</a>
           </Link>
