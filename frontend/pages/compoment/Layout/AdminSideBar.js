@@ -15,9 +15,19 @@ const AdminSideBar = () => {
           <Link href="/admin" passHref>
             <a>Reservations</a>
           </Link>
-          <Link href="/admin/quotation" passHref>
-            <a>Quotations</a>
-          </Link>
+          <li>
+            <Link href="/admin/quotation" passHref>
+            <a className="list-quotation">Quotations</a>
+            </Link>
+            <ul>
+            <Link href="/admin/quotation/petition" passHref>
+            <a>Petition</a>
+            </Link>
+            <Link href="/admin/quotation/statu" passHref>
+            <a>Quotations Status</a>
+            </Link>
+            </ul>
+          </li>
           <li>
             <Link href="/admin/customer" passHref>
               <a className="list-customer">Customers</a>
@@ -28,9 +38,6 @@ const AdminSideBar = () => {
               </Link>
               <Link href="/admin/customer/payment_slip" passHref>
                 <a>Payment Slip</a>
-              </Link>
-              <Link href="/admin/customer/quotation_status" passHref>
-                <a>Quotation Status</a>
               </Link>
             </ul>
           </li>

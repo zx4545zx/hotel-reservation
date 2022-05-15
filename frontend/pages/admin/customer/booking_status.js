@@ -2,28 +2,33 @@ import { useState } from "react";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const BookingStatus = () => {
-  return <AdminLayout>
+  return (
+    <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
-      Booking Status
+        Booking Status
       </div>
 
       <div class="field">
-        <label class="label">Last Name and Surname</label>
-        <div class="control">
-          <input class="input is-rounded" type="text" placeholder="Last Name" />
+        <label class="label">First Name and Last Name</label>
+        <div class="columns mt-2">
+          <input
+            class="input is-rounded column is-four-fifths"
+            type="text"
+            placeholder="First Name and Last Name"
+          />
+          <div class="column p-0 has-text-centered">
+          <button
+            className="button is-link is-rounded"
+            onClick={() => setModal(true)}
+          >
+            Search
+          </button>
+          </div>
+          
         </div>
       </div>
-
-      <div className="is-flex is-justify-content-space-between is-align-items-flex-end">
-        <button
-          className="button is-success mb-1 js-modal-trigger"
-          data-target="modal-js-example"
-          onClick={() => setModal(true)}>
-          Search
-        </button>
-      </div>
-      
-  </AdminLayout>;
+    </AdminLayout>
+  );
 };
 
 export default BookingStatus;
