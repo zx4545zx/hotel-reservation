@@ -10,22 +10,22 @@ const RoleAcsses = () => {
       <div className="container">
         <div className="is-flex is-justify-content-space-between">
           <Link href="/admin/role" passHref>
-            <button class="button is-info">Back</button>
+            <button className="button is-info">Back</button>
           </Link>
-          <button class="button is-success">Save</button>
+          <button className="button is-success">Save</button>
         </div>
 
         <hr className="mt-3" />
-        <div class="columns">
-          <div class="column">
+        <div className="columns">
+          <div className="column">
             <DepartmentList />
           </div>
 
-          <div class="column">
+          <div className="column">
             <PositionList />
           </div>
 
-          <div class="column">
+          <div className="column">
             <AcssesList />
           </div>
         </div>
@@ -42,10 +42,10 @@ const DepartmentList = () => {
       <div>
         <div className="is-flex is-justify-content-space-between is-align-items-center">
           <div className="title is-4 m-0">Department</div>
-          <button class="button is-success is-small">+</button>
+          <button className="button is-success is-small">+</button>
         </div>
         <hr />
-        <table class="table is-bordered is-fullwidth">
+        <table className="table is-bordered is-fullwidth">
           <thead>
             <tr>
               <th>
@@ -60,7 +60,7 @@ const DepartmentList = () => {
           <tbody className="list-table">
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <td>1</td>
               <td>Name</td>
@@ -78,10 +78,10 @@ const PositionList = () => {
       <div>
         <div className="is-flex is-justify-content-space-between is-align-items-center">
           <div className="title is-4 m-0">Position</div>
-          <button class="button is-success is-small">+</button>
+          <button className="button is-success is-small">+</button>
         </div>
         <hr />
-        <table class="table is-bordered is-fullwidth ">
+        <table className="table is-bordered is-fullwidth ">
           <thead>
             <tr>
               <th>
@@ -96,7 +96,7 @@ const PositionList = () => {
           <tbody className="list-table">
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <td>1</td>
               <td>Name</td>
@@ -114,10 +114,10 @@ const AcssesList = () => {
       <div>
         {/* <div className="is-flex is-justify-content-space-between is-align-items-center"> */}
         <div className="title is-4 m-0">Acsses</div>
-        {/* <button class="button is-success is-small">+</button>
+        {/* <button className="button is-success is-small">+</button>
         </div> */}
         <hr />
-        <table class="table is-bordered is-fullwidth">
+        <table className="table is-bordered is-fullwidth">
           <thead>
             <tr>
               <th>
@@ -129,91 +129,91 @@ const AcssesList = () => {
           <tbody className="list-table">
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Reservation</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Quotation</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Customer</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Bill</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Meeting Room</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Meeting Room Equipment</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Meeting Room Service</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Room</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Bed Type</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Room Equipment</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Room Service</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Room Add-On Service</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Bill</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Bill</th>
             </tr>
             <tr>
               <th>
-                <input type="checkbox" class="checkbox" />
+                <input type="checkbox" className="checkbox" />
               </th>
               <th>Bill</th>
             </tr>

@@ -50,31 +50,31 @@ const ListTable = () => {
           <td>การขาย</td>
           <td>หัวหน้า</td>
           <td>
-            <div class="tags is-flex is-justify-content-center">
-              <span class="tag">BookNow</span>
-              <span class="tag">Reservation</span>
-              <span class="tag">Quotation</span>
-              <span class="tag">Customer</span>
-              <span class="tag">Bill</span>
-              <span class="tag">MeetingRoom</span>
-              <span class="tag">MeetingRoomEquipment</span>
-              <span class="tag">MeetingRoomService</span>
-              <span class="tag">Room</span>
-              <span class="tag">RoomEquipment</span>
-              <span class="tag">RoomService</span>
-              <span class="tag">Package</span>
-              <span class="tag">RoleAcsses</span>
-              <span class="tag">Department</span>
-              <span class="tag">Position</span>
-              <span class="tag">Staff</span>
+            <div className="tags is-flex is-justify-content-center">
+              <span className="tag">BookNow</span>
+              <span className="tag">Reservation</span>
+              <span className="tag">Quotation</span>
+              <span className="tag">Customer</span>
+              <span className="tag">Bill</span>
+              <span className="tag">MeetingRoom</span>
+              <span className="tag">MeetingRoomEquipment</span>
+              <span className="tag">MeetingRoomService</span>
+              <span className="tag">Room</span>
+              <span className="tag">RoomEquipment</span>
+              <span className="tag">RoomService</span>
+              <span className="tag">Package</span>
+              <span className="tag">RoleAcsses</span>
+              <span className="tag">Department</span>
+              <span className="tag">Position</span>
+              <span className="tag">Staff</span>
             </div>
           </td>
           <td>
-            <div class="field is-grouped">
-              <p class="control">
+            <div className="field is-grouped">
+              <p className="control">
                 <button className="button is-info mx-3">Edit</button>
               </p>
-              <p class="control">
+              <p className="control">
                 <button className="button is-danger mx-3">Delete</button>
               </p>
             </div>

@@ -41,16 +41,16 @@ const Modal = ({ modal, setModal }) => {
 
       <div className="modal-content is-flex is-justify-content-center">
         <form className="box">
-          <label class="label">Department</label>
-          <div class="select mb-2 is-fullwidth">
+          <label className="label">Department</label>
+          <div className="select mb-2 is-fullwidth">
             <select>
               <option>Select department</option>
               <option>With options</option>
             </select>
           </div>
 
-          <label class="label">Position</label>
-          <div class="select mb-2 is-fullwidth">
+          <label className="label">Position</label>
+          <div className="select mb-2 is-fullwidth">
             <select>
               <option>Select position</option>
               <option>With options</option>
@@ -58,58 +58,61 @@ const Modal = ({ modal, setModal }) => {
           </div>
 
           <div className="is-flex is-justify-content-center ">
-            <div class="field mr-1">
-              <label class="label">First Name</label>
-              <div class="control">
-                <input class="input" type="text" />
+            <div className="field mr-1">
+              <label className="label">First Name</label>
+              <div className="control">
+                <input className="input" type="text" />
               </div>
             </div>
-            <div class="field ml-1">
-              <label class="label">Last Name</label>
-              <div class="control">
-                <input class="input" type="text" />
-              </div>
-            </div>
-          </div>
-
-          <div className="is-flex is-justify-content-center ">
-            <div class="field mr-1">
-              <label class="label">Phone Number</label>
-              <div class="control">
-                <input class="input" type="tel" />
-              </div>
-            </div>
-            <div class="field ml-1">
-              <label class="label">Email</label>
-              <div class="control">
-                <input class="input" type="email" />
+            <div className="field ml-1">
+              <label className="label">Last Name</label>
+              <div className="control">
+                <input className="input" type="text" />
               </div>
             </div>
           </div>
 
           <div className="is-flex is-justify-content-center ">
-            <div class="field mr-1">
-              <label class="label">Password</label>
-              <div class="control">
-                <input class="input" type="tel" />
+            <div className="field mr-1">
+              <label className="label">Phone Number</label>
+              <div className="control">
+                <input className="input" type="tel" />
               </div>
             </div>
-            <div class="field ml-1">
-              <label class="label">Confirm Password</label>
-              <div class="control">
-                <input class="input" type="email" />
+            <div className="field ml-1">
+              <label className="label">Email</label>
+              <div className="control">
+                <input className="input" type="email" />
               </div>
             </div>
           </div>
 
-          <div class="field is-grouped">
-            <p class="control">
-              <button class="button is-danger" onClick={() => setModal(false)}>
+          <div className="is-flex is-justify-content-center ">
+            <div className="field mr-1">
+              <label className="label">Password</label>
+              <div className="control">
+                <input className="input" type="tel" />
+              </div>
+            </div>
+            <div className="field ml-1">
+              <label className="label">Confirm Password</label>
+              <div className="control">
+                <input className="input" type="email" />
+              </div>
+            </div>
+          </div>
+
+          <div className="field is-grouped">
+            <p className="control">
+              <button
+                className="button is-danger"
+                onClick={() => setModal(false)}
+              >
                 Cancel
               </button>
             </p>
-            <p class="control">
-              <button class="button is-success">Save</button>
+            <p className="control">
+              <button className="button is-success">Save</button>
             </p>
           </div>
         </form>
