@@ -28,8 +28,7 @@ class StaffsController < ApplicationController
   # GET /staffs/1
   def show
     department = Department.find(@staff.department_id)
-    # position = Position.find(department.position_id)
-    position = []
+    position = Position.find(department.position_id)
 
     render json: { staff: @staff, department: department, position: position}
   end
@@ -39,7 +38,11 @@ class StaffsController < ApplicationController
     @staff = Staff.new(staff_params)
 
     if @staff.save
-      render json: @staff
+      department = Department.find(@staff.department_id)
+
+      if department.update(position_id: params[:position_id] )
+        render json: { staff: @staff, department: department }
+      end
     else
       render json: @staff.errors, status: :unprocessable_entity
     end
@@ -69,6 +72,6 @@ class StaffsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def staff_params
-      params.require(:staff).permit(:first_name, :last_name, :phone_number, :email, :password, :status, :department_id)
+      params.require(:staff).permit(:first_name, :last_name, :phone_number, :email, :password, :status, :department_id, :position_id)
     end
 end
