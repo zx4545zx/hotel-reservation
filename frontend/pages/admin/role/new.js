@@ -1,10 +1,25 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
 import Link from "next/link";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCat } from "@fortawesome/free-solid-svg-icons";
-
 const RoleAcsses = () => {
+  const Router = useRouter();
+  const [departments, setDepartments] = useState([]);
+  const [positions, setPositions] = useState([]);
+
+  useEffect(() => {
+    if (!Router.isReady) return;
+
+    axios
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs`)
+      .then((res) => {
+        setDepartments(res.data.departments);
+        setPositions(res.data.positions);
+      });
+  }, [Router.isReady]);
+
   return (
     <AdminLayout>
       <div className="container">
@@ -18,16 +33,16 @@ const RoleAcsses = () => {
         <hr className="mt-3" />
         <div className="columns">
           <div className="column">
-            <DepartmentList />
+            <DepartmentList departments={departments} />
           </div>
 
           <div className="column">
-            <PositionList />
+            <PositionList positions={positions} />
           </div>
+        </div>
 
-          <div className="column">
-            <AcssesList />
-          </div>
+        <div>
+          <AcssesList />
         </div>
       </div>
     </AdminLayout>
@@ -36,73 +51,39 @@ const RoleAcsses = () => {
 
 export default RoleAcsses;
 
-const DepartmentList = () => {
+const DepartmentList = ({ departments }) => {
   return (
     <>
       <div>
-        <div className="is-flex is-justify-content-space-between is-align-items-center">
-          <div className="title is-4 m-0">Department</div>
-          <button className="button is-success is-small">+</button>
-        </div>
+        <div className="title is-4 m-0">Department</div>
         <hr />
-        <table className="table is-bordered is-fullwidth">
-          <thead>
-            <tr>
-              <th>
-                <abbr>*</abbr>
-              </th>
-              <th>
-                <abbr>ID</abbr>
-              </th>
-              <th>Department</th>
-            </tr>
-          </thead>
-          <tbody className="list-table">
-            <tr>
-              <th>
-                <input type="checkbox" className="checkbox" />
-              </th>
-              <td>1</td>
-              <td>Name</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="select is-fullwidth">
+          <select>
+            <option>Select Position</option>
+            {departments.map((d) => {
+              return <option key={d.id}>{d.name}</option>;
+            })}
+          </select>
+        </div>
       </div>
     </>
   );
 };
 
-const PositionList = () => {
+const PositionList = ({ positions }) => {
   return (
     <>
       <div>
-        <div className="is-flex is-justify-content-space-between is-align-items-center">
-          <div className="title is-4 m-0">Position</div>
-          <button className="button is-success is-small">+</button>
-        </div>
+        <div className="title is-4 m-0">Position</div>
         <hr />
-        <table className="table is-bordered is-fullwidth ">
-          <thead>
-            <tr>
-              <th>
-                <abbr>*</abbr>
-              </th>
-              <th>
-                <abbr>ID</abbr>
-              </th>
-              <th>Position</th>
-            </tr>
-          </thead>
-          <tbody className="list-table">
-            <tr>
-              <th>
-                <input type="checkbox" className="checkbox" />
-              </th>
-              <td>1</td>
-              <td>Name</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="select is-fullwidth">
+          <select>
+            <option>Select Position</option>
+            {positions.map((p) => {
+              return <option key={p.id}>{p.name}</option>;
+            })}
+          </select>
+        </div>
       </div>
     </>
   );
@@ -112,10 +93,7 @@ const AcssesList = () => {
   return (
     <>
       <div>
-        {/* <div className="is-flex is-justify-content-space-between is-align-items-center"> */}
         <div className="title is-4 m-0">Acsses</div>
-        {/* <button className="button is-success is-small">+</button>
-        </div> */}
         <hr />
         <table className="table is-bordered is-fullwidth">
           <thead>
