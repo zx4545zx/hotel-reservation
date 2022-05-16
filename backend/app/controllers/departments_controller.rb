@@ -5,12 +5,12 @@ class DepartmentsController < ApplicationController
   def index
     @departments = Department.all
 
-    render json: @departments
+    render json: @departments, include: [ :positions ]
   end
 
   # GET /departments/1
   def show
-    render json: @department
+    render json: @department, include: [ :positions ]
   end
 
   # POST /departments

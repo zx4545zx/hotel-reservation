@@ -1,4 +1,4 @@
 class Department < ApplicationRecord
-    belongs_to :staff, optional: true
-    has_many :positions
+  has_many :staffs
+  has_many :positions, through: :staffs
 end

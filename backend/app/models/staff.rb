@@ -1,3 +1,4 @@
 class Staff < ApplicationRecord
-    has_many :departments
+  belongs_to :department, optional: true
+  belongs_to :position, optional: true
 end

@@ -14,12 +14,16 @@ const Staff = () => {
 
   useEffect(() => {
     axios
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments`)
+      .then((res) => setDepartments(res.data));
+
+    axios
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/positions`)
+      .then((res) => setPositions(res.data));
+
+    axios
       .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs`)
-      .then((res) => {
-        setStaffs(res.data.staffs);
-        setDepartments(res.data.departments);
-        setPositions(res.data.positions);
-      });
+      .then((res) => setStaffs(res.data));
   }, [staffs]);
 
   return (
@@ -59,26 +63,20 @@ const Staff = () => {
 
 export default Staff;
 
-const Modal = ({
-  modal,
-  setModal,
-  departments,
-  positions,
-  dep,
-  pos,
-  sta,
-}) => {
+const Modal = ({ modal, setModal, departments, positions, staff }) => {
   const { register, handleSubmit, watch, setValue } = useForm();
 
   useEffect(() => {
-    if (sta) {
-      setValue("id", sta.id);
-      setValue("department_id", dep.id);
-      setValue("position_id", pos.id);
-      setValue("first_name", sta.first_name);
-      setValue("last_name", sta.last_name);
-      setValue("phone_number", sta.phone_number);
-      setValue("email", sta.email);
+    if (staff) {
+      setValue("id", staff.id);
+      setValue("department_id", staff.department.id);
+      setValue("position_id", staff.position.id);
+      setValue("first_name", staff.first_name);
+      setValue("last_name", staff.last_name);
+      setValue("phone_number", staff.phone_number);
+      setValue("email", staff.email);
+      setValue("password", staff.password);
+      setValue("confirm_password", staff.password);
     }
     return;
   }, []);
@@ -235,15 +233,11 @@ const Modal = ({
 const ListTable = ({ staffs, departments, positions }) => {
   const [modal, setModal] = useState(false);
   const [staff, setStaff] = useState([]);
-  const [department, setDepartment] = useState([]);
-  const [position, setPosition] = useState([]);
 
-const OpenModal = (val, dep, pos) => {
-  setModal(true)
-  setStaff(val)
-  setDepartment(dep)
-  setPosition(pos)
-}
+  const OpenModal = (item) => {
+    setModal(true);
+    setStaff(item);
+  };
 
   const DelStaff = (id) => {
     axios
@@ -271,9 +265,6 @@ const OpenModal = (val, dep, pos) => {
         </thead>
         <tbody>
           {staffs.map((val) => {
-            const dep = departments.find((v) => v.id === val.department_id);
-            const pos = positions.find((v) => v.id === dep.position_id);
-
             return (
               <tr key={val.id}>
                 <th>{val.id}</th>
@@ -281,8 +272,8 @@ const OpenModal = (val, dep, pos) => {
                 <td>{val.last_name}</td>
                 <td>{val.email}</td>
                 <td>{val.phone_number}</td>
-                <td>{dep.name}</td>
-                <td>{pos.name}</td>
+                <td>{val.department.name}</td>
+                <td>{val.position.name}</td>
 
                 {val.status === "online" ? (
                   <td className="has-text-centered">
@@ -299,11 +290,12 @@ const OpenModal = (val, dep, pos) => {
                     />
                   </td>
                 )}
+
                 <td>
                   <div className="buttons is-flex is-justify-content-center">
                     <button
                       className="button is-info mx-3"
-                      onClick={() => OpenModal(val, dep, pos)}
+                      onClick={() => OpenModal(val)}
                     >
                       Edit
                     </button>
@@ -327,9 +319,7 @@ const OpenModal = (val, dep, pos) => {
           setModal={setModal}
           departments={departments}
           positions={positions}
-          dep={department}
-          pos={position}
-          sta={staff}
+          staff={staff}
         />
       )}
     </>
