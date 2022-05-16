@@ -3,10 +3,12 @@ import Link from "next/link";
 const AdminSideBar = () => {
   return (
     <>
-      <aside className="menu pt-3 mt-3 admin-sidebar box">
-        <a className="button is-primary is-flex is-justify-content-center">
-          <strong>BOOK NOW</strong>
-        </a>
+      <aside className="menu pt-3 mt-3 admin-sidebar">
+        <Link href="/admin/booking" passHref>
+          <a className="button is-primary is-flex is-justify-content-center">
+            <strong>BOOK NOW</strong>
+          </a>
+        </Link>
 
         <p className="menu-label">General</p>
         <ul className="menu-list">
@@ -62,7 +64,6 @@ const AdminSideBar = () => {
           <Link href="/admin/package" passHref>
             <a>Packages</a>
           </Link>
-          
         </ul>
 
         <p className="menu-label">Others</p>
