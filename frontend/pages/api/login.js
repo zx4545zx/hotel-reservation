@@ -5,8 +5,8 @@ import { sessionOptions } from "../../libs/session";
 export default withIronSessionApiRoute(async (req, res) => {
   const { email, password } = await req.body;
   const body = {
-    email: "admin",
-    password: "1234",
+    email: email,
+    password: password,
   };
 
   try {
@@ -29,12 +29,14 @@ export default withIronSessionApiRoute(async (req, res) => {
     if (data) {
       const user = {
         isLoggedIn: true,
-        email: data?.email,
-        fname: data?.first_name,
-        lname: data?.last_name,
-        status: data?.status,
+        email: data?.staff.email,
+        fname: data?.staff.first_name,
+        lname: data?.staff.last_name,
+        status: data?.staff.status,
+        department: data?.department.name,
+        position: data?.position.name,
         // accessRole: data?.user.access_role,
-        id: data?.id,
+        id: data?.staff.id,
       };
       req.session.user = user;
       await req.session.save();

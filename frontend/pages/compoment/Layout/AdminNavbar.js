@@ -1,11 +1,29 @@
 import { useState } from "react";
 import Link from "next/link";
 import Router from "next/router";
+import axios from "axios";
+import useUser from "../../../libs/useUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchway } from "@fortawesome/free-solid-svg-icons";
 
 const AdminNavbar = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
   const [burger, setBurger] = useState(false);
+
+  if (!user || user.isLoggedIn === false) {
+    return <div>Loading...</div>;
+  }
+
+  const LogOut = () => {
+    axios
+      .post(`/api/logout`, user)
+      .then((res) => {
+        Router.replace("/admin/login");
+      })
+      .catch((e) => {
+        console.log("error " + e);
+      });
+  };
 
   return (
     <nav
@@ -16,7 +34,8 @@ const AdminNavbar = () => {
       <div className="navbar-brand">
         <Link href="/admin">
           <a className="navbar-item has-text-primary is-size-3">
-            <FontAwesomeIcon icon={faArchway} className="mx-1" />
+            <FontAwesomeIcon icon={faArchway} className="mx-3" />
+            <div className="title has-text-primary">Hello! {user.fname}</div>
           </a>
         </Link>
 
@@ -36,9 +55,9 @@ const AdminNavbar = () => {
 
       {burger && (
         <div className="navbar-dropdown is-right">
-          <Link href="/admin" passHref>
-            <a className="navbar-item">Sign Out</a>
-          </Link>
+          <a className="navbar-item" onClick={() => LogOut()}>
+            Sign Out
+          </a>
         </div>
       )}
 
@@ -46,16 +65,9 @@ const AdminNavbar = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <Link href="/admin" passHref>
-                <a
-                  className="button is-danger"
-                  onClick={() => {
-                    Router.replace("/admin/login");
-                  }}
-                >
-                  Sign Out
-                </a>
-              </Link>
+              <a className="button is-danger" onClick={() => LogOut()}>
+                Sign Out
+              </a>
             </div>
           </div>
         </div>
