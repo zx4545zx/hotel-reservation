@@ -18,7 +18,13 @@ const BedtypeRooms = () => {
 
       <div className="is-flex is-justify-content-space-between is-align-items-flex-end">
         <h1 className="is-size-4">List</h1>
-        <button class="button is-link is-rounded">Add</button>
+        <button
+          className="button is-success mb-1 js-modal-trigger"
+          data-target="modal-js-example"
+          onClick={() => setModal(true)}
+        >
+          ADD
+        </button>
       </div>
 
       <hr className="mt-0" />

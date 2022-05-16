@@ -7,6 +7,7 @@ const ListTable = () => {
             <abbr title="ID">ID</abbr>
           </th>
           <th>Name</th>
+          <th>Size</th>
           <th className="has-text-centered">Action</th>
         </tr>
       </thead>
@@ -14,21 +15,23 @@ const ListTable = () => {
         <tr>
           <th>1</th>
           <td>Single Bed</td>
+          <th>3.5 ฟุต</th>
           <td className="has-text-centered">
           <div className="buttons is-flex is-justify-content-center">
-              <button class="button is-success is-rounded">Edit</button>
-              <button class="button is-danger is-rounded">Delete</button>
-            </div>
+            <button class="button is-success is-rounded">Edit</button>
+            <button class="button is-danger is-rounded">Delete</button>
+          </div>
           </td>
         </tr>
         <tr>
           <th>2</th>
-          <td>King size</td>
+          <td>King Size</td>
+          <th>6 ฟุต</th>
           <td className="has-text-centered">
           <div className="buttons is-flex is-justify-content-center">
-              <button class="button is-success is-rounded">Edit</button>
-              <button class="button is-danger is-rounded">Delete</button>
-            </div>
+            <button class="button is-success is-rounded">Edit</button>
+            <button class="button is-danger is-rounded">Delete</button>
+          </div>
           </td>
         </tr>
       </tbody>
