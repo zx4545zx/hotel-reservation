@@ -27,7 +27,7 @@ class DepartmentsController < ApplicationController
   # PATCH/PUT /departments/1
   def update
     if @department.update(department_params)
-      render :show, status: :ok, location: @department
+      render json: @department
     else
       render json: @department.errors, status: :unprocessable_entity
     end
@@ -48,6 +48,6 @@ class DepartmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def department_params
-      params.require(:department).permit(:name)
+      params.require(:department).permit(:name, :position_id)
     end
 end

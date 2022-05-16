@@ -2,42 +2,42 @@ class PositionsController < ApplicationController
   before_action :set_position, only: %i[ show update destroy ]
 
   # GET /positions
-  # GET /positions.json
   def index
     @positions = Position.all
+
+    render json: @positions
   end
 
   # GET /positions/1
-  # GET /positions/1.json
   def show
+    render json: @position
   end
 
   # POST /positions
-  # POST /positions.json
   def create
     @position = Position.new(position_params)
 
     if @position.save
-      render :show, status: :created, location: @position
+      render json: @position
     else
       render json: @position.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /positions/1
-  # PATCH/PUT /positions/1.json
   def update
     if @position.update(position_params)
-      render :show, status: :ok, location: @position
+      render json: @position
     else
       render json: @position.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /positions/1
-  # DELETE /positions/1.json
   def destroy
     @position.destroy
+
+    render json: @position
   end
 
   private

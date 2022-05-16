@@ -52,6 +52,8 @@ class StaffsController < ApplicationController
   # DELETE /staffs/1
   def destroy
     @staff.destroy
+
+    render json: @staff
   end
 
   private

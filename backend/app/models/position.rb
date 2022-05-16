@@ -1,3 +1,3 @@
 class Position < ApplicationRecord
-    belongs_to :department
+    belongs_to :department, optional: true
 end
