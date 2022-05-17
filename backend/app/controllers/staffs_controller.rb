@@ -28,7 +28,7 @@ class StaffsController < ApplicationController
     @staff = Staff.new(staff_params)
 
     if @staff.save
-      render json: @staff, status: :created, location: @staff
+      render json: @staff
     else
       render json: @staff.errors, status: :unprocessable_entity
     end

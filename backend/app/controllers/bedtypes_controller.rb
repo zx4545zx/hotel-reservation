@@ -18,7 +18,7 @@ class BedtypesController < ApplicationController
     @bedtype = Bedtype.new(bedtype_params)
 
     if @bedtype.save
-      render json: @bedtype, status: :created, location: @bedtype
+      render json: @bedtype
     else
       render json: @bedtype.errors, status: :unprocessable_entity
     end

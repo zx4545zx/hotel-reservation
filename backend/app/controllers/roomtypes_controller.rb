@@ -18,7 +18,7 @@ class RoomtypesController < ApplicationController
     @roomtype = Roomtype.new(roomtype_params)
 
     if @roomtype.save
-      render json: @roomtype, status: :created, location: @roomtype
+      render json: @roomtype
     else
       render json: @roomtype.errors, status: :unprocessable_entity
     end

@@ -18,7 +18,7 @@ class AddonserviceroomsController < ApplicationController
     @addonserviceroom = Addonserviceroom.new(addonserviceroom_params)
 
     if @addonserviceroom.save
-      render json: @addonserviceroom, status: :created, location: @addonserviceroom
+      render json: @addonserviceroom
     else
       render json: @addonserviceroom.errors, status: :unprocessable_entity
     end

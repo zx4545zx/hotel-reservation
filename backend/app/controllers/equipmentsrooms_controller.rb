@@ -18,7 +18,7 @@ class EquipmentsroomsController < ApplicationController
     @equipmentsroom = Equipmentsroom.new(equipmentsroom_params)
 
     if @equipmentsroom.save
-      render json: @equipmentsroom, status: :created, location: @equipmentsroom
+      render json: @equipmentsroom
     else
       render json: @equipmentsroom.errors, status: :unprocessable_entity
     end
