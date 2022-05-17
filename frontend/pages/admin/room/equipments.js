@@ -1,17 +1,16 @@
+import ListTable from "../../compoment/Admin/Room/Equipments/ListTable";
+import Modal from "../../compoment/Admin/Room/Equipments/Modal";
 import { useState } from "react";
-
-import Modal from "../../compoment/Admin/Room/Service/Modal";
-import ListTable from "../../compoment/Admin/Room/Service/ListTable";
 
 import AdminLayout from "../../compoment/Layout/AdminLayout"
 
-const ServiceRooms = () => {
+const Rooms = () => {
   const [modal, setModal] = useState(false);
 
   return (
     <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
-        Service Rooms
+      Equipments Rooms
       </div>
       
 
@@ -35,4 +34,4 @@ const ServiceRooms = () => {
   );
 };
 
-export default ServiceRooms;
+export default Rooms;
