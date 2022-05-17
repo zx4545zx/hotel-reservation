@@ -2,7 +2,6 @@ import ListTable from "../../compoment/Admin/Room/addonservice/ListTable";
 import Modal from "../../compoment/Admin/Room/addonservice/Modal";
 import { useState, useEffect } from "react";
 import axios from "axios"
-
 import AdminLayout from "../../compoment/Layout/AdminLayout"
 
 const AddonServiceRooms = () => {

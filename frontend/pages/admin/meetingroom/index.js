@@ -3,7 +3,7 @@ import { useState } from "react";
 import Modal from "../../compoment/Admin/MeetingRoom/Modal";
 import ListTable from "../../compoment/Admin/MeetingRoom/ListTable";
 
-import AdminLayout from "../../compoment/Layout/AdminLayout"
+import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const MeetingRooms = () => {
   const [modal, setModal] = useState(false);
@@ -13,7 +13,6 @@ const MeetingRooms = () => {
       <div className="title m-3 has-text-centered notification is-light">
         Meeting Rooms
       </div>
-      
 
       <Modal modal={modal} setModal={setModal} />
 

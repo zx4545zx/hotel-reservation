@@ -65,6 +65,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
     t.string "status", default: "offline", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "department_id"
+    t.bigint "position_id"
+    t.index ["department_id"], name: "index_staffs_on_department_id"
+    t.index ["position_id"], name: "index_staffs_on_position_id"
   end
 
+  add_foreign_key "staffs", "departments"
+  add_foreign_key "staffs", "positions"
 end
