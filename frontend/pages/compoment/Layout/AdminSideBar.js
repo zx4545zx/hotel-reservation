@@ -39,6 +39,9 @@ const AdminSideBar = () => {
               <Link href="/admin/meetingroom/service" passHref>
                 <a>Service</a>
               </Link>
+              <Link href="/admin/meetingroom/status" passHref>
+                <a>Status</a>
+              </Link>
             </ul>
           </li>
           <li>
