@@ -69,8 +69,8 @@ const Modal = ({ modal, setModal, departments, positions, staff }) => {
   useEffect(() => {
     if (staff) {
       setValue("id", staff.id);
-      setValue("department_id", staff.department.id);
-      setValue("position_id", staff.position.id);
+      setValue("department_id", staff.department_id);
+      setValue("position_id", staff.position_id);
       setValue("first_name", staff.first_name);
       setValue("last_name", staff.last_name);
       setValue("phone_number", staff.phone_number);
@@ -264,6 +264,7 @@ const ListTable = ({ staffs, departments, positions }) => {
           </tr>
         </thead>
         <tbody>
+          {console.log(staffs)}
           {staffs.map((val) => {
             return (
               <tr key={val.id}>
@@ -272,8 +273,10 @@ const ListTable = ({ staffs, departments, positions }) => {
                 <td>{val.last_name}</td>
                 <td>{val.email}</td>
                 <td>{val.phone_number}</td>
-                <td>{val.department.name}</td>
-                <td>{val.position.name}</td>
+                <td>
+                  {val.department_id === null ? "null" : val.department.name}
+                </td>
+                <td>{val.position_id === null ? "null" : val.position.name}</td>
 
                 {val.status === "online" ? (
                   <td className="has-text-centered">

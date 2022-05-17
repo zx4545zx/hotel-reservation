@@ -78,7 +78,7 @@ const Modal = ({ modal, setModal, position }) => {
           <input type="number" {...register("id")} hidden />
 
           <div className="field mr-1">
-            <label className="label">First Name</label>
+            <label className="label">Position</label>
             <div className="control">
               <input
                 className="input"
