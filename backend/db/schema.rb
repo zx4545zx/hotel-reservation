@@ -10,16 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_14_094600) do
+
+ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "equipment", force: :cascade do |t|
+  create_table "addonservicerooms", force: :cascade do |t|
     t.string "name"
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
 
   create_table "meeting_rooms", force: :cascade do |t|
     t.string "name", null: false
@@ -31,13 +33,48 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_14_094600) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "bedtypes", force: :cascade do |t|
+    t.string "name"
+    t.string "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "name"
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+  
+  create_table "equipmentsrooms", force: :cascade do |t|
+    t.string "name"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
+  create_table "rooms", force: :cascade do |t|
+    t.string "name"
+    t.string "building"
+    t.integer "guest"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roomtypes", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "servicerooms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+  
   create_table "staffs", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -47,6 +84,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_14_094600) do
     t.string "status", default: "offline", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "department_id"
+    t.bigint "position_id"
+    t.index ["department_id"], name: "index_staffs_on_department_id"
+    t.index ["position_id"], name: "index_staffs_on_position_id"
   end
 
+  add_foreign_key "staffs", "departments"
+  add_foreign_key "staffs", "positions"
 end

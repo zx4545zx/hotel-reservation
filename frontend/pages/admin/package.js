@@ -1,12 +1,12 @@
-import ModalMeetingRooms from "../compoment/Admin/Package/MeetingRooms"
-import ModalRoom from "../compoment/Admin/Package/Rooms"
-import ModalEquipmentsMeetingRooms from "../compoment/Admin/Package/EquipmentsMeetingRooms"
-import ModalServiceMeetingRooms from "../compoment/Admin/Package/ServiceMeetingRooms"
+import ModalMeetingRooms from "../compoment/Admin/Package/MeetingRooms";
+import ModalRoom from "../compoment/Admin/Package/Rooms";
+import ModalEquipmentsMeetingRooms from "../compoment/Admin/Package/EquipmentsMeetingRooms";
+import ModalServiceMeetingRooms from "../compoment/Admin/Package/ServiceMeetingRooms";
 import { useState } from "react";
 import "flatpickr/dist/themes/material_green.css";
 import Flatpickr from "react-flatpickr";
 
-import AdminLayout from "../compoment/Layout/AdminLayout"
+import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const Packages = () => {
   const [modal, setModal] = useState(false);
@@ -128,13 +128,12 @@ const Packages = () => {
           </button>
         </div>
         </nav>
-      
       <label>Summary</label>
-      <div class="control">
+      <div className="control">
         <textarea
-          class="textarea is-focused"
-          placeholder="Focused textarea">
-        </textarea>
+          className="textarea is-focused"
+          placeholder="Focused textarea"
+        ></textarea>
       </div>
 
       <nav class="level mt-5">

@@ -1,0 +1,2 @@
+class Bedtype < ApplicationRecord
+end

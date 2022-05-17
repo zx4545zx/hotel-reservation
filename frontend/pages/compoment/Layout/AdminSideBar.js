@@ -3,10 +3,12 @@ import Link from "next/link";
 const AdminSideBar = () => {
   return (
     <>
-      <aside className="menu pt-3 mt-3 admin-sidebar box">
-        <a className="button is-primary is-flex is-justify-content-center">
-          <strong>BOOK NOW</strong>
-        </a>
+      <aside className="menu pt-3 mt-3 admin-sidebar">
+        <Link href="/admin/booking" passHref>
+          <a className="button is-primary is-flex is-justify-content-center">
+            <strong>BOOK NOW</strong>
+          </a>
+        </Link>
 
         <p className="menu-label">General</p>
         <ul className="menu-list">
@@ -42,24 +44,49 @@ const AdminSideBar = () => {
               </Link>
             </ul>
           </li>
+          <li>
           <Link href="/admin/room" passHref>
-            <a>Rooms</a>
+          <a className="list-room">Rooms</a>
           </Link>
+          <ul>
+              <Link href="/admin/room/bedtype" passHref>
+                <a>Bedtype</a>
+              </Link>
+              <Link href="/admin/room/equipments" passHref>
+                <a>Equipments</a>
+              </Link>
+              <Link href="/admin/room/service" passHref>
+                <a>Service</a>
+              </Link>
+              <Link href="/admin/room/addonservice" passHref>
+                <a>Add-on Service</a>
+              </Link>
+            </ul>
+          </li>
+          
           <Link href="/admin/package" passHref>
             <a>Packages</a>
           </Link>
-          
         </ul>
 
         <p className="menu-label">Others</p>
         <ul className="menu-list">
-          <Link href="/admin/role" passHref>
-            <a>Role Acsses</a>
-          </Link>
           <Link href="/admin/staff" passHref>
             <a>Staff</a>
           </Link>
-
+          <li>
+            <Link href="/admin/role" passHref>
+              <a>Role Acsses</a>
+            </Link>
+            <ul>
+              <Link href="/admin/role/department" passHref>
+                <a>Department</a>
+              </Link>
+              <Link href="/admin/role/position" passHref>
+                <a>Position</a>
+              </Link>
+            </ul>
+          </li>
           <Link href="/admin/setting" passHref>
             <a>Setting</a>
           </Link>
