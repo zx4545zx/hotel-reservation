@@ -4,7 +4,7 @@ class StaffsController < ApplicationController
   # POST Login
   def login
     staff = Staff.find_by_email(params[:email])
-    staff.update(status: 'online')
+    #staff.update(status: 'online')
     department = Department.find(staff.department_id)
     position = Position.find(staff.position_id)
 
