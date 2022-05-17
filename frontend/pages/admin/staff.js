@@ -264,7 +264,6 @@ const ListTable = ({ staffs, departments, positions }) => {
           </tr>
         </thead>
         <tbody>
-          {console.log(staffs)}
           {staffs.map((val) => {
             return (
               <tr key={val.id}>

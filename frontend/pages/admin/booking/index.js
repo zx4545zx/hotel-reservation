@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,9 +14,19 @@ import {
 import "flatpickr/dist/themes/material_green.css";
 
 const Booking = () => {
+  const { register, handleSubmit, setValue } = useForm();
+  const [add, setAdd] = useState(false);
+  const [modal, setModal] = useState(false);
   const [tab, setTab] = useState(true);
   const [detail, setDetail] = useState(false);
   const [show, setShow] = useState(null);
+  const [rooms, setRooms] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [customer, setCustomer] = useState([]);
+  const [meetingRooms, setMeetingRooms] = useState([]);
+  const [date, setDate] = useState([]);
+  const [val, setVal] = useState([]);
+
   const options = {
     mode: "range",
     minDate: "today",
@@ -22,59 +35,81 @@ const Booking = () => {
     altFormat: "j F Y",
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    setCustomers([
+      {
+        id: 1,
+        first_name: "test1",
+        last_name: "test23424",
+        email: "test@mail.com",
+        phone_number: "01222",
+      },
+      {
+        id: 2,
+        first_name: "test2",
+        last_name: "test23424",
+        email: "test@mail.com",
+        phone_number: "01222",
+      },
+    ]);
+
+    setRooms([
+      {
+        name: "test",
+        build: "test",
+        value: "test",
+        price: "test",
+        status: "test",
+      },
+    ]);
+
+    setMeetingRooms([
+      {
+        name: "test",
+        price: "test",
+        people_number: "test",
+        table_number: "test",
+        status: "test",
+      },
+    ]);
+  }, []);
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const selectCustomer = (item) => {
+    setCustomer(item);
+  };
+
+  const convertDate = () => {
+    const checkIn = date[0];
+    const checkOut = date[1];
+
+    if (checkIn === undefined || checkOut === undefined) {
+      return;
+    }
+
+    checkIn.setHours(15,0,0);
+    checkOut.setHours(12,0,0);
+
+    console.log(checkIn);
+    console.log(checkOut);
+
+    const value = {
+      day_checkin: checkIn.toGMTString().toString().substring(0,15),
+      time_checkin: checkIn.toLocaleTimeString().toString(),
+      day_checkout: checkOut.toGMTString().toString().substring(0,15),
+      time_checkout: checkOut.toLocaleTimeString().toString(),
+    };
+
+    console.log(value);
+    setVal(value);
   };
 
   return (
     <AdminLayout>
       <div>
-        <form
-          className="columns is-variable is-2"
-          onSubmit={(e) => onSubmit(e)}
-        >
-          <div className="column is-three-fifths">
-            <BookingHeader options={options} />
-
-            {show === "e" ? (
-              <BookingEquipments setShow={setShow} />
-            ) : show === "s" ? (
-              <BookingServices setShow={setShow} />
-            ) : (
-              <div>
-                <BookingTabs tab={tab} setTab={setTab} />
-                {tab ? (
-                  <BookingMeetingRooms setDetail={setDetail} />
-                ) : (
-                  <BookingRooms />
-                )}
-              </div>
-            )}
-          </div>
-
-          <div className="column">
-            <BookingSummary>
-              <OrderCard setShow={setShow} />
-              <hr className="my-2" />
-            </BookingSummary>
-          </div>
-
-          <DetailModal detail={detail} setDetail={setDetail} />
-        </form>
-      </div>
-    </AdminLayout>
-  );
-};
-
-export default Booking;
-
-const BookingHeader = ({ options }) => {
-  const [modal, setModal] = useState(false);
-  const [add, setAdd] = useState(false);
-
-  return (
-    <div className="box">
-      <div className="control">
         <div className="field">
           <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
             <div>
@@ -97,7 +132,6 @@ const BookingHeader = ({ options }) => {
           <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth mb-0">
             <thead>
               <tr>
-                <th>*</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
@@ -106,41 +140,23 @@ const BookingHeader = ({ options }) => {
             </thead>
 
             <tbody>
-              <tr>
-                <th>
-                  <div className="checkbox">
-                    <input type="checkbox" />
-                  </div>
-                </th>
-                <td>Natto</td>
-                <td>Freever</td>
-                <td>test@mail.com</td>
-                <td>0900000000</td>
-              </tr>
-              <tr>
-                <th>
-                  <div className="checkbox">
-                    <input type="checkbox" />
-                  </div>
-                </th>
-                <td>Bunny</td>
-                <td>Eng</td>
-                <td>alf@test.com</td>
-                <td>0949589304</td>
-              </tr>
-              <tr>
-                <th>
-                  <div className="checkbox">
-                    <input type="checkbox" />
-                  </div>
-                </th>
-                <td>Name</td>
-                <td>Last</td>
-                <td>me@example.com</td>
-                <td>0999567865</td>
-              </tr>
+              {customers.map((c) => {
+                return (
+                  <tr
+                    key={c.id}
+                    className="pointer"
+                    onClick={() => selectCustomer(c)}
+                  >
+                    <td>{c.first_name}</td>
+                    <td>{c.last_name}</td>
+                    <td>{c.email}</td>
+                    <td>{c.phone_number}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+
           <button
             className="button is-link is-inverted is-fullwidth is-small"
             onClick={() => setModal(true)}
@@ -150,12 +166,79 @@ const BookingHeader = ({ options }) => {
               See More
             </strong>
           </button>
+
+          <CustomerList
+            modal={modal}
+            setModal={setModal}
+            customers={customers}
+            selectCustomer={selectCustomer}
+          />
         </div>
 
+        <form
+          className="columns is-variable is-2"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="column is-three-fifths">
+            <BookingHeader
+              options={options}
+              register={register}
+              setDate={setDate}
+              convertDate={convertDate}
+            />
+
+            {show === "e" ? (
+              <BookingEquipments setShow={setShow} register={register} />
+            ) : show === "s" ? (
+              <BookingServices setShow={setShow} register={register} />
+            ) : (
+              <div>
+                <BookingTabs tab={tab} setTab={setTab} register={register} />
+                {tab ? (
+                  <BookingMeetingRooms
+                    setDetail={setDetail}
+                    register={register}
+                  />
+                ) : (
+                  <BookingRooms register={register} />
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="column">
+            <BookingSummary register={register} customer={customer} val={val}>
+              <OrderCard setShow={setShow} register={register} />
+              <hr className="my-2" />
+            </BookingSummary>
+          </div>
+
+          <DetailModal
+            detail={detail}
+            setDetail={setDetail}
+            register={register}
+          />
+        </form>
+      </div>
+    </AdminLayout>
+  );
+};
+
+export default Booking;
+
+const BookingHeader = ({ options, register, setDate, convertDate }) => {
+  return (
+    <div className="box">
+      <div className="control">
         <div className="field">
           <label className="label">Guest</label>
           <div className="control">
-            <input className="input" type="number" placeholder="0" />
+            <input
+              className="input"
+              type="number"
+              placeholder="0"
+              {...register("guest")}
+            />
           </div>
         </div>
 
@@ -165,17 +248,26 @@ const BookingHeader = ({ options }) => {
             <Flatpickr
               options={options}
               placeholder="Please select Check In to Check Out"
+              onChange={(value) => setDate(value)}
             />
           </div>
         </div>
 
-        <CustomerList modal={modal} setModal={setModal} />
+        <div className="field">
+          <button
+            type="button"
+            className="button"
+            onClick={() => convertDate()}
+          >
+            APPLY
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-const BookingTabs = ({ tab, setTab }) => {
+const BookingTabs = ({ tab, setTab, register }) => {
   return (
     <div className="tabs is-toggle is-fullwidth">
       <ul>
@@ -193,7 +285,7 @@ const BookingTabs = ({ tab, setTab }) => {
   );
 };
 
-const BookingMeetingRooms = ({ setDetail }) => {
+const BookingMeetingRooms = ({ setDetail, register }) => {
   return (
     <div className="container">
       <div className="card">
@@ -241,7 +333,9 @@ const BookingMeetingRooms = ({ setDetail }) => {
             </div>
             <div className="column pr-5">
               <div className="has-text-right mb-2">15,000 THB</div>
-              <button className="button is-primary is-fullwidth">ADD</button>
+              <button type="button" className="button is-primary is-fullwidth">
+                ADD
+              </button>
             </div>
           </div>
 
@@ -261,7 +355,9 @@ const BookingMeetingRooms = ({ setDetail }) => {
               <div className="has-text-right mb-2 has-text-grey">
                 <strike>15,000 THB</strike>
               </div>
-              <button className="button is-primary is-fullwidth">ADD</button>
+              <button type="button" className="button is-primary is-fullwidth">
+                ADD
+              </button>
             </div>
           </div>
 
@@ -280,7 +376,9 @@ const BookingMeetingRooms = ({ setDetail }) => {
               <div className="has-text-right mb-2 has-text-grey">
                 <strike>15,000 THB</strike>
               </div>
-              <button className="button is-primary is-fullwidth">ADD</button>
+              <button type="button" className="button is-primary is-fullwidth">
+                ADD
+              </button>
             </div>
           </div>
 
@@ -299,7 +397,9 @@ const BookingMeetingRooms = ({ setDetail }) => {
               <div className="has-text-right mb-2 has-text-grey">
                 <strike>15,000 THB</strike>
               </div>
-              <button className="button is-primary is-fullwidth">ADD</button>
+              <button type="button" className="button is-primary is-fullwidth">
+                ADD
+              </button>
             </div>
           </div>
         </div>
@@ -308,15 +408,15 @@ const BookingMeetingRooms = ({ setDetail }) => {
   );
 };
 
-const BookingRooms = ({ setDetail }) => {
+const BookingRooms = ({ setDetail, register }) => {
   return <div className="container"></div>;
 };
 
-const BookingSummary = ({ children }) => {
+const BookingSummary = ({ children, register, customer, val }) => {
   return (
     <div className="box">
       <div className="title is-4 mb-3">
-        <strong>Customer Stay</strong>
+        <strong>{customer.first_name} Stay</strong>
       </div>
       <hr className="my-2" />
       <div className="content block is-outlined">
@@ -329,10 +429,11 @@ const BookingSummary = ({ children }) => {
           </div>
         </div>
         <div className="columns">
-          <div className="column pt-0">After 3:00 PM</div>
-          <div className="column pt-0">Before 12:00 PM</div>
+          <div className="column pt-0">After {val.time_checkin}</div>
+          <div className="column pt-0">Before {val.time_checkout}</div>
         </div>
-        <div className="column p-0">Fri, May 20, 2022 - Sat, May 21, 2022</div>
+        {/* <div className="column p-0">Fri, May 20, 2022 - Sat, May 21, 2022</div> */}
+        <div className="column p-0">{val.day_checkin} - {val.day_checkout}</div>
         <div className="column p-0">1 Guest</div>
       </div>
       <hr className="my-2" />
@@ -347,12 +448,14 @@ const BookingSummary = ({ children }) => {
           <strong>{"16,050"} THB</strong>
         </div>
       </div>
-      <button className="button is-success is-fullwidth">Confirm</button>
+      <button className="button is-success is-fullwidth" type="submit">
+        Confirm
+      </button>
     </div>
   );
 };
 
-const DetailModal = ({ detail, setDetail }) => {
+const DetailModal = ({ detail, setDetail, register }) => {
   return (
     <>
       <div className={`modal ${detail ? "is-active" : ""}`}>
@@ -428,7 +531,7 @@ const DetailModal = ({ detail, setDetail }) => {
   );
 };
 
-const BookingEquipments = ({ setShow }) => {
+const BookingEquipments = ({ setShow, register }) => {
   return (
     <div>
       <button className="button is-link is-light" onClick={() => setShow(null)}>
@@ -482,7 +585,7 @@ const BookingEquipments = ({ setShow }) => {
   );
 };
 
-const BookingServices = ({ setShow }) => {
+const BookingServices = ({ setShow, register }) => {
   return (
     <div>
       <button className="button is-link is-light" onClick={() => setShow(null)}>
@@ -536,13 +639,13 @@ const BookingServices = ({ setShow }) => {
   );
 };
 
-const OrderCard = ({ setShow }) => {
+const OrderCard = ({ setShow, register }) => {
   return (
     <>
       <nav className="panel is-info message">
         <p className="panel-heading message-header">
           Luna Meeting Room
-          <button className="delete" aria-label="delete"></button>
+          <button type="button" className="delete" aria-label="delete"></button>
         </p>
         <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
           <div>Nomal Package</div>
@@ -554,12 +657,14 @@ const OrderCard = ({ setShow }) => {
         </div>
         <div className="panel-block">
           <button
+            type="button"
             className="button is-link is- is-fullwidth mr-1"
             onClick={() => setShow("e")}
           >
             Add Equipments
           </button>
           <button
+            type="button"
             className="button is-link is-fullwidth ml-1"
             onClick={() => setShow("s")}
           >
@@ -571,7 +676,7 @@ const OrderCard = ({ setShow }) => {
   );
 };
 
-const CustomerList = ({ modal, setModal }) => {
+const CustomerList = ({ modal, setModal, customers, selectCustomer }) => {
   return (
     <div className={`modal ${modal && "is-active"}`}>
       <div className="modal-background" onClick={() => setModal(false)}></div>
@@ -591,7 +696,6 @@ const CustomerList = ({ modal, setModal }) => {
           <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth mb-0">
             <thead>
               <tr>
-                <th>*</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
@@ -600,58 +704,32 @@ const CustomerList = ({ modal, setModal }) => {
             </thead>
 
             <tbody>
-              <tr>
-                <th>
-                  <div className="checkbox">
-                    <input type="checkbox" />
-                  </div>
-                </th>
-                <td>Natto</td>
-                <td>Freever</td>
-                <td>test@mail.com</td>
-                <td>0900000000</td>
-              </tr>
-              <tr>
-                <th>
-                  <div className="checkbox">
-                    <input type="checkbox" />
-                  </div>
-                </th>
-                <td>Bunny</td>
-                <td>Eng</td>
-                <td>alf@test.com</td>
-                <td>0949589304</td>
-              </tr>
-              <tr>
-                <th>
-                  <div className="checkbox">
-                    <input type="checkbox" />
-                  </div>
-                </th>
-                <td>Name</td>
-                <td>Last</td>
-                <td>me@example.com</td>
-                <td>0999567865</td>
-              </tr>
+              {customers.map((c) => {
+                return (
+                  <tr
+                    key={c.id}
+                    className="pointer"
+                    onClick={() => {
+                      setModal(false);
+                      selectCustomer(c);
+                    }}
+                  >
+                    <td>{c.first_name}</td>
+                    <td>{c.last_name}</td>
+                    <td>{c.email}</td>
+                    <td>{c.phone_number}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </section>
-
-        <footer className="modal-card-foot">
-          <button
-            className="button is-danger is-fullwidth"
-            onClick={() => setModal(false)}
-          >
-            CANCEL
-          </button>
-          <button className="button is-primary is-fullwidth">CONFIRM</button>
-        </footer>
       </div>
     </div>
   );
 };
 
-const AddCustomer = ({ add, setAdd }) => {
+const AddCustomer = ({ add, setAdd, register }) => {
   return (
     <>
       <from>
