@@ -1,0 +1,2 @@
+class Equipmentsroom < ApplicationRecord
+end
