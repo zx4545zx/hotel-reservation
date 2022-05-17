@@ -1,11 +1,17 @@
 import ListTable from "../../compoment/Admin/Room/addonservice/ListTable";
 import Modal from "../../compoment/Admin/Room/addonservice/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios"
 
 import AdminLayout from "../../compoment/Layout/AdminLayout"
 
 const AddonServiceRooms = () => {
   const [modal, setModal] = useState(false);
+  useEffect(()=>{
+axios.get("http://localhost:4000/servicerooms").then(res=> {
+  console.log(res.data)
+})
+  })
 
   return (
     <AdminLayout>
