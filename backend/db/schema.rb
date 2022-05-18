@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +21,32 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "bedtypes", force: :cascade do |t|
+    t.string "name"
+    t.string "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "departments", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "equipment", force: :cascade do |t|
+    t.string "name"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "equipmentsrooms", force: :cascade do |t|
+    t.string "name"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "meeting_rooms", force: :cascade do |t|
     t.string "name", null: false
@@ -33,23 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "bedtypes", force: :cascade do |t|
+  create_table "positions", force: :cascade do |t|
     t.string "name"
-    t.string "size"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "services", force: :cascade do |t|
-    t.string "name"
-    t.decimal "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-  
-  create_table "equipmentsrooms", force: :cascade do |t|
-    t.string "name"
-    t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -74,7 +84,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-  
+
+  create_table "services", force: :cascade do |t|
+    t.string "name"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "staffs", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false

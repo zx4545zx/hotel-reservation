@@ -1,11 +1,19 @@
 import ListTable from "../../compoment/Admin/MeetingRoom/Equipments/ListTable";
 import Modal from "../../compoment/Admin/MeetingRoom/Equipments/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 import AdminLayout from "../../compoment/Layout/AdminLayout"
 
 const EquipmentsMeetingRooms = () => {
   const [modal, setModal] = useState(false);
+  const [equipments, setequipments] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/equipment")
+      .then((res) => setequipments(res.data));
+  },[])
 
   return (
     <AdminLayout>
@@ -13,7 +21,6 @@ const EquipmentsMeetingRooms = () => {
         Equipments Meeting Rooms
       </div>
       
-
       <Modal modal={modal} setModal={setModal} />
 
       <div className="is-flex is-justify-content-space-between is-align-items-flex-end">
@@ -29,7 +36,7 @@ const EquipmentsMeetingRooms = () => {
 
       <hr className="mt-0" />
 
-      <ListTable />
+      <ListTable equipments={equipments} />
     </AdminLayout>
   );
 };

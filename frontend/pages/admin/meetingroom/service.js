@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import { useForm } from "react-hook-form";
+
 import Modal from "../../compoment/Admin/MeetingRoom/Service/Modal";
 import ListTable from "../../compoment/Admin/MeetingRoom/Service/ListTable";
 
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const ServiceMeetingRooms = () => {
-  // const { register, handleSubmit, watch, setValue } = useForm();
   const [modal, setModal] = useState(false);
   const [services, setServices] = useState([]);
 
