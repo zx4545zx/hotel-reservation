@@ -1,5 +1,17 @@
-const ListTable = () => {
+import Modal from "./Modal";
+import { useState } from "react";
+import axios from "axios";
+
+const ListTable = ({ services }) => {
+  const [item, setItem] = useState([]);
+  const [modal, setModal] = useState(false);
+
+  const DeleteService = (id) => {
+    axios.delete("http://localhost:4000/services/"+id).then(res => console.log('ok'))
+  }
+
   return (
+    <>
     <table className="table is-bordered is-fullwidth">
       <thead>
         <tr>
@@ -12,26 +24,32 @@ const ListTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th>1</th>
-          <td>อาหารชุดกลาง</td>
-          <td>3000</td>
-          <td className="has-text-centered">
-            <button className="button is-info mx-3">View</button>
-            <button className="button is-danger mx-3">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <th>2</th>
-          <td>เบรคชุดเล็ก</td>
-          <td>1000</td>
-          <td className="has-text-centered">
-            <button className="button is-info mx-3">View</button>
-            <button className="button is-danger mx-3">Delete</button>
-          </td>
-        </tr>
+        {services.map((s) => {
+          return (
+            <tr key={s.id}>
+              <th>{s.id}</th>
+              <td>{s.name}</td>
+              <td>{s.price}</td>
+              <td className="has-text-centered">
+                <button
+                  className="button is-info mx-3"
+                  onClick={() => {
+                    setItem(s)
+                    setModal(true);
+                  }}
+                >
+                  Edit
+                </button>
+                <button className="button is-danger mx-3" onClick={()=> DeleteService(s.id)}>Delete</button>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
+
+    <Modal modal={modal} setModal={setModal} item={item}/>
+    </>
   );
 };
 
