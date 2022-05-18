@@ -16,8 +16,8 @@ export default function Home() {
         <main className="container is-max-widescreen">
           <section className="block card hero is-primary">
             <div className="hero-body">
-              <p className="title">Hello World</p>
-              <p className="subtitle">Second level</p>
+              <p className="title">MUT HOTEL</p>
+              <p className="subtitle">Our accommodations are excellent for a trip with friends, family or as a couple</p>
             </div>
           </section>
           <Content />
