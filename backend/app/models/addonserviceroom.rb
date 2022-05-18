@@ -1,0 +1,2 @@
+class Addonserviceroom < ApplicationRecord
+end

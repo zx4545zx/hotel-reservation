@@ -1,168 +1,181 @@
-import ModalMeetingRooms from "../compoment/Admin/Package/MeetingRooms"
-import ModalRoom from "../compoment/Admin/Package/Rooms"
-import ModalEquipmentsMeetingRooms from "../compoment/Admin/Package/EquipmentsMeetingRooms"
-import ModalServiceMeetingRooms from "../compoment/Admin/Package/ServiceMeetingRooms"
+import ModalMeetingRooms from "../compoment/Admin/Package/MeetingRooms";
+import ModalRoom from "../compoment/Admin/Package/Rooms";
+import ModalEquipmentsMeetingRooms from "../compoment/Admin/Package/EquipmentsMeetingRooms";
+import ModalServiceMeetingRooms from "../compoment/Admin/Package/ServiceMeetingRooms";
 import { useState } from "react";
+import "flatpickr/dist/themes/material_green.css";
+import Flatpickr from "react-flatpickr";
 
-import AdminLayout from "../compoment/Layout/AdminLayout"
+import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const Packages = () => {
   const [modal, setModal] = useState(false);
+  const options = {
+    mode: "range",
+    minDate: "today",
+    defaultTime: ["10:00", "11:00"],
+    minTime: "16:00",
+    maxTime: "22:30"
+  };
+
 
   return (
     <AdminLayout>
-      <div className="title mt-5">Packages</div>
+      <div className="title m-3 has-text-centered notification is-light">Packages</div>
       <label>Package Name</label>
       <input
         className="input"
         type="text"
         placeholder="Package Name">
       </input>
-      
-      <label>Date Package</label>
+
+      <div className="mt-5">Date Package</div>
       <nav class="level">
         <div class="level-item has-text-centered">
-      <label className="checkbox">
-        <input
-          type="checkbox"
-        />
-        Sunday
-      </label>
-      </div>
-      <div class="level-item has-text-centered">
-      <label className="checkbox">
-        <input
-          type="checkbox"
-        />
-        Monday
-      </label>
-      </div>
-      <div class="level-item has-text-centered">
-      <label className="checkbox">
-        <input
-          type="checkbox"
-        />
-        Tuesday
-      </label>
-      </div>
-      <div class="level-item has-text-centered">
-      <label className="checkbox">
-        <input
-          type="checkbox"
-        />
-        Wednesday
-      </label>
-      </div>
-      <div class="level-item has-text-centered">
-      <label className="checkbox">
-        <input
-          type="checkbox"
-        />
-        Thurday
-      </label>
-      </div>
-      <div class="level-item has-text-centered">
-      <label className="checkbox">
-        <input
-          type="checkbox"
-        />
-        Friday
-      </label>
-      </div>
-      <div class="level-item has-text-centered">
-      <label className="checkbox">
-        <input
-          type="checkbox"
-        />
-        Saturday
-      </label>
-      </div>
+          <label className="checkbox">
+            <input
+              type="checkbox"
+            />
+            Sunday
+          </label>
+        </div>
+        <div class="level-item has-text-centered">
+          <label className="checkbox">
+            <input
+              type="checkbox"
+            />
+            Monday
+          </label>
+        </div>
+        <div class="level-item has-text-centered">
+          <label className="checkbox">
+            <input
+              type="checkbox"
+            />
+            Tuesday
+          </label>
+        </div>
+        <div class="level-item has-text-centered">
+          <label className="checkbox">
+            <input
+              type="checkbox"
+            />
+            Wednesday
+          </label>
+        </div>
+        <div class="level-item has-text-centered">
+          <label className="checkbox">
+            <input
+              type="checkbox"
+            />
+            Thurday
+          </label>
+        </div>
+        <div class="level-item has-text-centered">
+          <label className="checkbox">
+            <input
+              type="checkbox"
+            />
+            Friday
+          </label>
+        </div>
+        <div class="level-item has-text-centered">
+          <label className="checkbox">
+            <input
+              type="checkbox"
+            />
+            Saturday
+          </label>
+        </div>
       </nav>
-
-      <ModalMeetingRooms modal={modal} setModal={setModal}/>
       <nav class="level">
-      <div class="level-item has-text-centered">
-      <button
-        className="button is-link is-light"
-        data-target="modal-js-example"
-        onClick={() => setModal(true)}
-        >Meeting Rooms
-      </button>
+      <div class="level-item">
+      <Flatpickr options={options} />
       </div>
       </nav>
+    
+      <ModalMeetingRooms modal={modal} setModal={setModal} />
+      <nav class="level ">
+        <div class="level-item">
+          <button
+            className="button is-link "
+            onClick={() => setModal(true)}
+          >Meeting Rooms
+          </button>
+        </div>
       
-      <nav class="level">
-      <div class="level-item has-text-centered">
-      <button
-        className="button is-primary is-light"
-        onClick={() => setModal(true)}
-        >Rooms
-      </button>
-      </div>
-      </nav>
-
-      <nav class="level">
-      <div class="level-item has-text-centered">
-      <button
-        className="button is-danger is-light"
-        onClick={() => setModal(true)}
-        >Equipments Meeting Rooms
-      </button>
-      </div>
-      </nav>
-      <nav class="level ">
-      <div class="level-item has-text-centered">
-      <button
-        className="button is-warning is-light is-flex "
-        onClick={() => setModal(true)}
-        >Service Meeting Rooms
-      </button>
-      </div>
-      </nav>
-
+        <div class="level-item">
+          <button
+            className="button is-primary"
+            onClick={() => setModal(true)}
+          >Rooms
+          </button>
+        </div>
+     
+        <div class="level-item">
+          <button
+            className="button is-danger "
+            onClick={() => setModal(true)}
+          >Equipments Meeting Rooms
+          </button>
+        </div>
+      
+        <div class="level-item">
+          <button
+            className="button is-warning "
+            onClick={() => setModal(true)}
+          >Service Meeting Rooms
+          </button>
+        </div>
+        </nav>
       <label>Summary</label>
-      <div class="control">
+      <div className="control">
         <textarea
-          class="textarea is-focused"
-          placeholder="Focused textarea">
-        </textarea>
+          className="textarea is-focused"
+          placeholder="Focused textarea"
+        ></textarea>
       </div>
 
-      <nav class="level ">
-      <label>Total price</label>
-      <label>700000</label>
-      <label>Baht</label>
+      <nav class="level mt-5">
+      <p class="level-item"><a>Total price</a></p>
+      <p class="level-item"><a>700000</a></p>
+      <p class="level-item"><a>Baht</a></p>
       </nav>
 
       <nav class="level ">
-      <label>Discount</label>
-      <input type="number"></input>
+      <p class="level-item"><a>Discount</a></p>
+      <input class="level-item" type="number"></input>
+      <div class="level-item">
       <div class="select">
-        <select>
-          <option>Percentage</option>
-          <option>Baht</option>
-        </select>
-      </div>
+          <select>
+            <option>Percentage</option>
+            <option>Baht</option>
+          </select>
+          </div></div>
       </nav>
 
       <nav class="level ">
-      <label>Package price</label>
-      <label>600000</label>
-      <label>Baht</label>
+      <p class="level-item"><a>Package price</a></p>
+      <p class="level-item"><a>600000</a></p>
+      <p class="level-item"><a>Baht</a></p>
+      </nav>
+      <nav class="level">
+      <div class="level-item has-text-centered">
+        <button
+          className="button is-link"
+          title="Disabled button"
+          >Cancel
+        </button>
+        <button
+          className="button is-danger"
+          title="Disabled button"
+          >Save
+        </button>
+      </div>
       </nav>
 
-      <div class="level-item has-text-centered">
-      <button
-        className="button is-link"
-        title="Disabled button"
-        disabled>Cancel
-      </button>
-      <button
-        className="button is-danger"
-        title="Disabled button"
-        disabled>Save
-      </button>
-      </div>
+      <h1 className="is-size-4">List</h1>
+      <hr className="mt-0" />
 
     </AdminLayout>
   );

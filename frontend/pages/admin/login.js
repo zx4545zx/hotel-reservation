@@ -15,7 +15,7 @@ const Admin = () => {
 
   const onSubmit = (data) => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs/login`, data)
+      .post(`/api/login`, data)
       .then((res) => {
         Router.replace("/admin");
       })
