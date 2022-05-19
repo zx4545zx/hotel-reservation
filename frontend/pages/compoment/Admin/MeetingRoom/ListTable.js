@@ -1,13 +1,21 @@
 import { useState } from "react";
 import Image from "next/image";
 import mockimg from "../../../public/cover.jpeg";
+import axios from "axios";
+import Modal from "./Modal";
 
-const ListTable = () => {
+const ListTable = ({ meetingroom }) => {
+  const [item, setItem] = useState([]);
   const [modal, setModal] = useState(false);
+  const [modalImg, setModalImg] = useState(false);
+
+  const DeleteService = (id) => {
+    axios.delete("http://localhost:4000/meeting_rooms/"+id).then(res => console.log('ok'))
+  }
 
   return (
     <>
-      <ImgModal modal={modal} setModal={setModal} />
+      <ImgModal modalImg={modalImg} setModalImg={setModalImg} />
 
       <table className="table is-bordered is-fullwidth">
         <thead>
@@ -24,30 +32,43 @@ const ListTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>1</th>
+        {meetingroom.map((s) => {
+          return (
+          <tr key={s.id}>
+            <th>{s.id}</th>
             <td className="has-text-centered">
-              <button className="button is-dark" onClick={() => setModal(true)}>SHOW</button>
+              <button className="button is-dark" onClick={() => setModalImg(true)}>SHOW</button>
             </td>
-            <td>Luna Meeting</td>
-            <td>1000</td>
-            <td>40</td>
-            <td>10</td>
+            <td>{s.name}</td>
+            <td>{s.price}</td>
+            <td>{s.people}</td>
+            <td>{s.table}</td>
             <td className="has-text-centered">
-              <button className="button is-info mx-3">View</button>
-              <button className="button is-danger mx-3">Delete</button>
+                <button
+                  className="button is-info mx-3"
+                  onClick={() => {
+                    setItem(s)
+                    setModal(true);
+                  }}
+                >
+                  Edit
+                </button>
+              <button className="button is-danger mx-3" onClick={()=> DeleteService(s.id)}>Delete</button>
             </td>
           </tr>
+           );
+          })}
         </tbody>
       </table>
+      <Modal modal={modal} setModal={setModal} item={item}/>
     </>
   );
 };
 
-const ImgModal = ({ modal, setModal }) => {
+const ImgModal = ({ modalImg, setModalImg }) => {
   return (
-    <div id="modal-js-example" className={`modal ${modal && "is-active"}`}>
-      <div className="modal-background" onClick={() => setModal(false)}></div>
+    <div id="modal-js-example" className={`modal ${modalImg && "is-active"}`}>
+      <div className="modal-background" onClick={() => setModalImg (false)}></div>
 
       <div className="modal-content is-flex is-justify-content-center">
         <Image
@@ -59,7 +80,7 @@ const ImgModal = ({ modal, setModal }) => {
       <button
         className="modal-close is-large"
         aria-label="close"
-        onClick={() => setModal(false)}
+        onClick={() => setModalImg (false)}
       ></button>
     </div>
   );
