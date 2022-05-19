@@ -1,21 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 import Modal from "../../compoment/Admin/MeetingRoom/Service/Modal";
 import ListTable from "../../compoment/Admin/MeetingRoom/Service/ListTable";
 
-import AdminLayout from "../../compoment/Layout/AdminLayout"
+import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const ServiceMeetingRooms = () => {
   const [modal, setModal] = useState(false);
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/services")
+      .then((res) => setServices(res.data));
+  },[])
 
   return (
     <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
         Service Meeting Rooms
       </div>
-      
 
-      <Modal modal={modal} setModal={setModal} />
+      <Modal modal={modal} setModal={setModal}/>
 
       <div className="is-flex is-justify-content-space-between is-align-items-flex-end">
         <h1 className="is-size-4">List</h1>
@@ -30,7 +37,7 @@ const ServiceMeetingRooms = () => {
 
       <hr className="mt-0" />
 
-      <ListTable />
+      <ListTable services={services} />
     </AdminLayout>
   );
 };

@@ -7,13 +7,14 @@ class ServicesController < ApplicationController
   end
 
   def show
+    render json: @service
   end
 
   def create
     @service = Service.new(service_params)
 
     if @service.save
-      render json: @services
+      render json: @service
     else
       render json: @service.errors, status: :unprocessable_entity
     end
@@ -21,7 +22,7 @@ class ServicesController < ApplicationController
 
   def update
     if @service.update(service_params)
-      render json: @services
+      render json: @service
     else
       render json: @service.errors, status: :unprocessable_entity
     end
