@@ -9,7 +9,10 @@ import Flatpickr from "react-flatpickr";
 import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const Packages = () => {
-  const [modal, setModal] = useState(false);
+  const [modalMR, setModalMR] = useState(false);
+  const [modalR, setModalR] = useState(false);
+  const [modalEMR, setModalEMR] = useState(false);
+  const [modalSMR, setModalSMR] = useState(false);
   const options = {
     mode: "range",
     minDate: "today",
@@ -94,40 +97,44 @@ const Packages = () => {
       </div>
       </nav>
     
-      <ModalMeetingRooms modal={modal} setModal={setModal} />
+      <ModalMeetingRooms modalMR={modalMR} setModalMR={setModalMR} />
       <nav class="level ">
         <div class="level-item">
           <button
             className="button is-link "
-            onClick={() => setModal(true)}
+            onClick={() => setModalMR(true)}
           >Meeting Rooms
           </button>
         </div>
-      
+
+        <ModalRoom modalR={modalR} setModalR={setModalR} />
         <div class="level-item">
           <button
             className="button is-primary"
-            onClick={() => setModal(true)}
+            onClick={() => setModalR(true)}
           >Rooms
           </button>
         </div>
      
+        <ModalEquipmentsMeetingRooms modalEMR={modalEMR} setModalEMR={setModalEMR} />
         <div class="level-item">
           <button
             className="button is-danger "
-            onClick={() => setModal(true)}
+            onClick={() => setModalEMR(true)}
           >Equipments Meeting Rooms
           </button>
         </div>
       
+        <ModalServiceMeetingRooms modalSMR={modalSMR} setModalSMR={setModalSMR} />
         <div class="level-item">
           <button
             className="button is-warning "
-            onClick={() => setModal(true)}
+            onClick={() => setModalSMR(true)}
           >Service Meeting Rooms
           </button>
         </div>
-        </nav>
+      </nav>
+
       <label>Summary</label>
       <div className="control">
         <textarea
