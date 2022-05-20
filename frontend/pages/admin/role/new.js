@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
+
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const RoleAcsses = () => {
@@ -13,11 +14,12 @@ const RoleAcsses = () => {
     if (!Router.isReady) return;
 
     axios
-      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs`)
-      .then((res) => {
-        setDepartments(res.data.departments);
-        setPositions(res.data.positions);
-      });
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments`)
+      .then((res) => setDepartments(res.data));
+
+    axios
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/positions`)
+      .then((res) => setPositions(res.data));
   }, [Router.isReady]);
 
   return (
