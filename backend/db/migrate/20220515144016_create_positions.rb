@@ -2,7 +2,7 @@ class CreatePositions < ActiveRecord::Migration[7.0]
   def change
     create_table :positions do |t|
       t.string :name
-      t.boolean :head
+      t.boolean :head, default: false
 
       t.timestamps
     end

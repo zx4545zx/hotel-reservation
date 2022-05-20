@@ -19,7 +19,8 @@ class StaffsController < ApplicationController
   def index
     staffs = Staff.order(id: :asc)
 
-    render json: staffs, include: [ :department, :position ]
+    render json: staffs
+    # render json: staffs, include: [ :department, :position ]
   end
 
   # GET /staffs/1
