@@ -1,5 +1,5 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Modal from "../../compoment/Admin/MeetingRoom/Modal";
 import ListTable from "../../compoment/Admin/MeetingRoom/ListTable";
 
@@ -7,6 +7,13 @@ import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const MeetingRooms = () => {
   const [modal, setModal] = useState(false);
+  const [meetingroom, setmeetingroom] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/meeting_rooms")
+      .then((res) => setmeetingroom(res.data));
+  },[])
 
   return (
     <AdminLayout>
@@ -29,7 +36,7 @@ const MeetingRooms = () => {
 
       <hr className="mt-0" />
 
-      <ListTable />
+      <ListTable meetingroom={meetingroom}/>
     </AdminLayout>
   );
 };
