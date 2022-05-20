@@ -1,8 +1,6 @@
 import LoginForm from "../compoment/Admin/LoginForm";
 import { useForm } from "react-hook-form";
 import useUser from "../../libs/useUser";
-import Router from "next/router";
-import axios from "axios";
 import fetchJson, { FetchError } from "../../libs/fetchJson";
 
 const Admin = () => {
@@ -18,19 +16,6 @@ const Admin = () => {
     redirectTo: "/admin",
     redirectIfFound: true,
   });
-
-  // const onSubmit = (data) => {
-
-  //   axios
-  //     .post(`/api/login`, data)
-  //     .then((res) => {
-  //       Router.push("/admin");
-  //     })
-  //     .catch((e) => {
-  //       setError("sumit", { message: "login error" });
-  //       console.log("error " + e);
-  //     });
-  // };
 
   const onSubmit = async (data, e) => {
     e.nativeEvent.preventDefault();
@@ -50,6 +35,7 @@ const Admin = () => {
         setError("submit", { message: fetchResult.error });
       }
 
+      // console.log(fetchResult);
       mutateUser(fetchResult);
     } catch (error) {
       if (error instanceof FetchError) {

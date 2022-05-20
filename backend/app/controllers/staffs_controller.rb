@@ -5,11 +5,13 @@ class StaffsController < ApplicationController
   def login
     staff = Staff.find_by_email(params[:email])
     staff.update(status: 'online')
-    department = Department.find(staff.department_id)
-    position = Position.find(staff.position_id)
+
+    role = staff.role
+    department = role.department
+    position = role.position
 
     if staff.password == params[:password]
-      render json: { staff: staff, department: department, position: position }
+      render json: { staff: staff, role: role, department: department, position: position }
     else
       render json: staff.errors, status: :unprocessable_entity
     end
@@ -19,13 +21,13 @@ class StaffsController < ApplicationController
   def index
     staffs = Staff.order(id: :asc)
 
-    render json: staffs
+    render json: staffs, include: [ :role ]
     # render json: staffs, include: [ :department, :position ]
   end
 
   # GET /staffs/1
   def show
-    render json: @staff, include: [ :department, :position ]
+    render json: @staff, include: [ :role, :department, :position ]
   end
 
   # POST /staffs

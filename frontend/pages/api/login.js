@@ -29,14 +29,14 @@ export default withIronSessionApiRoute(async (req, res) => {
     if (data) {
       const user = {
         isLoggedIn: true,
+        id: data?.staff.id,
         email: data?.staff.email,
         fname: data?.staff.first_name,
         lname: data?.staff.last_name,
         status: data?.staff.status,
         department: data?.department.name,
         position: data?.position.name,
-        // accessRole: data?.user.access_role,
-        id: data?.staff.id,
+        role: data?.role,
       };
       req.session.user = user;
       await req.session.save();
