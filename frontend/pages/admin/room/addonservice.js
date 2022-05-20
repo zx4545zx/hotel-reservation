@@ -6,6 +6,13 @@ import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const AddonServiceRooms = () => {
   const [modal, setModal] = useState(false);
+  const [addonservices, setAddonservices] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:4000/addonservice").then((res) => {
+      setAddonservices(res.data);
+    });
+  },[]);
   
   return (
     <AdminLayout>
@@ -28,7 +35,7 @@ const AddonServiceRooms = () => {
 
       <hr className="mt-0" />
 
-      <ListTable/>
+      <ListTable addonservices={addonservices} />
     </AdminLayout>
   );
 };

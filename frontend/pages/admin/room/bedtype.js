@@ -1,11 +1,19 @@
 import ListTable from "../../compoment/Admin/Room/bedtype/ListTable";
 import Modal from "../../compoment/Admin/Room/bedtype/Modal";
 import { useState } from "react";
+import axios from "axios";
 
 import AdminLayout from "../../compoment/Layout/AdminLayout"
 
 const BedtypeRooms = () => {
   const [modal, setModal] = useState(false);
+  const [brdtypes, setBedtypes] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:4000/bedtypes").then((res) => {
+      setBedtypes(res.data);
+    });
+  },[]);
 
   return (
     <AdminLayout>
@@ -29,7 +37,7 @@ const BedtypeRooms = () => {
 
       <hr className="mt-0" />
 
-      <ListTable />
+      <ListTable brdtypes={bedtypes} />
     </AdminLayout>
   );
 };

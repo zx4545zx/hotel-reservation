@@ -1,4 +1,15 @@
-const ListTable = () => {
+import Modal from "./Modal";
+import { useState } from "react";
+import axios from "axios";
+
+const ListTable = ({ addonservices }) => {
+  const [item, setItem] = useState([]);
+  const [modal, setModal] = useState(false);
+  
+  const DeleteService = (id) => {
+    axios.delete("http://localhost:4000/addonservices/"+id).then(res => console.log('ok'))
+  }
+
   return (
     <table className="table is-bordered is-fullwidth">
       <thead>
@@ -36,6 +47,7 @@ const ListTable = () => {
         </tr>
       </tbody>
     </table>
+    
   );
 };
 
