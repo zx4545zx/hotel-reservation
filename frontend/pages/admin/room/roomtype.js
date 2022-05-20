@@ -6,6 +6,13 @@ import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const AddonServiceRooms = () => {
   const [modal, setModal] = useState(false);
+  const [roomtypes, setRoomtypes] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:4000/roomtypes").then((res) => {
+      setRoomtypes(res.data);
+    });
+  },[]);
   
   return (
     <AdminLayout>
@@ -28,7 +35,7 @@ const AddonServiceRooms = () => {
 
       <hr className="mt-0" />
 
-      <ListTable/>
+      <ListTable roomtypes={roomtypes} />
     </AdminLayout>
   );
 };
