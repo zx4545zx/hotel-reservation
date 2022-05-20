@@ -41,7 +41,7 @@ const CustomersList = () => {
             <td>0954137065</td>
             <td>Bensuiwong@hotmail.com</td>
             <td className="has-text-centered">
-              <button className="button is-info mx-3">View</button>
+              <button className="button is-info mx-3">Edit</button>
               <button className="button is-danger mx-3">Delete</button>
             </td>
           </tr>

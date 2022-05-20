@@ -1,7 +1,9 @@
+
+
 const Content = () => {
   return (
     <div className="content">
-      <h1>Hello World</h1>
+      <h1>MUT HOTEL</h1>
       <p>
         Renowned for consistent quality and prime locations in the Bangkok
         Metropolitan surrounded by popular provincial top destinations, MUT
@@ -21,7 +23,7 @@ const Content = () => {
       <figure>
         <img src="https://bulma.io/images/placeholders/256x256.png" />
         <img src="https://bulma.io/images/placeholders/256x256.png" />
-        <figcaption>Figure 1: Some beautiful placeholders</figcaption>
+        <figcaption>Deluxe Room</figcaption>
       </figure>
       <h5>Premier Suites</h5>
       <p>
@@ -31,7 +33,7 @@ const Content = () => {
       <figure>
         <img src="https://bulma.io/images/placeholders/256x256.png" />
         <img src="https://bulma.io/images/placeholders/256x256.png" />
-        <figcaption>Figure 1: Some beautiful placeholders</figcaption>
+        <figcaption>Premier Suites</figcaption>
       </figure>
       <h5>Divalux Jacuzzi Suite</h5>
       <p>
@@ -43,19 +45,19 @@ const Content = () => {
       <figure>
         <img src="https://bulma.io/images/placeholders/256x256.png" />
         <img src="https://bulma.io/images/placeholders/256x256.png" />
-        <figcaption>Figure 1: Some beautiful placeholders</figcaption>
+        <figcaption>Divalux Jacuzzi Suite</figcaption>
       </figure>
       <h2>EVENT ROOM</h2>
       <p>
-        Guests can also enjoy the delicacy of many local street foods at Indy
-        Night Market or Maharaj Pier to savor local specialties or go to the
-        night walking street at the famous Khaosan road. Come and enjoy superior
-        modem hotel at great connectivity with local touch.
+        Our private and fully equipped meeting and function rooms provide a high
+        class, modern business environment to meet all your business needs. meet
+        your partner or meet your business in our meeting room with facilities
+        in a prime location
       </p>
       <figure>
         <img src="https://bulma.io/images/placeholders/256x256.png" />
         <img src="https://bulma.io/images/placeholders/256x256.png" />
-        <figcaption>Figure 1: Some beautiful placeholders</figcaption>
+        <figcaption>EVENT ROOM</figcaption>
       </figure>
       <h2>SERVICE US</h2>
       <p>
@@ -67,7 +69,7 @@ const Content = () => {
       <figure>
         <img src="https://bulma.io/images/placeholders/256x256.png" />
         <img src="https://bulma.io/images/placeholders/256x256.png" />
-        <figcaption>Figure 1: Some beautiful placeholders</figcaption>
+        <figcaption>SERVICE US</figcaption>
       </figure>
     </div>
   );
