@@ -1,13 +1,13 @@
 class EquipmentController < ApplicationController
   before_action :set_equipment, only: %i[ show update destroy ]
-
-
+  
   def index
     @equipment = Equipment.all
     render json: @equipment
   end
 
   def show
+    render json: @equipment
   end
 
   def create

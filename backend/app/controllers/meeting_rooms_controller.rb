@@ -7,6 +7,7 @@ class MeetingRoomsController < ApplicationController
   end
 
   def show
+    render json: @meeting_room
   end
 
   def create
