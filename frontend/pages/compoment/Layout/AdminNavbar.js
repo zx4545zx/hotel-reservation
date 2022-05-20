@@ -11,7 +11,7 @@ const AdminNavbar = () => {
   const [burger, setBurger] = useState(false);
 
   if (!user || user.isLoggedIn === false) {
-    return <div>Loading...</div>;
+    return <progress class="progress is-small is-primary" max="100"></progress>;
   }
 
   const LogOut = () => {

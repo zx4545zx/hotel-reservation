@@ -128,11 +128,11 @@ const Booking = () => {
   };
 
   const confirmSubmit = () => {
-    console.log("customer: "+customer);
-    console.log("datetime: "+date);
-    console.log("guest: "+guest);
-    console.log("result: "+result);
-    console.log("butget: "+butget);
+    console.log(customer);
+    console.log(date);
+    console.log(guest);
+    console.log(result);
+    console.log(butget);
   };
 
   return (

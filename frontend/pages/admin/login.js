@@ -17,7 +17,7 @@ const Admin = () => {
     axios
       .post(`/api/login`, data)
       .then((res) => {
-        Router.replace("/admin");
+        Router.push("/admin");
       })
       .catch((e) => {
         setError("sumit", { message: "login error" });
