@@ -20,12 +20,16 @@ const Booking = () => {
   const [tab, setTab] = useState(true);
   const [detail, setDetail] = useState(false);
   const [show, setShow] = useState(null);
-  const [rooms, setRooms] = useState([]);
+
   const [customers, setCustomers] = useState([]);
+
   const [customer, setCustomer] = useState([]);
-  const [meetingRooms, setMeetingRooms] = useState([]);
   const [date, setDate] = useState([]);
+  const [guest, setGuest] = useState(0);
+  const [butget, setButget] = useState(0);
+
   const [val, setVal] = useState([]);
+  const [result, setResult] = useState([]);
 
   const options = {
     mode: "range",
@@ -39,72 +43,96 @@ const Booking = () => {
     setCustomers([
       {
         id: 1,
-        first_name: "test1",
+        first_name: "Natto",
         last_name: "test23424",
         email: "test@mail.com",
         phone_number: "01222",
       },
       {
         id: 2,
-        first_name: "test2",
+        first_name: "Bunny",
+        last_name: "test23424",
+        email: "test@mail.com",
+        phone_number: "01222",
+      },
+      {
+        id: 3,
+        first_name: "Bunny3",
+        last_name: "test23424",
+        email: "test@mail.com",
+        phone_number: "01222",
+      },
+      {
+        id: 4,
+        first_name: "Bunny4",
+        last_name: "test23424",
+        email: "test@mail.com",
+        phone_number: "01222",
+      },
+      {
+        id: 5,
+        first_name: "Bunny5",
+        last_name: "test23424",
+        email: "test@mail.com",
+        phone_number: "01222",
+      },
+      {
+        id: 6,
+        first_name: "Bunny6",
+        last_name: "test23424",
+        email: "test@mail.com",
+        phone_number: "01222",
+      },
+      {
+        id: 7,
+        first_name: "Bunny7",
+        last_name: "test23424",
+        email: "test@mail.com",
+        phone_number: "01222",
+      },
+      {
+        id: 8,
+        first_name: "Bunny8",
         last_name: "test23424",
         email: "test@mail.com",
         phone_number: "01222",
       },
     ]);
-
-    setRooms([
-      {
-        name: "test",
-        build: "test",
-        value: "test",
-        price: "test",
-        status: "test",
-      },
-    ]);
-
-    setMeetingRooms([
-      {
-        name: "test",
-        price: "test",
-        people_number: "test",
-        table_number: "test",
-        status: "test",
-      },
-    ]);
   }, []);
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  const selectCustomer = (item) => {
-    setCustomer(item);
-  };
 
   const convertDate = () => {
     const checkIn = date[0];
     const checkOut = date[1];
+    const guest_number = guest;
 
     if (checkIn === undefined || checkOut === undefined) {
       return;
     }
 
-    checkIn.setHours(15,0,0);
-    checkOut.setHours(12,0,0);
-
-    console.log(checkIn);
-    console.log(checkOut);
+    checkIn.setHours(15, 0, 0);
+    checkOut.setHours(12, 0, 0);
 
     const value = {
-      day_checkin: checkIn.toGMTString().toString().substring(0,15),
-      time_checkin: checkIn.toLocaleTimeString().toString(),
-      day_checkout: checkOut.toGMTString().toString().substring(0,15),
-      time_checkout: checkOut.toLocaleTimeString().toString(),
+      day_checkin: checkIn.toGMTString().toString().substring(0, 16),
+      time_checkin: checkIn.toLocaleTimeString().toString().substring(0, 5),
+      day_checkout: checkOut.toGMTString().toString().substring(0, 16),
+      time_checkout: checkOut.toLocaleTimeString().toString().substring(0, 5),
+      guest_number: guest_number,
     };
 
-    console.log(value);
     setVal(value);
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const confirmSubmit = () => {
+    console.log(customer);
+    console.log(date);
+    console.log(guest);
+    console.log(result);
+    console.log(butget);
   };
 
   return (
@@ -140,12 +168,14 @@ const Booking = () => {
             </thead>
 
             <tbody>
-              {customers.map((c) => {
+              {customers.slice(0, 5).map((c) => {
                 return (
                   <tr
                     key={c.id}
-                    className="pointer"
-                    onClick={() => selectCustomer(c)}
+                    className={`pointer ${
+                      c.id === customer.id ? "has-background-link-light" : ""
+                    }`}
+                    onClick={() => setCustomer(c)}
                   >
                     <td>{c.first_name}</td>
                     <td>{c.last_name}</td>
@@ -171,44 +201,78 @@ const Booking = () => {
             modal={modal}
             setModal={setModal}
             customers={customers}
-            selectCustomer={selectCustomer}
+            setCustomer={setCustomer}
+            customer={customer}
           />
         </div>
 
-        <form
-          className="columns is-variable is-2"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="columns is-variable is-2">
           <div className="column is-three-fifths">
-            <BookingHeader
-              options={options}
-              register={register}
-              setDate={setDate}
-              convertDate={convertDate}
-            />
+            {customer != 0 && (
+              <BookingHeader
+                options={options}
+                setDate={setDate}
+                convertDate={convertDate}
+                setGuest={setGuest}
+              />
+            )}
 
             {show === "e" ? (
-              <BookingEquipments setShow={setShow} register={register} />
+              <BookingEquipments setShow={setShow} />
             ) : show === "s" ? (
-              <BookingServices setShow={setShow} register={register} />
+              <BookingServices setShow={setShow} />
             ) : (
-              <div>
-                <BookingTabs tab={tab} setTab={setTab} register={register} />
-                {tab ? (
-                  <BookingMeetingRooms
-                    setDetail={setDetail}
-                    register={register}
-                  />
+              <>
+                {val.length != 0 ? (
+                  <div>
+                    <BookingTabs
+                      tab={tab}
+                      setTab={setTab}
+                      register={register}
+                    />
+                    {tab ? (
+                      <BookingMeetingRooms
+                        result={result}
+                        setResult={setResult}
+                      />
+                    ) : (
+                      <BookingRooms register={register} />
+                    )}
+                  </div>
                 ) : (
-                  <BookingRooms register={register} />
+                  <>
+                    <div className="notification has-text-centered">
+                      Please complete the information.
+                    </div>
+                  </>
                 )}
-              </div>
+              </>
             )}
           </div>
 
           <div className="column">
-            <BookingSummary register={register} customer={customer} val={val}>
-              <OrderCard setShow={setShow} register={register} />
+            <BookingSummary
+              register={register}
+              customer={customer}
+              val={val}
+              result={result}
+              confirmSubmit={confirmSubmit}
+              setButget={setButget}
+            >
+              {result.length != 0 ? (
+                <OrderCard
+                  setShow={setShow}
+                  result={result}
+                  setResult={setResult}
+                />
+              ) : (
+                <>
+                  <div className="notification has-text-centered">
+                    No Reservations
+                  </div>
+                </>
+              )}
+
               <hr className="my-2" />
             </BookingSummary>
           </div>
@@ -226,7 +290,7 @@ const Booking = () => {
 
 export default Booking;
 
-const BookingHeader = ({ options, register, setDate, convertDate }) => {
+const BookingHeader = ({ options, setDate, convertDate, setGuest }) => {
   return (
     <div className="box">
       <div className="control">
@@ -237,7 +301,7 @@ const BookingHeader = ({ options, register, setDate, convertDate }) => {
               className="input"
               type="number"
               placeholder="0"
-              {...register("guest")}
+              onChange={(e) => setGuest(e.target.value)}
             />
           </div>
         </div>
@@ -253,10 +317,10 @@ const BookingHeader = ({ options, register, setDate, convertDate }) => {
           </div>
         </div>
 
-        <div className="field">
+        <div className="field is-flex is-justify-content-flex-end">
           <button
             type="button"
-            className="button"
+            className="button is-primary"
             onClick={() => convertDate()}
           >
             APPLY
@@ -285,138 +349,235 @@ const BookingTabs = ({ tab, setTab, register }) => {
   );
 };
 
-const BookingMeetingRooms = ({ setDetail, register }) => {
+const BookingMeetingRooms = ({ result, setResult }) => {
+  const [meetingRooms, setMeetingRooms] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/meeting_rooms`)
+      .then((res) => setMeetingRooms(res.data));
+  }, []);
+
   return (
     <div className="container">
-      <div className="card">
-        <div className="card-content">
-          <div className="media">
-            <div className="media-left">
-              <figure className="image is-128x128">
-                <img
-                  src="https://media.istockphoto.com/photos/conference-room-with-a-long-table-and-lots-of-chairs-picture-id98395721?k=20&m=98395721&s=612x612&w=0&h=aLPhhimrM4OYCsoFiK2EbMQqgKvNVSkPBl1M9Od0BYc="
-                  alt="Placeholder image"
-                />
-              </figure>
-            </div>
+      {meetingRooms.length > 0 ? (
+        <>
+          {meetingRooms.map((m) => {
+            return (
+              <div className="card mb-3" key={m.id}>
+                <div className="card-content">
+                  <div className="media">
+                    <div className="media-left">
+                      <figure className="image is-128x128">
+                        <img
+                          src="https://bulma.io/images/placeholders/128x128.png"
+                          alt="Placeholder image"
+                        />
+                      </figure>
+                    </div>
 
-            <div className="media-content">
-              <div className="is-flex is-align-items-center is-justify-content-space-between mb-1">
-                <div className="title m-0 is-5">Luna Meeting Room</div>
-                <div className="has-text-success title m-0 is-5">
-                  10 Available
+                    <div className="media-content">
+                      <div className="is-flex is-align-items-center is-justify-content-space-between mb-1">
+                        <div className="title m-0 is-5">{m.name}</div>
+                        <div className="has-text-success title m-0 is-5">
+                          10 Available
+                        </div>
+                      </div>
+
+                      <p className="subtitle is-6 has-text-grey mb-2">
+                        Suport <u>{m.people}</u> guest, <u>{m.table}</u> table
+                      </p>
+                      <p>
+                        Spacious rooms (32sqm) with panoramic city views,
+                        king-sized bed or convert to twin beds.
+                      </p>
+
+                      <u>
+                        <a className="pointer">detail</a>
+                      </u>
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <div className="content columns">
+                    <div className="column is-three-quarters">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec iaculis mauris.
+                    </div>
+                    <div className="column pr-5">
+                      <div className="has-text-right mb-2">15,000 THB</div>
+                      <button
+                        type="button"
+                        className="button is-primary is-fullwidth"
+                        onClick={() => setResult([...result, m])}
+                      >
+                        ADD
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="title is-5 m-0">Packages</div>
+                  <hr className="mt-2" />
+
+                  <div className="content columns">
+                    <div className="column is-three-quarters">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec iaculis mauris...{" "}
+                      <u>
+                        <a className="pointer">detail</a>
+                      </u>
+                    </div>
+                    <div className="column pr-5">
+                      <div className="has-text-right">12,000 THB</div>
+                      <div className="has-text-right mb-2 has-text-grey">
+                        <strike>15,000 THB</strike>
+                      </div>
+                      <button
+                        type="button"
+                        className="button is-primary is-fullwidth"
+                      >
+                        ADD
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <p className="subtitle is-6 has-text-grey mb-2">
-                Suport <u>60</u> guest
-              </p>
-              <p>
-                Spacious rooms (32sqm) with panoramic city views, king-sized bed
-                or convert to twin beds.
-              </p>
-
-              <u>
-                <a className="pointer" onClick={() => setDetail(true)}>
-                  detail
-                </a>
-              </u>
-            </div>
+            );
+          })}
+        </>
+      ) : (
+        <>
+          <div className="notification is-danger is-light has-text-centered">
+            No Data
           </div>
-
-          <hr />
-
-          <div className="content columns">
-            <div className="column is-three-quarters">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-              nec iaculis mauris.
-            </div>
-            <div className="column pr-5">
-              <div className="has-text-right mb-2">15,000 THB</div>
-              <button type="button" className="button is-primary is-fullwidth">
-                ADD
-              </button>
-            </div>
-          </div>
-
-          <div className="title is-5 m-0">Packages</div>
-          <hr className="mt-2" />
-
-          <div className="content columns">
-            <div className="column is-three-quarters">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-              nec iaculis mauris...{" "}
-              <u>
-                <a className="pointer">detail</a>
-              </u>
-            </div>
-            <div className="column pr-5">
-              <div className="has-text-right">12,000 THB</div>
-              <div className="has-text-right mb-2 has-text-grey">
-                <strike>15,000 THB</strike>
-              </div>
-              <button type="button" className="button is-primary is-fullwidth">
-                ADD
-              </button>
-            </div>
-          </div>
-
-          <hr className="m-2" />
-
-          <div className="content columns">
-            <div className="column is-three-quarters">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-              nec iaculis mauris...{" "}
-              <u>
-                <a className="pointer">detail</a>
-              </u>
-            </div>
-            <div className="column pr-5">
-              <div className="has-text-right">11,500 THB</div>
-              <div className="has-text-right mb-2 has-text-grey">
-                <strike>15,000 THB</strike>
-              </div>
-              <button type="button" className="button is-primary is-fullwidth">
-                ADD
-              </button>
-            </div>
-          </div>
-
-          <hr className="m-2" />
-
-          <div className="content columns">
-            <div className="column is-three-quarters">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-              nec iaculis mauris...{" "}
-              <u>
-                <a className="pointer">detail</a>
-              </u>
-            </div>
-            <div className="column pr-5">
-              <div className="has-text-right">11,000 THB</div>
-              <div className="has-text-right mb-2 has-text-grey">
-                <strike>15,000 THB</strike>
-              </div>
-              <button type="button" className="button is-primary is-fullwidth">
-                ADD
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };
 
-const BookingRooms = ({ setDetail, register }) => {
-  return <div className="container"></div>;
+const BookingRooms = () => {
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:4000/rooms`).then((res) => setRooms(res.data));
+  }, []);
+
+  return (
+    <div className="container">
+      {rooms.length > 0 ? (
+        <>
+          {rooms.map((m) => {
+            return (
+              <div className="card mb-3" key={m.id}>
+                <div className="card-content">
+                  <div className="media">
+                    <div className="media-left">
+                      <figure className="image is-128x128">
+                        <img
+                          src="https://bulma.io/images/placeholders/128x128.png"
+                          alt="Placeholder image"
+                        />
+                      </figure>
+                    </div>
+
+                    <div className="media-content">
+                      <div className="is-flex is-align-items-center is-justify-content-space-between mb-1">
+                        <div className="title m-0 is-5">Luna Meeting Room</div>
+                        <div className="has-text-success title m-0 is-5">
+                          10 Available
+                        </div>
+                      </div>
+
+                      <p className="subtitle is-6 has-text-grey mb-2">
+                        Suport <u>60</u> guest
+                      </p>
+                      <p>
+                        Spacious rooms (32sqm) with panoramic city views,
+                        king-sized bed or convert to twin beds.
+                      </p>
+
+                      <u>
+                        <a className="pointer">detail</a>
+                      </u>
+                    </div>
+                  </div>
+
+                  <hr />
+
+                  <div className="content columns">
+                    <div className="column is-three-quarters">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec iaculis mauris.
+                    </div>
+                    <div className="column pr-5">
+                      <div className="has-text-right mb-2">15,000 THB</div>
+                      <button
+                        type="button"
+                        className="button is-primary is-fullwidth"
+                      >
+                        ADD
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="title is-5 m-0">Packages</div>
+                  <hr className="mt-2" />
+
+                  <div className="content columns">
+                    <div className="column is-three-quarters">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Phasellus nec iaculis mauris...{" "}
+                      <u>
+                        <a className="pointer">detail</a>
+                      </u>
+                    </div>
+                    <div className="column pr-5">
+                      <div className="has-text-right">12,000 THB</div>
+                      <div className="has-text-right mb-2 has-text-grey">
+                        <strike>15,000 THB</strike>
+                      </div>
+                      <button
+                        type="button"
+                        className="button is-primary is-fullwidth"
+                      >
+                        ADD
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        <>
+          <div className="notification is-danger is-light has-text-centered">
+            No Data
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
-const BookingSummary = ({ children, register, customer, val }) => {
+const BookingSummary = ({
+  children,
+  customer,
+  val,
+  result,
+  confirmSubmit,
+  setButget,
+}) => {
+  const [show, setShow] = useState(false);
+
   return (
     <div className="box">
       <div className="title is-4 mb-3">
-        <strong>{customer.first_name} Stay</strong>
+        <strong>
+          <span className="has-text-danger">{customer.first_name}</span> Stay
+        </strong>
       </div>
       <hr className="my-2" />
       <div className="content block is-outlined">
@@ -432,25 +593,63 @@ const BookingSummary = ({ children, register, customer, val }) => {
           <div className="column pt-0">After {val.time_checkin}</div>
           <div className="column pt-0">Before {val.time_checkout}</div>
         </div>
-        {/* <div className="column p-0">Fri, May 20, 2022 - Sat, May 21, 2022</div> */}
-        <div className="column p-0">{val.day_checkin} - {val.day_checkout}</div>
-        <div className="column p-0">1 Guest</div>
+        <div className="column p-0">
+          {val.day_checkin} - {val.day_checkout}
+        </div>
+        <div className="column p-0">{val.guest_number} Guest</div>
       </div>
       <hr className="my-2" />
 
       <div>{children}</div>
 
-      <div className="columns">
+      <div className="columns m-0">
         <div className="column is-size-4">
           <strong>Total:</strong>
         </div>
         <div className="column has-text-right is-size-4">
-          <strong>{"16,050"} THB</strong>
+          <strong>{"0"} THB</strong>
         </div>
       </div>
-      <button className="button is-success is-fullwidth" type="submit">
-        Confirm
-      </button>
+
+      {result.length > 0 && (
+        <>
+          {show ? (
+            <>
+              <hr className="m-0" />
+
+              <div className="columns p-3">
+                <div className="column">Butget:</div>
+                <div className="column has-text-right">
+                  <input
+                    className="input is-small"
+                    type="number"
+                    placeholder="0 THB"
+                    onChange={(e) => setButget(e.target.value)}
+                  />
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="is-flex is-justify-content-flex-end">
+              <button
+                className="button is-small is-light is-fullwidth mb-3"
+                type="button"
+                onClick={() => setShow(true)}
+              >
+                Bargain
+              </button>
+            </div>
+          )}
+
+          <button
+            className="button is-success is-fullwidth"
+            type="button"
+            onClick={confirmSubmit}
+          >
+            Confirm
+          </button>
+        </>
+      )}
     </div>
   );
 };
@@ -531,7 +730,13 @@ const DetailModal = ({ detail, setDetail, register }) => {
   );
 };
 
-const BookingEquipments = ({ setShow, register }) => {
+const BookingEquipments = ({ setShow }) => {
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:4000/meeting_rooms`)
+  //     .then((res) => console.log(res.data));
+  // }, []);
+
   return (
     <div>
       <button className="button is-link is-light" onClick={() => setShow(null)}>
@@ -572,7 +777,10 @@ const BookingEquipments = ({ setShow, register }) => {
               <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
                 <div>Equipments for Meeting Rooms</div>
                 <div>
-                  <button className="button is-primary is-fullwidth">
+                  <button
+                    className="button is-primary is-fullwidth"
+                    type="button"
+                  >
                     ADD
                   </button>
                 </div>
@@ -585,7 +793,7 @@ const BookingEquipments = ({ setShow, register }) => {
   );
 };
 
-const BookingServices = ({ setShow, register }) => {
+const BookingServices = ({ setShow }) => {
   return (
     <div>
       <button className="button is-link is-light" onClick={() => setShow(null)}>
@@ -626,7 +834,10 @@ const BookingServices = ({ setShow, register }) => {
               <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
                 <div>Services for Meeting Rooms</div>
                 <div>
-                  <button className="button is-primary is-fullwidth">
+                  <button
+                    className="button is-primary is-fullwidth"
+                    type="button"
+                  >
                     ADD
                   </button>
                 </div>
@@ -639,44 +850,65 @@ const BookingServices = ({ setShow, register }) => {
   );
 };
 
-const OrderCard = ({ setShow, register }) => {
+const OrderCard = ({ setShow, result, setResult }) => {
+  const handleRemoveItem = (e) => {
+    const name = e.target.getAttribute("name");
+    setResult(result.filter((item) => item.name !== name));
+  };
+
   return (
     <>
-      <nav className="panel is-info message">
-        <p className="panel-heading message-header">
-          Luna Meeting Room
-          <button type="button" className="delete" aria-label="delete"></button>
-        </p>
-        <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
-          <div>Nomal Package</div>
-          <div>15,000 THB</div>
-        </div>
-        <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
-          <div>Taxes & Fees 7%</div>
-          <div>1,050 THB</div>
-        </div>
-        <div className="panel-block">
-          <button
-            type="button"
-            className="button is-link is- is-fullwidth mr-1"
-            onClick={() => setShow("e")}
-          >
-            Add Equipments
-          </button>
-          <button
-            type="button"
-            className="button is-link is-fullwidth ml-1"
-            onClick={() => setShow("s")}
-          >
-            Add Services
-          </button>
-        </div>
-      </nav>
+      {result.map((r, i) => {
+        return (
+          <nav className="panel is-info message" key={i}>
+            <p className="panel-heading message-header">
+              {r.name}
+              <button
+                type="button"
+                className="delete"
+                aria-label="delete"
+                name={r.name}
+                onClick={handleRemoveItem}
+              ></button>
+            </p>
+            <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+              <div>Nomal Package</div>
+              <div>{r.price} THB</div>
+            </div>
+            <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+              <div>Taxes & Fees</div>
+              <div>0 THB</div>
+            </div>
+            <div className="panel-block">
+              <button
+                type="button"
+                className="button is-link is- is-fullwidth mr-1"
+                onClick={() => setShow("e")}
+              >
+                Add Equipments
+              </button>
+              <button
+                type="button"
+                className="button is-link is-fullwidth ml-1"
+                onClick={() => setShow("s")}
+              >
+                Add Services
+              </button>
+            </div>
+          </nav>
+        );
+      })}
     </>
   );
 };
 
-const CustomerList = ({ modal, setModal, customers, selectCustomer }) => {
+const CustomerList = ({
+  modal,
+  setModal,
+  customers,
+  setCustomer,
+  customer,
+}) => {
   return (
     <div className={`modal ${modal && "is-active"}`}>
       <div className="modal-background" onClick={() => setModal(false)}></div>
@@ -708,10 +940,12 @@ const CustomerList = ({ modal, setModal, customers, selectCustomer }) => {
                 return (
                   <tr
                     key={c.id}
-                    className="pointer"
+                    className={`pointer ${
+                      c.id === customer.id ? "has-background-link-light" : ""
+                    }`}
                     onClick={() => {
                       setModal(false);
-                      selectCustomer(c);
+                      setCustomer(c);
                     }}
                   >
                     <td>{c.first_name}</td>
@@ -729,10 +963,10 @@ const CustomerList = ({ modal, setModal, customers, selectCustomer }) => {
   );
 };
 
-const AddCustomer = ({ add, setAdd, register }) => {
+const AddCustomer = ({ add, setAdd }) => {
   return (
     <>
-      <from>
+      <form>
         <div className={`modal ${add && "is-active"}`}>
           <div className="modal-background" onClick={() => setAdd(false)}></div>
           <button
@@ -781,7 +1015,7 @@ const AddCustomer = ({ add, setAdd, register }) => {
             </footer>
           </div>
         </div>
-      </from>
+      </form>
     </>
   );
 };
