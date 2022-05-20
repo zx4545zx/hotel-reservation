@@ -8,8 +8,8 @@ const Modal = ({ modal, setModal }) => {
           <label>Name</label>
           <input className="input box" type="text" placeholder="bedtype name" />
           <div className="buttons is-flex is-justify-content-center		">
-            <button class="button is-success ">Save</button>
-            <button class="button is-warning">cancle</button>
+            <button className="button is-success ">Save</button>
+            <button className="button is-warning">cancle</button>
           </div>
         </form>
       </div>
