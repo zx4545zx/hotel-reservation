@@ -1,0 +1,37 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  department: one
+  position: one
+  acess_reserv: false
+  acess_quot: false
+  acess_cust: false
+  acess_meet: false
+  acess_meet_equi: false
+  acess_meet_ser: false
+  acess_room: false
+  acess_room_type: false
+  acess_bed_type: false
+  acess_room_equi: false
+  acess_room_ser: false
+  acess_room_add_on_ser: false
+  package: false
+  staff: false
+
+two:
+  department: two
+  position: two
+  acess_reserv: false
+  acess_quot: false
+  acess_cust: false
+  acess_meet: false
+  acess_meet_equi: false
+  acess_meet_ser: false
+  acess_room: false
+  acess_room_type: false
+  acess_bed_type: false
+  acess_room_equi: false
+  acess_room_ser: false
+  acess_room_add_on_ser: false
+  package: false
+  staff: false

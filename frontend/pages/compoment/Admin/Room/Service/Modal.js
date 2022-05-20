@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import Router from "next/router";
 
-const Modal = ({ modal, setModal, item  }) => {
+const Modal = ({ modal, setModal, item }) => {
   const { register, handleSubmit, watch, setValue } = useForm();
 
   useEffect(() => {
@@ -28,9 +28,7 @@ const Modal = ({ modal, setModal, item  }) => {
 
     axios
       .post("http://localhost:4000/servicerooms", data)
-      .then((res) => 
-        setModal(false)
-      );
+      .then((res) => setModal(false));
   };
 
   return (
@@ -39,8 +37,9 @@ const Modal = ({ modal, setModal, item  }) => {
 
       <div className="modal-content is-flex is-justify-content-center">
         <form className="box" onSubmit={handleSubmit(onSubmit)}>
-        <input {...register("id")} hidden />
+          <input {...register("id")} hidden />
           <label>Name</label>
+
           <input
             className="input box"
             type="text"
