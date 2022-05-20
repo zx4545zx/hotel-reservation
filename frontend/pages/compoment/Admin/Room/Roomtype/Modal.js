@@ -6,12 +6,10 @@ const Modal = ({ modal, setModal }) => {
       <div className="modal-content is-flex is-justify-content-center">
         <form className="box">
           <label>Name</label>
-          <input className="input box" type="text" placeholder="bedtype name" />
-          <label>Size / ft </label>
           <input
             className="input box"
-            type="number"
-            placeholder="Size /ft "
+            type="text"
+            placeholder="equipments name"
           />
           <div className="buttons is-flex is-justify-content-center		">
             <button className="button is-success ">Save</button>

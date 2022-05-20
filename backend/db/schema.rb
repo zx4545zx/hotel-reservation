@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_19_133724) do
 
   create_table "bedtypes", force: :cascade do |t|
     t.string "name"
-    t.string "size"
+    t.decimal "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -35,7 +35,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_19_133724) do
   end
 
   create_table "equipment", force: :cascade do |t|
-
     t.string "name"
     t.decimal "price"
     t.datetime "created_at", null: false

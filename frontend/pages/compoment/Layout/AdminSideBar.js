@@ -49,6 +49,9 @@ const AdminSideBar = () => {
           <a className="list-room">Rooms</a>
           </Link>
           <ul>
+          <Link href="/admin/room/roomtype" passHref>
+                <a>Roomtype</a>
+              </Link>
               <Link href="/admin/room/bedtype" passHref>
                 <a>Bedtype</a>
               </Link>

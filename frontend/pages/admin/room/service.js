@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 import Modal from "../../compoment/Admin/Room/Service/Modal";
 import ListTable from "../../compoment/Admin/Room/Service/ListTable";
 
@@ -14,7 +13,7 @@ const ServiceRooms = () => {
     axios.get("http://localhost:4000/servicerooms").then((res) => {
       setServicerooms(res.data);
     });
-  });
+  },[]);
 
   return (
     <AdminLayout>
