@@ -10,25 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_20_124327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addonservicerooms", force: :cascade do |t|
     t.string "name"
     t.decimal "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-
-  create_table "meeting_rooms", force: :cascade do |t|
-    t.string "name", null: false
-    t.decimal "price", null: false
-    t.integer "people", null: false
-    t.integer "table", null: false
-    t.string "status", default: "empty", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -46,9 +34,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "services", force: :cascade do |t|
-    t.string "name"
-    t.decimal "price"
+  create_table "equipment", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -60,10 +48,56 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "positions", force: :cascade do |t|
-    t.string "name"
+  create_table "meeting_rooms", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "price", null: false
+    t.integer "people", null: false
+    t.integer "table", null: false
+    t.string "status", default: "empty", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "positions", force: :cascade do |t|
+    t.string "name"
+    t.boolean "head"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.integer "guest", null: false
+    t.datetime "check_in", null: false
+    t.datetime "check_out", null: false
+    t.decimal "price", null: false
+    t.string "tracking", null: false
+    t.integer "queue", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.bigint "department_id"
+    t.bigint "position_id"
+    t.boolean "acess_reserv"
+    t.boolean "acess_quot"
+    t.boolean "acess_cust"
+    t.boolean "acess_meet"
+    t.boolean "acess_meet_equi"
+    t.boolean "acess_meet_ser"
+    t.boolean "acess_room"
+    t.boolean "acess_room_type"
+    t.boolean "acess_bed_type"
+    t.boolean "acess_room_equi"
+    t.boolean "acess_room_ser"
+    t.boolean "acess_room_add_on_ser"
+    t.boolean "package"
+    t.boolean "staff"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_roles_on_department_id"
+    t.index ["position_id"], name: "index_roles_on_position_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -87,6 +121,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "services", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "price", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "staffs", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -96,12 +137,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_114506) do
     t.string "status", default: "offline", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "department_id"
-    t.bigint "position_id"
-    t.index ["department_id"], name: "index_staffs_on_department_id"
-    t.index ["position_id"], name: "index_staffs_on_position_id"
+    t.bigint "staff_id"
+    t.bigint "role_id", null: false
+    t.index ["role_id"], name: "index_staffs_on_role_id"
+    t.index ["staff_id"], name: "index_staffs_on_staff_id"
   end
 
-  add_foreign_key "staffs", "departments"
-  add_foreign_key "staffs", "positions"
+  add_foreign_key "roles", "departments"
+  add_foreign_key "roles", "positions"
+  add_foreign_key "staffs", "roles"
+  add_foreign_key "staffs", "staffs"
 end

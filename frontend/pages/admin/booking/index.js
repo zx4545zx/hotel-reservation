@@ -966,7 +966,7 @@ const CustomerList = ({
 const AddCustomer = ({ add, setAdd }) => {
   return (
     <>
-      <from>
+      <form>
         <div className={`modal ${add && "is-active"}`}>
           <div className="modal-background" onClick={() => setAdd(false)}></div>
           <button
@@ -1015,7 +1015,7 @@ const AddCustomer = ({ add, setAdd }) => {
             </footer>
           </div>
         </div>
-      </from>
+      </form>
     </>
   );
 };
