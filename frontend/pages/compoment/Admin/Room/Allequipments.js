@@ -37,7 +37,7 @@ const Modal = ({ modal1, setModal1 }) => {
             <button
                 className="modal-close is-large"
                 aria-label="close"
-                onClick={() => setModal(false)}
+                onClick={() => setModal1(false)}
             ></button>
         </div>
     );

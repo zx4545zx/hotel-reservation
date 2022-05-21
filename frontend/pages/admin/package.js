@@ -2,7 +2,8 @@ import ModalMeetingRooms from "../compoment/Admin/Package/MeetingRooms";
 import ModalRoom from "../compoment/Admin/Package/Rooms";
 import ModalEquipmentsMeetingRooms from "../compoment/Admin/Package/EquipmentsMeetingRooms";
 import ModalServiceMeetingRooms from "../compoment/Admin/Package/ServiceMeetingRooms";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "flatpickr/dist/themes/material_green.css";
 import Flatpickr from "react-flatpickr";
 import useUser from "../../libs/useUser";
@@ -29,6 +30,7 @@ const Packages = () => {
   }
 
   const [modal, setModal] = useState(false);
+  const [packages, setPackages] = useState([]);
   const options = {
     mode: "range",
     minDate: "today",
@@ -36,6 +38,7 @@ const Packages = () => {
     minTime: "16:00",
     maxTime: "22:30",
   };
+
 
   return (
     <AdminLayout>
@@ -99,24 +102,32 @@ const Packages = () => {
       <ModalMeetingRooms modal={modal} setModal={setModal} />
       <nav className="level ">
         <div className="level-item">
+
+        
           <button className="button is-link " onClick={() => setModal(true)}>
             Meeting Rooms
+
           </button>
         </div>
 
         <div className="level-item">
+
           <button className="button is-primary" onClick={() => setModal(true)}>
             Rooms
+
           </button>
         </div>
 
         <div className="level-item">
+
           <button className="button is-danger " onClick={() => setModal(true)}>
             Equipments Meeting Rooms
+
           </button>
         </div>
 
         <div className="level-item">
+
           <button className="button is-warning " onClick={() => setModal(true)}>
             Service Meeting Rooms
           </button>
@@ -146,6 +157,7 @@ const Packages = () => {
         <p className="level-item">
           <a>Discount</a>
         </p>
+
         <input className="level-item" type="number"></input>
         <div className="level-item">
           <div className="select">
@@ -153,6 +165,7 @@ const Packages = () => {
               <option>Percentage</option>
               <option>Baht</option>
             </select>
+
           </div>
         </div>
       </nav>
@@ -175,12 +188,14 @@ const Packages = () => {
           </button>
           <button className="button is-danger" title="Disabled button">
             Save
+
           </button>
         </div>
       </nav>
 
       <h1 className="is-size-4">List</h1>
       <hr className="mt-0" />
+
     </AdminLayout>
   );
 };

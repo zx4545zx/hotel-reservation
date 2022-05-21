@@ -15,6 +15,7 @@ const Modal = ({ modal, setModal }) => {
           <input
             className="input box"
             type="number"
+            step="any"
             placeholder="price / item"
           />
           <div className="buttons is-flex is-justify-content-center		">

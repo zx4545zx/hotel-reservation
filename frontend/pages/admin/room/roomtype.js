@@ -1,24 +1,23 @@
-import ListTable from "../../compoment/Admin/Room/addonservice/ListTable";
-import Modal from "../../compoment/Admin/Room/addonservice/Modal";
+import ListTable from "../../compoment/Admin/Room/roomtype/ListTable";
+import Modal from "../../compoment/Admin/Room/roomtype/Modal";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
-const AddonServiceRooms = () => {
+const RoomType = () => {
   const [modal, setModal] = useState(false);
-  const [addon, setaddon] = useState([]);
+  const [roomtype, setRoomtypes] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/addonservicerooms")
-      .then((res) => setaddon(res.data));
-  },[])
+    axios.get("http://localhost:4000/roomtypes").then((res) => {
+      setRoomtypes(res.data);
+    });
+  },[]);
   
   return (
     <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
-        Add-on Service Rooms
+        Roomtype
       </div>
 
       <Modal modal={modal} setModal={setModal} />
@@ -36,9 +35,9 @@ const AddonServiceRooms = () => {
 
       <hr className="mt-0" />
 
-      <ListTable addon={addon}/>
+      <ListTable roomtype={roomtype} />
     </AdminLayout>
   );
 };
 
-export default AddonServiceRooms;
+export default RoomType;
