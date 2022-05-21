@@ -11,7 +11,7 @@ const ListTable = ({ addon }) => {
   }
 
   return (
-      <>
+    <>
       <table className="table is-bordered is-fullwidth">
         <thead>
           <tr>
@@ -46,9 +46,9 @@ const ListTable = ({ addon }) => {
 
         </tbody>
       </table>
-      <Modal modal={modal} setModal={setModal} item={item}/>
-      </>
-      );
-  };
+      <Modal modal={modal} setModal={setModal} item={item} />
+    </>
+  );
+};
 
-      export default ListTable;
+export default ListTable;

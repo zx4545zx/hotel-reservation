@@ -1,4 +1,4 @@
 class Position < ApplicationRecord
-  has_many :staffs, dependent: :nullify
-  has_many :departments, through: :staffs
+    has_many :roles
+    has_many :departments, through: :roles
 end

@@ -52,10 +52,10 @@ const Modal = ({ modal, setModal, item }) => {
             placeholder="price / item"
             {...register("price")}
           />
-
-          <button type="submit" className="button is-success ">
-          Save
-          </button> 
+          <div className="buttons is-flex is-justify-content-center		">
+            <button className="button is-success ">Save</button>
+            <button className="button is-warning">cancle</button>
+          </div>
         </form>
       </div>
 

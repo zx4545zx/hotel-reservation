@@ -44,6 +44,7 @@ const ListTable = ({ servicerooms }) => {
             </tr>
           );
         })}
+
       </tbody>
     </table>
     <Modal modal={modal} setModal={setModal} item={item}/>
