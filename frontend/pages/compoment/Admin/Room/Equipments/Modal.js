@@ -48,6 +48,7 @@ const Modal = ({ modal, setModal, item }) => {
           <input
             className="input box"
             type="number"
+            step="any"
             placeholder="price / item"
             {...register("price")}
           />

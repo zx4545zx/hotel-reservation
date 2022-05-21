@@ -1,5 +1,17 @@
-const ListTable = () => {
-    return (
+import Modal from "./Modal";
+import { useState } from "react";
+import axios from "axios";
+
+const ListTable = ({ addon }) => {
+  const [item, setItem] = useState([]);
+  const [modal, setModal] = useState(false);
+
+  const DeleteService = (id) => {
+    axios.delete("http://localhost:4000/addonservicerooms/" + id).then(res => console.log('ok'))
+  }
+
+  return (
+      <>
       <table className="table is-bordered is-fullwidth">
         <thead>
           <tr>
@@ -12,32 +24,31 @@ const ListTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>1</th>
-            <td>เตียงเสริม</td>
-            <td>700</td>
-            <td className="has-text-centered">
-            <div className="buttons is-flex is-justify-content-center">
-              <button className="button is-success is-rounded">Edit</button>
-              <button className="button is-danger is-rounded">Delete</button>
-            </div>
-            </td>
-          </tr>
-          <tr>
-            <th>2</th>
-            <td>อาหารในเซ็ต/1ท่าน</td>
-            <td>300</td>
-            <td className="has-text-centered">
-            <div className="buttons is-flex is-justify-content-center">
-              <button className="button is-success is-rounded">Edit</button>
-              <button className="button is-danger is-rounded">Delete</button>
-            </div>
-            </td>
-          </tr>
+          {addon.map((a) => {
+            return (
+              <tr key={a.id}>
+                <th>{a.id}</th>
+                <td>{a.name}</td>
+                <td>{a.price}</td>
+                <td className="has-text-centered">
+                  <div className="buttons is-flex is-justify-content-center">
+                    <button className="button is-success is-rounded"
+                      onClick={() => {
+                        setItem(a)
+                        setModal(true);
+                      }}>Edit</button>
+                    <button className="button is-danger is-rounded" onClick={() => DeleteService(a.id)}>Delete</button>
+                  </div>
+                </td>
+              </tr>
+            )
+          })}
+
         </tbody>
       </table>
-    );
+      <Modal modal={modal} setModal={setModal} item={item}/>
+      </>
+      );
   };
-  
-  export default ListTable;
-  
+
+      export default ListTable;

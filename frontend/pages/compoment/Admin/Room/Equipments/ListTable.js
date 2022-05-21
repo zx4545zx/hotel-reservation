@@ -29,7 +29,7 @@ const ListTable = ({ equipmentsroom }) => {
             <tr key={data.id}>
               <th>{data.id}</th>
               <td>{data.name}</td>
-              <td>{data.name}</td>
+              <td>{data.price}</td>
               <td className="has-text-centered">
             <div className="buttons is-flex is-justify-content-center">
             <button className="button is-success is-rounded"  onClick={() => {

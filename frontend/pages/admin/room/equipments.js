@@ -21,7 +21,6 @@ const EquipmentRooms = () => {
       Equipments Rooms
       </div>
       
-
       <Modal modal={modal} setModal={setModal} />
 
       <div className="is-flex is-justify-content-space-between is-align-items-flex-end">
