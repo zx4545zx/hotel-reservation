@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :positions
   resources :departments
   resources :staffs
+  resources :roles
 
   resources :roomtypes
   resources :bedtypes

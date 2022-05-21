@@ -45,10 +45,10 @@ const AdminSideBar = () => {
             </ul>
           </li>
           <li>
-          <Link href="/admin/room" passHref>
-          <a className="list-room">Rooms</a>
-          </Link>
-          <ul>
+            <Link href="/admin/room" passHref>
+              <a className="list-room">Rooms</a>
+            </Link>
+            <ul>
               <Link href="/admin/room/bedtype" passHref>
                 <a>Bedtype</a>
               </Link>
@@ -63,7 +63,7 @@ const AdminSideBar = () => {
               </Link>
             </ul>
           </li>
-          
+
           <Link href="/admin/package" passHref>
             <a>Packages</a>
           </Link>
@@ -71,18 +71,15 @@ const AdminSideBar = () => {
 
         <p className="menu-label">Others</p>
         <ul className="menu-list">
-          <Link href="/admin/staff" passHref>
-            <a>Staff</a>
-          </Link>
           <li>
-            <Link href="/admin/role" passHref>
-              <a>Role Acsses</a>
+            <Link href="/admin/staff" passHref>
+              <a>Staff</a>
             </Link>
             <ul>
-              <Link href="/admin/role/department" passHref>
+              <Link href="/admin/staff/department" passHref>
                 <a>Department</a>
               </Link>
-              <Link href="/admin/role/position" passHref>
+              <Link href="/admin/staff/position" passHref>
                 <a>Position</a>
               </Link>
             </ul>

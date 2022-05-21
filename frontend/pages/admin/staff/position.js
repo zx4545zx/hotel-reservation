@@ -47,6 +47,7 @@ const Modal = ({ modal, setModal, position }) => {
     if (position) {
       setValue("id", position.id);
       setValue("name", position.name);
+      setValue("head", position.head);
     }
     return;
   }, []);
@@ -88,6 +89,10 @@ const Modal = ({ modal, setModal, position }) => {
                 })}
               />
             </div>
+            <label className="checkbox p-2">
+              <input type="checkbox" {...register("head")} />
+              {`  Department Head`}
+            </label>
           </div>
 
           <div className="field is-grouped">
