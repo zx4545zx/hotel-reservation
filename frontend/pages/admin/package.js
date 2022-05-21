@@ -6,10 +6,29 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "flatpickr/dist/themes/material_green.css";
 import Flatpickr from "react-flatpickr";
+import useUser from "../../libs/useUser";
 
 import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const Packages = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_package) {
+    return (
+      <AdminLayout>
+        <div class="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
+  }
+
   const [modal, setModal] = useState(false);
   const [packages, setPackages] = useState([]);
   const options = {
