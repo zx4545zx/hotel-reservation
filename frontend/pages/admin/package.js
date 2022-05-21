@@ -11,6 +11,11 @@ import useUser from "../../libs/useUser";
 import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const Packages = () => {
+  const [modalMR, setModalMR] = useState(false);
+  const [modalR, setModalR] = useState(false);
+  const [modalEMR, setModalEMR] = useState(false);
+  const [modalSMR, setModalSMR] = useState(false);
+
   const { user } = useUser({ redirectTo: "/admin/login" });
 
   if (!user || user.isLoggedIn === false) {
@@ -98,41 +103,45 @@ const Packages = () => {
           <Flatpickr options={options} />
         </div>
       </nav>
-
-      <ModalMeetingRooms modal={modal} setModal={setModal} />
-      <nav className="level ">
-        <div className="level-item">
-
-        
-          <button className="button is-link " onClick={() => setModal(true)}>
-            Meeting Rooms
-
+    
+      <ModalMeetingRooms modalMR={modalMR} setModalMR={setModalMR} />
+      <nav class="level ">
+        <div class="level-item">
+          <button
+            className="button is-link "
+            onClick={() => setModalMR(true)}
+          >Meeting Rooms
           </button>
         </div>
 
-        <div className="level-item">
-
-          <button className="button is-primary" onClick={() => setModal(true)}>
-            Rooms
-
+        <ModalRoom modalR={modalR} setModalR={setModalR} />
+        <div class="level-item">
+          <button
+            className="button is-primary"
+            onClick={() => setModalR(true)}
+          >Rooms
           </button>
         </div>
-
-        <div className="level-item">
-
-          <button className="button is-danger " onClick={() => setModal(true)}>
-            Equipments Meeting Rooms
-
+     
+        <ModalEquipmentsMeetingRooms modalEMR={modalEMR} setModalEMR={setModalEMR} />
+        <div class="level-item">
+          <button
+            className="button is-danger "
+            onClick={() => setModalEMR(true)}
+          >Equipments Meeting Rooms
           </button>
         </div>
-
-        <div className="level-item">
-
-          <button className="button is-warning " onClick={() => setModal(true)}>
-            Service Meeting Rooms
+      
+        <ModalServiceMeetingRooms modalSMR={modalSMR} setModalSMR={setModalSMR} />
+        <div class="level-item">
+          <button
+            className="button is-warning "
+            onClick={() => setModalSMR(true)}
+          >Service Meeting Rooms
           </button>
         </div>
       </nav>
+
       <label>Summary</label>
       <div className="control">
         <textarea

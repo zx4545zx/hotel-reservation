@@ -1,23 +1,18 @@
-const Modal = ({ modal, setModal }) => {
+const Modal = ({ modalSMR, setModalSMR }) => {
     return (
-      <div id="modal-js-example" className={`modal ${modal && "is-active"}`}>
-        <div className="modal-background" onClick={() => setModal(false)}></div>
+      <div id="modal-js-example" className={`modal ${modalSMR && "is-active"}`}>
+        <div className="modal-background" onClick={() => setModalSMR(false)}></div>
   
         <div className="modal-content is-flex is-justify-content-center">
           <form className="box">
-            <label>Name</label>
-            <input
-              className="input box"
-              type="text"
-              placeholder="equipments name"
-            />
-            <label>Price / THB</label>
-            <input
-              className="input box"
-              type="number"
-              placeholder="price / item"
-            />
-  
+          <label>Service Meeting Rooms</label>
+            <nav className="level">
+              <label className="checkbox">
+                <input type="checkbox"/>
+                Wednesday
+                </label>
+                <input class="level-item" type="number"></input>
+            </nav> 
             <button type="submit" className="button is-success">
               Save
             </button>
@@ -27,7 +22,7 @@ const Modal = ({ modal, setModal }) => {
         <button
           className="modal-close is-large"
           aria-label="close"
-          onClick={() => setModal(false)}
+          onClick={() => setModalSMR(false)}
         ></button>
       </div>
     );
