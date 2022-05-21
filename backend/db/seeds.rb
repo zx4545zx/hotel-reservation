@@ -13,7 +13,7 @@ if Department.create!(name: 'admin')
     put 'department created'
 end
 
-if Role.create!(department_id: 1 , position: 1)
+if Role.create!(department_id: 1 , position_id: 1)
     put 'role created'
 end
 
