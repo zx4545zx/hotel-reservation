@@ -1,18 +1,25 @@
 import ListTable from "../../compoment/Admin/Room/addonservice/ListTable";
 import Modal from "../../compoment/Admin/Room/addonservice/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-import AdminLayout from "../../compoment/Layout/AdminLayout"
+import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const AddonServiceRooms = () => {
   const [modal, setModal] = useState(false);
+  const [addon, setaddon] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/addonservicerooms")
+      .then((res) => setaddon(res.data));
+  },[])
+  
   return (
     <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
         Add-on Service Rooms
       </div>
-      
 
       <Modal modal={modal} setModal={setModal} />
 
@@ -29,7 +36,7 @@ const AddonServiceRooms = () => {
 
       <hr className="mt-0" />
 
-      <ListTable />
+      <ListTable addon={addon}/>
     </AdminLayout>
   );
 };

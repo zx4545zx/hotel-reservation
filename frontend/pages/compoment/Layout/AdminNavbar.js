@@ -2,17 +2,11 @@ import { useState } from "react";
 import Link from "next/link";
 import Router from "next/router";
 import axios from "axios";
-import useUser from "../../../libs/useUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchway } from "@fortawesome/free-solid-svg-icons";
 
-const AdminNavbar = () => {
-  const { user } = useUser({ redirectTo: "/admin/login" });
+const AdminNavbar = ({ user }) => {
   const [burger, setBurger] = useState(false);
-
-  if (!user || user.isLoggedIn === false) {
-    return <div>Loading...</div>;
-  }
 
   const LogOut = () => {
     axios
