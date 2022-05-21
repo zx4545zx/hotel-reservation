@@ -60,7 +60,6 @@ const Modal = ({ modal, setModal }) => {
   return (
     <div id="modal-js-example" className={`modal ${modal && "is-active"}`}>
       <div className="modal-background" onClick={() => setModal(false)}></div>
-
       <div className="modal-content is-flex is-justify-content-center">
         <form className="box">
           <label>Name</label>

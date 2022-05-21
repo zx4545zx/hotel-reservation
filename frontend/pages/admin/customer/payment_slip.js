@@ -58,7 +58,7 @@ const PaymentSlip = () => {
             class="button is-success is-rounded "
             onClick={() => setModal(true)}
           >
-            ยืนยัน
+            Confirm
           </button>
         </div>
       </div>
