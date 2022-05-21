@@ -2,5 +2,5 @@ class Role < ApplicationRecord
   belongs_to :department
   belongs_to :position
 
-  has_one :staff
+  has_one :staff, dependent: :nullify
 end

@@ -160,8 +160,44 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_124327) do
 
   create_table "positions", force: :cascade do |t|
     t.string "name"
+    t.boolean "head", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.integer "guest", null: false
+    t.datetime "check_in", null: false
+    t.datetime "check_out", null: false
+    t.decimal "price", null: false
+    t.string "tracking", null: false
+    t.integer "queue", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.bigint "department_id"
+    t.bigint "position_id"
+    t.boolean "acess_reserv", default: false
+    t.boolean "acess_quot", default: false
+    t.boolean "acess_cust", default: false
+    t.boolean "acess_meet", default: false
+    t.boolean "acess_meet_equi", default: false
+    t.boolean "acess_meet_ser", default: false
+    t.boolean "acess_room", default: false
+    t.boolean "acess_room_type", default: false
+    t.boolean "acess_bed_type", default: false
+    t.boolean "acess_room_equi", default: false
+    t.boolean "acess_room_ser", default: false
+    t.boolean "acess_room_add_on_ser", default: false
+    t.boolean "acess_package", default: false
+    t.boolean "acess_staff", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_roles_on_department_id"
+    t.index ["position_id"], name: "index_roles_on_position_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -202,7 +238,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_124327) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "staff_id"
-    t.bigint "role_id", null: false
+    t.bigint "role_id"
     t.index ["role_id"], name: "index_staffs_on_role_id"
     t.index ["staff_id"], name: "index_staffs_on_staff_id"
   end
@@ -219,4 +255,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_124327) do
   add_foreign_key "list_package_rooms", "roomtypes", column: "roomtypes_id"
   add_foreign_key "list_package_services", "packages", column: "packages_id"
   add_foreign_key "list_package_services", "services", column: "services_id"
+  add_foreign_key "roles", "departments"
+  add_foreign_key "roles", "positions"
+  add_foreign_key "staffs", "roles"
+  add_foreign_key "staffs", "staffs"
 end

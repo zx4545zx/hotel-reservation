@@ -24,7 +24,6 @@ const LoginForm = ({ register, handleSubmit, errors, clearErrors, onSubmit }) =>
             type="password"
             placeholder="*******"
             className="input"
-            required
             {...register("password")}
           />
         </div>
