@@ -2,7 +2,8 @@ import ModalMeetingRooms from "../compoment/Admin/Package/MeetingRooms";
 import ModalRoom from "../compoment/Admin/Package/Rooms";
 import ModalEquipmentsMeetingRooms from "../compoment/Admin/Package/EquipmentsMeetingRooms";
 import ModalServiceMeetingRooms from "../compoment/Admin/Package/ServiceMeetingRooms";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "flatpickr/dist/themes/material_green.css";
 import Flatpickr from "react-flatpickr";
 import useUser from "../../libs/useUser";
@@ -10,6 +11,11 @@ import useUser from "../../libs/useUser";
 import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const Packages = () => {
+  const [modalMR, setModalMR] = useState(false);
+  const [modalR, setModalR] = useState(false);
+  const [modalEMR, setModalEMR] = useState(false);
+  const [modalSMR, setModalSMR] = useState(false);
+
   const { user } = useUser({ redirectTo: "/admin/login" });
 
   if (!user || user.isLoggedIn === false) {
@@ -29,6 +35,7 @@ const Packages = () => {
   }
 
   const [modal, setModal] = useState(false);
+  const [packages, setPackages] = useState([]);
   const options = {
     mode: "range",
     minDate: "today",
@@ -96,32 +103,48 @@ const Packages = () => {
         </div>
       </nav>
 
-      <ModalMeetingRooms modal={modal} setModal={setModal} />
-      <nav className="level ">
-        <div className="level-item">
-          <button className="button is-link " onClick={() => setModal(true)}>
+      <ModalMeetingRooms modalMR={modalMR} setModalMR={setModalMR} />
+      <nav class="level ">
+        <div class="level-item">
+          <button className="button is-link " onClick={() => setModalMR(true)}>
             Meeting Rooms
           </button>
         </div>
 
-        <div className="level-item">
-          <button className="button is-primary" onClick={() => setModal(true)}>
+        <ModalRoom modalR={modalR} setModalR={setModalR} />
+        <div class="level-item">
+          <button className="button is-primary" onClick={() => setModalR(true)}>
             Rooms
           </button>
         </div>
 
-        <div className="level-item">
-          <button className="button is-danger " onClick={() => setModal(true)}>
+        <ModalEquipmentsMeetingRooms
+          modalEMR={modalEMR}
+          setModalEMR={setModalEMR}
+        />
+        <div class="level-item">
+          <button
+            className="button is-danger "
+            onClick={() => setModalEMR(true)}
+          >
             Equipments Meeting Rooms
           </button>
         </div>
 
-        <div className="level-item">
-          <button className="button is-warning " onClick={() => setModal(true)}>
+        <ModalServiceMeetingRooms
+          modalSMR={modalSMR}
+          setModalSMR={setModalSMR}
+        />
+        <div class="level-item">
+          <button
+            className="button is-warning "
+            onClick={() => setModalSMR(true)}
+          >
             Service Meeting Rooms
           </button>
         </div>
       </nav>
+
       <label>Summary</label>
       <div className="control">
         <textarea
@@ -146,6 +169,7 @@ const Packages = () => {
         <p className="level-item">
           <a>Discount</a>
         </p>
+
         <input className="level-item" type="number"></input>
         <div className="level-item">
           <div className="select">
