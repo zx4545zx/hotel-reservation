@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import useUser from "../../../libs/useUser";
 
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 import { staffForm } from "../../../libs/utils/staffForm";
@@ -12,6 +13,23 @@ const RoleAcsses = () => {
   const Router = useRouter();
   const [departments, setDepartments] = useState([]);
   const [positions, setPositions] = useState([]);
+  const { user } = useUser({ redirectTo: "/admin/login" });
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_cust) {
+    return (
+      <AdminLayout>
+        <div class="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
+  }
 
   useEffect(() => {
     if (!Router.isReady) return;

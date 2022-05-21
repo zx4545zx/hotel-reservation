@@ -2,10 +2,28 @@ import AdminLayout from "../../compoment/Layout/AdminLayout";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import useUser from "../../../libs/useUser";
 
 const Department = () => {
   const [modal, setModal] = useState(false);
   const [departments, setDepartments] = useState([]);
+  const { user } = useUser({ redirectTo: "/admin/login" });
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_cust) {
+    return (
+      <AdminLayout>
+        <div class="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
+  }
 
   useEffect(() => {
     axios
