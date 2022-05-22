@@ -250,14 +250,17 @@ const Booking = () => {
                         setPack={setPack}
                         roomType={roomType}
                         setRoomType={setRoomType}
+                        guest={guest}
                       />
                     ) : (
                       <BookingRooms
                         pack={pack}
                         setPack={setPack}
+                        roomType={roomType}
                         setRoomType={setRoomType}
                         setResult={setResult}
                         result={result}
+                        guest={guest}
                       />
                     )}
                   </div>
@@ -280,6 +283,7 @@ const Booking = () => {
               result={result}
               confirmSubmit={confirmSubmit}
               setButget={setButget}
+              guest={guest}
             >
               {result.length != 0 ? (
                 <OrderCard
@@ -390,6 +394,7 @@ const BookingMeetingRooms = ({
   setPack,
   roomType,
   setRoomType,
+  guest,
 }) => {
   const [meetingRooms, setMeetingRooms] = useState([]);
 
@@ -434,7 +439,170 @@ const BookingMeetingRooms = ({
     <div className="container">
       {meetingRooms.length > 0 ? (
         <>
-          {meetingRooms.map((m) => {
+          {meetingRooms
+            .filter((m) => m.people <= guest)
+            .map((m) => {
+              return (
+                <div className="card mb-3" key={m.id}>
+                  <div className="card-content">
+                    <div className="media">
+                      <div className="media-left">
+                        <figure className="image is-128x128">
+                          <img
+                            src="https://bulma.io/images/placeholders/128x128.png"
+                            alt="Placeholder image"
+                          />
+                        </figure>
+                      </div>
+
+                      <div className="media-content">
+                        <div className="is-flex is-align-items-center is-justify-content-flex-start mb-1">
+                          <div className="title m-0 is-5">{m.name}</div>
+                        </div>
+
+                        <p className="subtitle is-6 has-text-grey mb-2">
+                          Suport <u>{m.people}</u> guest, <u>{m.table}</u> table
+                        </p>
+                        <p>
+                          Spacious rooms (32sqm) with panoramic city views,
+                          king-sized bed or convert to twin beds.
+                        </p>
+
+                        <u>
+                          <a className="pointer">detail</a>
+                        </u>
+                      </div>
+                    </div>
+
+                    <hr />
+
+                    <div className="content columns">
+                      <div className="column is-three-quarters">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Phasellus nec iaculis mauris.
+                      </div>
+                      <div className="column pr-5">
+                        <div className="has-text-right mb-2">15,000 THB</div>
+                        <button
+                          type="button"
+                          className={`button is-primary is-fullwidth ${
+                            btnDisable(m) ? "is-static" : ""
+                          }`}
+                          onClick={() => setResult([...result, m])}
+                        >
+                          ADD
+                        </button>
+                      </div>
+                    </div>
+
+                    {m.packages.length != 0 && (
+                      <>
+                        <div className="title is-5 m-0">Packages</div>
+                        <hr className="mt-2" />
+                      </>
+                    )}
+
+                    {m.packages.map((p) => {
+                      return (
+                        <div key={p.id}>
+                          <div className="content columns">
+                            <div className="column is-three-quarters">
+                              <div className="title is-6 mb-2">{p.name}</div>
+                              <div className="mb-2">
+                                Start: {p.start} - Stop: {p.stop}
+                              </div>
+                              <u>
+                                <a className="pointer">detail</a>
+                              </u>
+                            </div>
+                            <div className="column pr-5">
+                              <div className="has-text-right">12,000 THB</div>
+                              <div className="has-text-right mb-2 has-text-grey">
+                                <strike>15,000 THB</strike>
+                              </div>
+                              <button
+                                type="button"
+                                className={`button is-primary is-fullwidth ${
+                                  btnDisablePack(p) ? "is-static" : ""
+                                }`}
+                                onClick={() => findPackage(p)}
+                              >
+                                ADD
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+        </>
+      ) : (
+        <>
+          <div className="notification is-warning is-light has-text-centered">
+            Loading...
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const BookingRooms = ({
+  pack,
+  setPack,
+  roomType,
+  setRoomType,
+  setResult,
+  result,
+  guest,
+}) => {
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/roomtypes`)
+      .then((res) => setRooms(res.data));
+  }, []);
+
+  const findPackage = (p) => {
+    axios.get(`http://localhost:4000/packages/${p.id}`).then((res) => {
+      setResult(res.data.meeting_rooms);
+      setPack([res.data]);
+      setRoomType(res.data.roomtypes);
+    });
+  };
+
+  const btnDisable = (val) => {
+    const r = roomType.filter((v) => v.id === val.id);
+
+    if (r.length > 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const btnDisablePack = (val) => {
+    const r = pack.filter((v) => v.id === val.id);
+
+    if (result.length <= 0 || roomType.length <= 0) {
+      return false;
+    }
+
+    if (r.length > 0) {
+      return true;
+    }
+
+    return false;
+  };
+
+  return (
+    <div className="container">
+      {rooms.length > 0 ? (
+        <>
+          {rooms.map((m) => {
             return (
               <div className="card mb-3" key={m.id}>
                 <div className="card-content">
@@ -457,7 +625,7 @@ const BookingMeetingRooms = ({
                       </div>
 
                       <p className="subtitle is-6 has-text-grey mb-2">
-                        Suport <u>{m.people}</u> guest, <u>{m.table}</u> table
+                        Suport <u>2</u> guest
                       </p>
                       <p>
                         Spacious rooms (32sqm) with panoramic city views,
@@ -478,13 +646,13 @@ const BookingMeetingRooms = ({
                       Phasellus nec iaculis mauris.
                     </div>
                     <div className="column pr-5">
-                      <div className="has-text-right mb-2">15,000 THB</div>
+                      <div className="has-text-right mb-2">0 THB</div>
                       <button
                         type="button"
                         className={`button is-primary is-fullwidth ${
                           btnDisable(m) ? "is-static" : ""
                         }`}
-                        onClick={() => setResult([...result, m])}
+                        onClick={() => setRoomType([...roomType, m])}
                       >
                         ADD
                       </button>
@@ -542,130 +710,6 @@ const BookingMeetingRooms = ({
   );
 };
 
-const BookingRooms = ({ pack, setPack, setRoomType, setResult, result }) => {
-  const [rooms, setRooms] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/roomtypes`)
-      .then((res) => setRooms(res.data));
-  }, []);
-
-  const findPackage = (p) => {
-    axios.get(`http://localhost:4000/packages/${p.id}`).then((res) => {
-      setResult(res.data.meeting_rooms);
-      setPack([res.data]);
-      setRoomType(res.data.roomtypes);
-    });
-  };
-
-  return (
-    <div className="container">
-      {rooms.length > 0 ? (
-        <>
-          {rooms.map((m) => {
-            return (
-              <div className="card mb-3" key={m.id}>
-                <div className="card-content">
-                  <div className="media">
-                    <div className="media-left">
-                      <figure className="image is-128x128">
-                        <img
-                          src="https://bulma.io/images/placeholders/128x128.png"
-                          alt="Placeholder image"
-                        />
-                      </figure>
-                    </div>
-
-                    <div className="media-content">
-                      <div className="is-flex is-align-items-center is-justify-content-space-between mb-1">
-                        <div className="title m-0 is-5">{m.name}</div>
-                        <div className="has-text-success title m-0 is-5">
-                          10 Available
-                        </div>
-                      </div>
-
-                      <p className="subtitle is-6 has-text-grey mb-2">
-                        Suport <u>2</u> guest
-                      </p>
-                      <p>
-                        Spacious rooms (32sqm) with panoramic city views,
-                        king-sized bed or convert to twin beds.
-                      </p>
-
-                      <u>
-                        <a className="pointer">detail</a>
-                      </u>
-                    </div>
-                  </div>
-
-                  <hr />
-
-                  <div className="content columns">
-                    <div className="column is-three-quarters">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec iaculis mauris.
-                    </div>
-                    <div className="column pr-5">
-                      <div className="has-text-right mb-2">0 THB</div>
-                      <button
-                        type="button"
-                        className="button is-primary is-fullwidth"
-                      >
-                        ADD
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="title is-5 m-0">Packages</div>
-                  <hr className="mt-2" />
-
-                  {m.packages.map((p) => {
-                    return (
-                      <div key={p.id}>
-                        <div className="content columns">
-                          <div className="column is-three-quarters">
-                            <div className="title is-6 mb-2">{p.name}</div>
-                            <div className="mb-2">
-                              Start: {p.start} - Stop: {p.stop}
-                            </div>
-                            <u>
-                              <a className="pointer">detail</a>
-                            </u>
-                          </div>
-                          <div className="column pr-5">
-                            <div className="has-text-right">12,000 THB</div>
-                            <div className="has-text-right mb-2 has-text-grey">
-                              <strike>15,000 THB</strike>
-                            </div>
-                            <button
-                              type="button"
-                              className="button is-primary is-fullwidth"
-                              onClick={() => findPackage(p)}
-                            >
-                              ADD
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </>
-      ) : (
-        <>
-          <div className="notification is-warning is-light has-text-centered">
-            Loading...
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
-
 const BookingSummary = ({
   children,
   customer,
@@ -673,6 +717,7 @@ const BookingSummary = ({
   result,
   confirmSubmit,
   setButget,
+  guest,
 }) => {
   const [show, setShow] = useState(false);
 
@@ -700,7 +745,7 @@ const BookingSummary = ({
         <div className="column p-0">
           {val.day_checkin} - {val.day_checkout}
         </div>
-        <div className="column p-0">{val.guest_number} Guest</div>
+        <div className="column p-0">{guest} Guest</div>
       </div>
       <hr className="my-2" />
 
@@ -989,7 +1034,7 @@ const OrderCard = ({
             </p>
             <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
               <div>Price</div>
-              <div>{r.price} THB</div>
+              <div>{r.price} THB/Day</div>
             </div>
 
             <div className="panel-block">
@@ -1029,7 +1074,7 @@ const OrderCard = ({
                 </p>
                 <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
                   <div>Price</div>
-                  <div>{r.price} THB</div>
+                  <div>{r.price} THB/Day</div>
                 </div>
 
                 <div className="panel-block">
