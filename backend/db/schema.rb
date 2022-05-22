@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_124327) do
 
   create_table "bedtypes", force: :cascade do |t|
     t.string "name"
-    t.decimal "size"
+    t.string "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -49,42 +49,42 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_124327) do
   end
 
   create_table "list_package_equipments", force: :cascade do |t|
-    t.bigint "packages_id", null: false
+    t.bigint "package_id", null: false
     t.bigint "equipment_id", null: false
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_id"], name: "index_list_package_equipments_on_equipment_id"
-    t.index ["packages_id"], name: "index_list_package_equipments_on_packages_id"
+    t.index ["package_id"], name: "index_list_package_equipments_on_package_id"
   end
 
   create_table "list_package_meetingrooms", force: :cascade do |t|
-    t.bigint "packages_id", null: false
-    t.bigint "meeting_rooms_id", null: false
+    t.bigint "package_id", null: false
+    t.bigint "meeting_room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["meeting_rooms_id"], name: "index_list_package_meetingrooms_on_meeting_rooms_id"
-    t.index ["packages_id"], name: "index_list_package_meetingrooms_on_packages_id"
+    t.index ["meeting_room_id"], name: "index_list_package_meetingrooms_on_meeting_room_id"
+    t.index ["package_id"], name: "index_list_package_meetingrooms_on_package_id"
   end
 
   create_table "list_package_rooms", force: :cascade do |t|
-    t.bigint "packages_id", null: false
-    t.bigint "roomtypes_id", null: false
+    t.bigint "package_id", null: false
+    t.bigint "roomtype_id", null: false
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["packages_id"], name: "index_list_package_rooms_on_packages_id"
-    t.index ["roomtypes_id"], name: "index_list_package_rooms_on_roomtypes_id"
+    t.index ["package_id"], name: "index_list_package_rooms_on_package_id"
+    t.index ["roomtype_id"], name: "index_list_package_rooms_on_roomtype_id"
   end
 
   create_table "list_package_services", force: :cascade do |t|
-    t.bigint "packages_id", null: false
-    t.bigint "services_id", null: false
+    t.bigint "package_id", null: false
+    t.bigint "service_id", null: false
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["packages_id"], name: "index_list_package_services_on_packages_id"
-    t.index ["services_id"], name: "index_list_package_services_on_services_id"
+    t.index ["package_id"], name: "index_list_package_services_on_package_id"
+    t.index ["service_id"], name: "index_list_package_services_on_service_id"
   end
 
   create_table "meeting_rooms", force: :cascade do |t|
@@ -192,13 +192,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_124327) do
   end
 
   add_foreign_key "list_package_equipments", "equipment"
-  add_foreign_key "list_package_equipments", "packages", column: "packages_id"
-  add_foreign_key "list_package_meetingrooms", "meeting_rooms", column: "meeting_rooms_id"
-  add_foreign_key "list_package_meetingrooms", "packages", column: "packages_id"
-  add_foreign_key "list_package_rooms", "packages", column: "packages_id"
-  add_foreign_key "list_package_rooms", "roomtypes", column: "roomtypes_id"
-  add_foreign_key "list_package_services", "packages", column: "packages_id"
-  add_foreign_key "list_package_services", "services", column: "services_id"
+  add_foreign_key "list_package_equipments", "packages"
+  add_foreign_key "list_package_meetingrooms", "meeting_rooms"
+  add_foreign_key "list_package_meetingrooms", "packages"
+  add_foreign_key "list_package_rooms", "packages"
+  add_foreign_key "list_package_rooms", "roomtypes"
+  add_foreign_key "list_package_services", "packages"
+  add_foreign_key "list_package_services", "services"
   add_foreign_key "roles", "departments"
   add_foreign_key "roles", "positions"
   add_foreign_key "staffs", "roles"

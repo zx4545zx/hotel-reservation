@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :list_package_meetingrooms
   resources :packages
   resources :services
-  resources :equipment
+  resources :equipments
   resources :meeting_rooms
 
   resources :positions
