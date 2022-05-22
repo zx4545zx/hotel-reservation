@@ -7,7 +7,7 @@ const ListTable = ({ equipments }) => {
   const [modal, setModal] = useState(false);
 
   const DeleteService = (id) => {
-    axios.delete("http://localhost:4000/equipment/"+id).then(res => console.log('ok'))
+    axios.delete("http://localhost:4000/equipments/"+id).then(res => console.log('ok'))
   }
 
   return (

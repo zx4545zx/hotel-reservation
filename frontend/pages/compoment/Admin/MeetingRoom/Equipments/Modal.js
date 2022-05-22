@@ -19,14 +19,14 @@ const Modal = ({ modal, setModal, item }) => {
 
     if (data.id != "") {
       axios
-        .patch("http://localhost:4000/equipment/" + data.id, data)
+        .patch("http://localhost:4000/equipments/" + data.id, data)
         .then((res) => setModal(false));
 
       return;
     }
 
     axios
-      .post("http://localhost:4000/equipment", data)
+      .post("http://localhost:4000/equipments", data)
       .then((res) => setModal(false));
   };
 
