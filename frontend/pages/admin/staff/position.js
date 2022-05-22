@@ -2,21 +2,39 @@ import AdminLayout from "../../compoment/Layout/AdminLayout";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import useUser from "../../../libs/useUser";
 
-const Department = () => {
+const Position = () => {
   const [modal, setModal] = useState(false);
-  const [departments, setDepartments] = useState([]);
+  const [positions, setPositions] = useState([]);
+  const { user } = useUser({ redirectTo: "/admin/login" });
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_cust) {
+    return (
+      <AdminLayout>
+        <div class="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
+  }
 
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments`)
-      .then((res) => setDepartments(res.data));
-  }, [departments]);
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/positions`)
+      .then((res) => setPositions(res.data));
+  }, [positions]);
 
   return (
     <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
-        Department
+        Position
       </div>
 
       <Modal modal={modal} setModal={setModal} />
@@ -27,26 +45,27 @@ const Department = () => {
           className="button is-success mb-1 js-modal-trigger"
           onClick={() => setModal(true)}
         >
-          Add New Staff
+          Add
         </button>
       </div>
 
       <hr className="mb-3 mt-2" />
 
-      <ListTable departments={departments} />
+      <ListTable positions={positions} />
     </AdminLayout>
   );
 };
 
-export default Department;
+export default Position;
 
-const Modal = ({ modal, setModal, departmen }) => {
+const Modal = ({ modal, setModal, position }) => {
   const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
-    if (departmen) {
-      setValue("id", departmen.id);
-      setValue("name", departmen.name);
+    if (position) {
+      setValue("id", position.id);
+      setValue("name", position.name);
+      setValue("head", position.head);
     }
     return;
   }, []);
@@ -55,7 +74,7 @@ const Modal = ({ modal, setModal, departmen }) => {
     if (data.id != "") {
       axios
         .patch(
-          `${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments/${data.id}`,
+          `${process.env.NEXT_PUBLIC_DORADORA_API_URL}/positions/${data.id}`,
           data
         )
         .then((res) => setModal(false));
@@ -63,7 +82,7 @@ const Modal = ({ modal, setModal, departmen }) => {
       return;
     }
     axios
-      .post(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments`, data)
+      .post(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/positions`, data)
       .then((res) => setModal(false));
 
     return;
@@ -78,7 +97,7 @@ const Modal = ({ modal, setModal, departmen }) => {
           <input type="number" {...register("id")} hidden />
 
           <div className="field mr-1">
-            <label className="label">Departmen</label>
+            <label className="label">Position</label>
             <div className="control">
               <input
                 className="input"
@@ -88,6 +107,10 @@ const Modal = ({ modal, setModal, departmen }) => {
                 })}
               />
             </div>
+            <label className="checkbox p-2">
+              <input type="checkbox" {...register("head")} />
+              {`  Department Head`}
+            </label>
           </div>
 
           <div className="field is-grouped">
@@ -109,19 +132,19 @@ const Modal = ({ modal, setModal, departmen }) => {
   );
 };
 
-const ListTable = ({ departments }) => {
+const ListTable = ({ positions }) => {
   const [modal, setModal] = useState(false);
-  const [departmen, setDepartment] = useState([]);
+  const [position, setPosition] = useState([]);
 
   const OpenModal = (item) => {
     setModal(true);
-    setDepartment(item);
+    setPosition(item);
   };
 
-  const DelDepartment = (id) => {
+  const DelPosition = (id) => {
     axios
-      .delete(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments/${id}`)
-      .then((res) => console.log(res));
+      .delete(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/positions/${id}`)
+      .then((res) => console.log(res.data));
   };
 
   return (
@@ -132,12 +155,12 @@ const ListTable = ({ departments }) => {
             <th>
               <abbr title="ID">ID</abbr>
             </th>
-            <th>Departmen</th>
+            <th>Position</th>
             <th className="has-text-centered">Action</th>
           </tr>
         </thead>
         <tbody>
-          {departments.map((p) => {
+          {positions.map((p) => {
             return (
               <tr key={p.id}>
                 <th>{p.id}</th>
@@ -151,7 +174,7 @@ const ListTable = ({ departments }) => {
                   </button>
                   <button
                     className="button is-danger mx-3"
-                    onClick={() => DelDepartment(p.id)}
+                    onClick={() => DelPosition(p.id)}
                   >
                     Delete
                   </button>
@@ -162,7 +185,7 @@ const ListTable = ({ departments }) => {
         </tbody>
       </table>
 
-      {modal && <Modal modal={modal} setModal={setModal} departmen={departmen} />}
+      {modal && <Modal modal={modal} setModal={setModal} position={position} />}
     </>
   );
 };

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_22_121936) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_20_124327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -188,11 +188,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_22_121936) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "staff_id"
-    t.bigint "role_id", null: false
-    t.bigint "department_id"
-    t.bigint "position_id"
-    t.index ["department_id"], name: "index_staffs_on_department_id"
-    t.index ["position_id"], name: "index_staffs_on_position_id"
+    t.bigint "role_id"
     t.index ["role_id"], name: "index_staffs_on_role_id"
     t.index ["staff_id"], name: "index_staffs_on_staff_id"
   end
@@ -207,8 +203,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_22_121936) do
   add_foreign_key "list_package_services", "services", column: "services_id"
   add_foreign_key "roles", "departments"
   add_foreign_key "roles", "positions"
-  add_foreign_key "staffs", "departments"
-  add_foreign_key "staffs", "positions"
   add_foreign_key "staffs", "roles"
   add_foreign_key "staffs", "staffs"
 end

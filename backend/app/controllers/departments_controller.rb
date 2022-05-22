@@ -5,12 +5,12 @@ class DepartmentsController < ApplicationController
   def index
     @departments = Department.order(id: :asc)
 
-    render json: @departments, include: [ :positions ]
+    render json: @departments, include: [ :positions, :roles]
   end
 
   # GET /departments/1
   def show
-    render json: @department, include: [ :positions ]
+    render json: @department, include: [ :positions, :roles ]
   end
 
   # POST /departments
