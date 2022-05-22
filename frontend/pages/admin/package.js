@@ -2,9 +2,11 @@ import ModalMeetingRooms from "../compoment/Admin/Package/MeetingRooms";
 import ModalRoom from "../compoment/Admin/Package/Rooms";
 import ModalEquipmentsMeetingRooms from "../compoment/Admin/Package/EquipmentsMeetingRooms";
 import ModalServiceMeetingRooms from "../compoment/Admin/Package/ServiceMeetingRooms";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import "flatpickr/dist/themes/material_green.css";
 import Flatpickr from "react-flatpickr";
+import ListTable from "../compoment/Admin/Package/ListTable";
+import axios from "axios";
 
 import AdminLayout from "../compoment/Layout/AdminLayout";
 
@@ -13,6 +15,8 @@ const Packages = () => {
   const [modalR, setModalR] = useState(false);
   const [modalEMR, setModalEMR] = useState(false);
   const [modalSMR, setModalSMR] = useState(false);
+  const [packages, setpackages] = useState([]);
+
   const options = {
     mode: "range",
     minDate: "today",
@@ -20,6 +24,12 @@ const Packages = () => {
     minTime: "16:00",
     maxTime: "22:30"
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/packages")
+      .then((res) => setpackages(res.data));
+  },[])
 
 
   return (
@@ -183,6 +193,8 @@ const Packages = () => {
 
       <h1 className="is-size-4">List</h1>
       <hr className="mt-0" />
+
+      <ListTable packages={packages}/>
 
     </AdminLayout>
   );
