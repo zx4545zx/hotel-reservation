@@ -15,8 +15,16 @@ const Packages = () => {
   const [modalR, setModalR] = useState(false);
   const [modalEMR, setModalEMR] = useState(false);
   const [modalSMR, setModalSMR] = useState(false);
-
+  const [modal, setModal] = useState(false);
+  const [packages, setPackages] = useState([]);
   const { user } = useUser({ redirectTo: "/admin/login" });
+  const options = {
+    mode: "range",
+    minDate: "today",
+    defaultTime: ["10:00", "11:00"],
+    minTime: "16:00",
+    maxTime: "22:30",
+  };
 
   if (!user || user.isLoggedIn === false) {
     return (
@@ -27,22 +35,12 @@ const Packages = () => {
   if (!user.role.acess_package) {
     return (
       <AdminLayout>
-        <div class="notification is-danger has-text-centered is-size-3">
+        <div className="notification is-danger has-text-centered is-size-3">
           You are not allowed on this page.
         </div>
       </AdminLayout>
     );
   }
-
-  const [modal, setModal] = useState(false);
-  const [packages, setPackages] = useState([]);
-  const options = {
-    mode: "range",
-    minDate: "today",
-    defaultTime: ["10:00", "11:00"],
-    minTime: "16:00",
-    maxTime: "22:30",
-  };
 
   return (
     <AdminLayout>
@@ -104,15 +102,15 @@ const Packages = () => {
       </nav>
 
       <ModalMeetingRooms modalMR={modalMR} setModalMR={setModalMR} />
-      <nav class="level ">
-        <div class="level-item">
+      <nav className="level ">
+        <div className="level-item">
           <button className="button is-link " onClick={() => setModalMR(true)}>
             Meeting Rooms
           </button>
         </div>
 
         <ModalRoom modalR={modalR} setModalR={setModalR} />
-        <div class="level-item">
+        <div className="level-item">
           <button className="button is-primary" onClick={() => setModalR(true)}>
             Rooms
           </button>
@@ -122,7 +120,7 @@ const Packages = () => {
           modalEMR={modalEMR}
           setModalEMR={setModalEMR}
         />
-        <div class="level-item">
+        <div className="level-item">
           <button
             className="button is-danger "
             onClick={() => setModalEMR(true)}
@@ -135,7 +133,7 @@ const Packages = () => {
           modalSMR={modalSMR}
           setModalSMR={setModalSMR}
         />
-        <div class="level-item">
+        <div className="level-item">
           <button
             className="button is-warning "
             onClick={() => setModalSMR(true)}

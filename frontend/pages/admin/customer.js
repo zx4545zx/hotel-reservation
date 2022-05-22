@@ -1,4 +1,4 @@
-import AdminLayout from "../compoment/Layout/AdminLayout"
+import AdminLayout from "../compoment/Layout/AdminLayout";
 import useUser from "../../libs/useUser";
 
 const Customers = () => {
@@ -13,7 +13,7 @@ const Customers = () => {
   if (!user.role.acess_cust) {
     return (
       <AdminLayout>
-        <div class="notification is-danger has-text-centered is-size-3">
+        <div className="notification is-danger has-text-centered is-size-3">
           You are not allowed on this page.
         </div>
       </AdminLayout>
