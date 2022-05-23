@@ -27,17 +27,5 @@ class Reservation < ApplicationRecord
     has_many :reservation_packages
     has_many :packages, through: :reservation_packages
 
-    after_create :create_quotation
-    after_create :create_reservation_meeting_room
-
     private
-
-        def create_quotation
-        end
-
-        def create_reservation_meeting_room
-            byebug
-            # reservation_meeting_rooms.create!(reservation_id: reservation.id, meeting_room_id: self.meeting_room_id)
-        end
-
 end
