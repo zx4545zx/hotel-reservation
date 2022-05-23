@@ -10,4 +10,7 @@ class Package < ApplicationRecord
 
     has_many :list_package_equipments
     has_many :equipments, through: :list_package_equipments
+
+    has_many :reservation_packages
+    has_many :reservations, through: :reservation_packages
 end

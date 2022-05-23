@@ -4,23 +4,26 @@ Rails.application.routes.draw do
   resources :list_package_rooms
   resources :list_package_meetingrooms
   resources :packages
+
+  resources :meeting_rooms
   resources :services
   resources :equipments
-  resources :meeting_rooms
 
   resources :positions
   resources :departments
   resources :staffs
   resources :roles
 
+  resources :rooms
   resources :roomtypes
   resources :bedtypes
-  resources :rooms
   resources :servicerooms
   resources :addonservicerooms
   resources :equipmentsrooms
 
   resources :reservations
+
+  resources :customers
 
   post '/staffs/login', to: 'staffs#login'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
