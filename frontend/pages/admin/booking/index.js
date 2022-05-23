@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import useUser from "../../../libs/useUser";
 
 import { bookingForm } from "../../../libs/utils/bookingForm";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
@@ -15,6 +16,7 @@ import {
 import "flatpickr/dist/themes/material_green.css";
 
 const Booking = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
   const { register, handleSubmit, setValue } = useForm();
   const [add, setAdd] = useState(false);
   const [modal, setModal] = useState(false);
@@ -46,64 +48,9 @@ const Booking = () => {
   };
 
   useEffect(() => {
-    setCustomers([
-      {
-        id: 1,
-        first_name: "Natto",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 2,
-        first_name: "Bunny",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 3,
-        first_name: "Bunny3",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 4,
-        first_name: "Bunny4",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 5,
-        first_name: "Bunny5",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 6,
-        first_name: "Bunny6",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 7,
-        first_name: "Bunny7",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 8,
-        first_name: "Bunny8",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-    ]);
+    axios
+      .get("http://localhost:4000/customers")
+      .then((res) => setCustomers(res.data));
   }, []);
 
   const convertDate = () => {
@@ -168,22 +115,10 @@ const Booking = () => {
   };
 
   const confirmSubmit = () => {
-    console.log("customer-----------");
-    console.log(customer);
-    console.log("checkin - checkout-----------");
-    console.log(date);
-    console.log("guest-----------");
-    console.log(guest);
-    console.log("meeting rooms-----------");
-    console.log(result);
     console.log("roomType-----------");
     console.log(roomType);
     console.log("packages-----------");
     console.log(pack);
-    console.log("butget-----------");
-    console.log(butget);
-    console.log("total-----------");
-    console.log(total);
     console.log("--------------");
 
     const ci = new Date(date[0]);
@@ -195,10 +130,53 @@ const Booking = () => {
       .toLocaleString("en-US", "Asia/Jakarta")
       .replace(",", "");
 
-    const body = bookingForm(guest, checkIn, checkOut, total, butget);
+    const body = bookingForm(
+      guest,
+      checkIn,
+      checkOut,
+      total,
+      butget,
+      customer,
+      user,
+      service,
+      "",
+      "",
+      result,
+      equipment
+    );
 
     console.log(body);
+
+    axios.post("http://localhost:4000/reservations", body).then((res) => {
+      console.log(res.data);
+
+      result.map((b) => {
+        axios
+          .post("http://localhost:4000/reservation_meeting_rooms", {
+            reservation_id: res.data.id,
+            meeting_room_id: b.id,
+            amount: result.length,
+          })
+          .then((res) => console.log("reservation_meeting_room"));
+      });
+
+      service.map((b) => {
+        axios
+          .post("http://localhost:4000/reservation_services", {
+            reservation_id: res.data.id,
+            service_id: b.id,
+            amount: b.amount,
+          })
+          .then((res) => console.log("reservation_services"));
+      });
+    });
   };
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
 
   return (
     <AdminLayout>
@@ -271,7 +249,7 @@ const Booking = () => {
           />
         </div>
 
-        <form className="columns is-variable is-2">
+        <div className="columns is-variable is-2">
           <div className="column is-three-fifths">
             {customer != 0 && (
               <BookingHeader
@@ -387,7 +365,7 @@ const Booking = () => {
             setDetail={setDetail}
             register={register}
           />
-        </form>
+        </div>
       </div>
     </AdminLayout>
   );

@@ -144,6 +144,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   create_table "reservation_meeting_rooms", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "meeting_room_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meeting_room_id"], name: "index_reservation_meeting_rooms_on_meeting_room_id"
@@ -180,6 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   create_table "reservation_services", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "service_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reservation_id"], name: "index_reservation_services_on_reservation_id"
@@ -188,8 +190,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
 
   create_table "reservations", force: :cascade do |t|
     t.integer "guest", null: false
-    t.datetime "check_in", null: false
-    t.datetime "check_out", null: false
+    t.string "check_in", null: false
+    t.string "check_out", null: false
     t.decimal "price", null: false
     t.string "tracking", null: false
     t.integer "queue", null: false

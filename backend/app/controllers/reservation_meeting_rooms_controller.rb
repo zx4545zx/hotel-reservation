@@ -46,6 +46,6 @@ class ReservationMeetingRoomsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def reservation_meeting_room_params
-      params.require(:reservation_meeting_room).permit(:reservation_id, :meeting_room_id)
+      params.require(:reservation_meeting_room).permit(:reservation_id, :meeting_room_id, :amount)
     end
 end
