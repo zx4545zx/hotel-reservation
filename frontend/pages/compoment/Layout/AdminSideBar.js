@@ -15,17 +15,36 @@ const AdminSideBar = () => {
           <Link href="/admin/reservations" passHref>
             <a>Reservations</a>
           </Link>
-          <Link href="/admin/quotation" passHref>
-            <a>Quotations</a>
-          </Link>
-          <Link href="/admin/customer" passHref>
-            <a>Customers</a>
-          </Link>
+          <li>
+            <Link href="/admin/quotation" passHref>
+            <a className="list-quotation">Quotations</a>
+            </Link>
+            <ul>
+            <Link href="/admin/quotation/petition" passHref>
+            <a>Petition</a>
+            </Link>
+            <Link href="/admin/quotation/statu" passHref>
+            <a>Quotations Status</a>
+            </Link>
+            </ul>
+          </li>
+          <li>
+            <Link href="/admin/customer" passHref>
+              <a className="list-customer">Customers</a>
+            </Link>
+            <ul>
+              <Link href="/admin/customer/booking_status" passHref>
+                <a>Booking Status</a>
+              </Link>
+              <Link href="/admin/customer/payment_slip" passHref>
+                <a>Payment Slip</a>
+              </Link>
+            </ul>
+          </li>
           <Link href="/admin/bills" passHref>
             <a>Bills</a>
           </Link>
         </ul>
-
         <p className="menu-label">Management</p>
         <ul className="menu-list">
           <li>
