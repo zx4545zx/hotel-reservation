@@ -3,11 +3,11 @@ class MeetingRoomsController < ApplicationController
 
   def index
     @meeting_rooms = MeetingRoom.all
-    render json: @meeting_rooms
+    render json: @meeting_rooms, include: [ :packages ]
   end
 
   def show
-    render json: @meeting_room
+    render json: @meeting_room, include: [ :packages ]
   end
 
   def create

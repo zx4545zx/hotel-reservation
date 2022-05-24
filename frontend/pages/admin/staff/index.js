@@ -20,7 +20,7 @@ const Staff = () => {
   if (!user.role.acess_cust) {
     return (
       <AdminLayout>
-        <div class="notification is-danger has-text-centered is-size-3">
+        <div className="notification is-danger has-text-centered is-size-3">
           You are not allowed on this page.
         </div>
       </AdminLayout>

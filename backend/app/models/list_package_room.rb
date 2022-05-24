@@ -1,4 +1,4 @@
 class ListPackageRoom < ApplicationRecord
-  belongs_to :packages
-  belongs_to :roomtypes
+  belongs_to :package
+  belongs_to :roomtype
 end
