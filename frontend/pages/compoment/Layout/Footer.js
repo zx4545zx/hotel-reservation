@@ -2,20 +2,17 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="content has-text-centered">
+        <h1 className="is-size-4">CONTACTS US</h1>
         <p>
-          <strong>Bulma</strong> by{" "}
-          <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is
-          licensed
-          <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The
-          website content is licensed{" "}
-          <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
-            CC BY NC SA 4.0
-          </a>
-          .
-        </p>
+          204/2 Soi Arun Amarin49, Arun Amarin Rd., Bangyikhan, Bangplud,
+          Bangkok 10700.​
+        </p> 
+        <p>TEL : 02 424 9888​ </p>
+        <p>FAX : 02 424 9883</p>
+        <p>Email : info.rama8@Amarinhg.com</p> 
       </div>
     </footer>
   );
 };
 
-export default Footer
+export default Footer;
