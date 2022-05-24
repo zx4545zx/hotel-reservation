@@ -3,7 +3,7 @@ import Modal from "../../compoment/Admin/MeetingRoom/Equipments/Modal";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import AdminLayout from "../../compoment/Layout/AdminLayout"
+import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const EquipmentsMeetingRooms = () => {
   const [modal, setModal] = useState(false);
@@ -13,14 +13,14 @@ const EquipmentsMeetingRooms = () => {
     axios
       .get("http://localhost:4000/equipment")
       .then((res) => setequipments(res.data));
-  },[])
+  }, []);
 
   return (
     <AdminLayout>
       <div className="title m-3 has-text-centered notification is-light">
         Equipments Meeting Rooms
       </div>
-      
+
       <Modal modal={modal} setModal={setModal} />
 
       <div className="is-flex is-justify-content-space-between is-align-items-flex-end">

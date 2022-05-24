@@ -9,7 +9,6 @@ const Modal = ({ modal, setModal, item }) => {
     if (item) {
       setValue("id", item.id);
       setValue("name", item.name);
-      setValue("price", item.price);
     }
     return;
   }, [item]);
@@ -19,14 +18,14 @@ const Modal = ({ modal, setModal, item }) => {
 
     if (data.id != "") {
       axios
-        .patch("http://localhost:4000/equipmentsrooms/" + data.id, data)
+        .patch("http://localhost:4000/roomtypes/" + data.id, data)
         .then((res) => setModal(false));
 
       return;
     }
 
     axios
-      .post("http://localhost:4000/equipmentsrooms", data)
+      .post("http://localhost:4000/roomtypes", data)
       .then((res) => setModal(false));
   };
 
@@ -35,22 +34,14 @@ const Modal = ({ modal, setModal, item }) => {
       <div className="modal-background" onClick={() => setModal(false)}></div>
 
       <div className="modal-content is-flex is-justify-content-center">
-        <form className="box" onSubmit={handleSubmit(onSubmit)}>
+        <form className="box"onSubmit={handleSubmit(onSubmit)}>
         <input {...register("id")} hidden />
           <label>Name</label>
           <input
             className="input box"
             type="text"
-            placeholder="equipments name"
+            placeholder="Roomtype name"
             {...register("name")}
-          />
-          <label>Price / THB</label>
-          <input
-            className="input box"
-            type="number"
-            step="any"
-            placeholder="price / item"
-            {...register("price")}
           />
           <div className="buttons is-flex is-justify-content-center		">
             <button className="button is-success ">Save</button>
