@@ -8,15 +8,15 @@ const BookingStatus = () => {
         Booking Status
       </div>
 
-      <div class="field">
-        <label class="label">First Name and Last Name</label>
-        <div class="columns mt-2">
+      <div className="field">
+        <label className="label">First Name and Last Name</label>
+        <div className="columns mt-2">
           <input
-            class="input is-rounded column is-four-fifths"
+            className="input is-rounded column is-four-fifths"
             type="text"
             placeholder="First Name and Last Name"
           />
-          <div class="column p-0 has-text-centered">
+          <div className="column p-0 has-text-centered">
             <button
               className="button is-link is-rounded"
               onClick={() => setModal(true)}

@@ -1,6 +1,17 @@
 class CustomersController < ApplicationController
   before_action :set_customer, only: %i[ show update destroy ]
 
+  # POST Login
+  def login
+    customer = Customer.find_by_email(params[:email])
+
+    if customer.password == params[:password]
+      render json: { customer: customer }
+    else
+      render json: customer.errors, status: :unprocessable_entity
+    end
+  end
+
   # GET /customers
   def index
     @customers = Customer.all
