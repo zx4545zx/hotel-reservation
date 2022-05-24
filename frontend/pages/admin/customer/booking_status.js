@@ -17,14 +17,13 @@ const BookingStatus = () => {
             placeholder="First Name and Last Name"
           />
           <div class="column p-0 has-text-centered">
-          <button
-            className="button is-link is-rounded"
-            onClick={() => setModal(true)}
-          >
-            Search
-          </button>
+            <button
+              className="button is-link is-rounded"
+              onClick={() => setModal(true)}
+            >
+              Search
+            </button>
           </div>
-          
         </div>
       </div>
     </AdminLayout>
