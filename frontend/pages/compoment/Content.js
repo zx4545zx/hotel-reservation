@@ -69,11 +69,13 @@ const Content = () => {
         modem hotel at great connectivity with local touch.
       </p>
       <figure>
-        <div class="columns">
-          <div class="column">
+        <div className="columns">
+          <div className="column">
             <Image src={D} />
           </div>
-          <div class="column"><Image src={E} /></div>
+          <div className="column">
+            <Image src={E} />
+          </div>
         </div>
         <figcaption>SERVICE US</figcaption>
       </figure>
