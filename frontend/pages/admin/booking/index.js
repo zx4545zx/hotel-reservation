@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import useUser from "../../../libs/useUser";
 
+import { bookingForm } from "../../../libs/utils/bookingForm";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,6 +16,7 @@ import {
 import "flatpickr/dist/themes/material_green.css";
 
 const Booking = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
   const { register, handleSubmit, setValue } = useForm();
   const [add, setAdd] = useState(false);
   const [modal, setModal] = useState(false);
@@ -24,12 +27,17 @@ const Booking = () => {
   const [customers, setCustomers] = useState([]);
 
   const [customer, setCustomer] = useState([]);
+  const [pack, setPack] = useState([]);
+  const [roomType, setRoomType] = useState([]);
   const [date, setDate] = useState([]);
   const [guest, setGuest] = useState(0);
   const [butget, setButget] = useState(0);
+  const [equipment, setEquipment] = useState([]);
+  const [service, setService] = useState([]);
 
   const [val, setVal] = useState([]);
   const [result, setResult] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const options = {
     mode: "range",
@@ -40,64 +48,9 @@ const Booking = () => {
   };
 
   useEffect(() => {
-    setCustomers([
-      {
-        id: 1,
-        first_name: "Natto",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 2,
-        first_name: "Bunny",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 3,
-        first_name: "Bunny3",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 4,
-        first_name: "Bunny4",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 5,
-        first_name: "Bunny5",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 6,
-        first_name: "Bunny6",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 7,
-        first_name: "Bunny7",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-      {
-        id: 8,
-        first_name: "Bunny8",
-        last_name: "test23424",
-        email: "test@mail.com",
-        phone_number: "01222",
-      },
-    ]);
+    axios
+      .get("http://localhost:4000/customers")
+      .then((res) => setCustomers(res.data));
   }, []);
 
   const convertDate = () => {
@@ -123,17 +76,107 @@ const Booking = () => {
     setVal(value);
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const fndiffDay = () => {
+    const checkIn = new Date(val.day_checkin);
+    const checkOut = new Date(val.day_checkout);
+    const diffTime = checkOut.getTime() - checkIn.getTime();
+    const diffDay = diffTime / (1000 * 3600 * 24);
+
+    return diffDay;
+  };
+
+  const totalPrice = () => {
+    let sum = 0;
+
+    if (date.length > 1) {
+      var diffDay = fndiffDay();
+    }
+    if (result.length == 0 && roomType.length == 0) {
+      return 0;
+    }
+    if (pack.length == 0 || result.length == 0 || roomType.length == 0) {
+      result.map((v) => {
+        sum += parseInt(v.price);
+      });
+
+      let s = sum * diffDay;
+      equipment.map((v) => {
+        s += parseInt(v.price) * parseInt(v.amount);
+      });
+      service.map((v) => {
+        s += parseInt(v.price) * parseInt(v.amount);
+      });
+
+      setTotal(s);
+      return s;
+    }
+
+    return sum;
   };
 
   const confirmSubmit = () => {
-    console.log(customer);
-    console.log(date);
-    console.log(guest);
-    console.log(result);
-    console.log(butget);
+    console.log("roomType-----------");
+    console.log(roomType);
+    console.log("packages-----------");
+    console.log(pack);
+    console.log("--------------");
+
+    const ci = new Date(date[0]);
+    const co = new Date(date[1]);
+    ci.setHours(15, 0, 0);
+    co.setHours(12, 0, 0);
+    const checkIn = ci.toLocaleString("en-US", "Asia/Jakarta").replace(",", "");
+    const checkOut = co
+      .toLocaleString("en-US", "Asia/Jakarta")
+      .replace(",", "");
+
+    const body = bookingForm(
+      guest,
+      checkIn,
+      checkOut,
+      total,
+      butget,
+      customer,
+      user,
+      service,
+      "",
+      "",
+      result,
+      equipment
+    );
+
+    console.log(body);
+
+    axios.post("http://localhost:4000/reservations", body).then((res) => {
+      console.log(res.data);
+
+      result.map((b) => {
+        axios
+          .post("http://localhost:4000/reservation_meeting_rooms", {
+            reservation_id: res.data.id,
+            meeting_room_id: b.id,
+            amount: result.length,
+          })
+          .then((res) => console.log("reservation_meeting_room"));
+      });
+
+      service.map((b) => {
+        axios
+          .post("http://localhost:4000/reservation_services", {
+            reservation_id: res.data.id,
+            service_id: b.id,
+            amount: b.amount,
+          })
+          .then((res) => console.log("reservation_services"));
+      });
+    });
   };
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
 
   return (
     <AdminLayout>
@@ -206,7 +249,7 @@ const Booking = () => {
           />
         </div>
 
-        <form className="columns is-variable is-2">
+        <div className="columns is-variable is-2">
           <div className="column is-three-fifths">
             {customer != 0 && (
               <BookingHeader
@@ -218,9 +261,17 @@ const Booking = () => {
             )}
 
             {show === "e" ? (
-              <BookingEquipments setShow={setShow} />
+              <BookingEquipments
+                setShow={setShow}
+                equipment={equipment}
+                setEquipment={setEquipment}
+              />
             ) : show === "s" ? (
-              <BookingServices setShow={setShow} />
+              <BookingServices
+                setShow={setShow}
+                service={service}
+                setService={setService}
+              />
             ) : (
               <>
                 {val.length != 0 ? (
@@ -234,9 +285,22 @@ const Booking = () => {
                       <BookingMeetingRooms
                         result={result}
                         setResult={setResult}
+                        pack={pack}
+                        setPack={setPack}
+                        roomType={roomType}
+                        setRoomType={setRoomType}
+                        guest={guest}
                       />
                     ) : (
-                      <BookingRooms register={register} />
+                      <BookingRooms
+                        pack={pack}
+                        setPack={setPack}
+                        roomType={roomType}
+                        setRoomType={setRoomType}
+                        setResult={setResult}
+                        result={result}
+                        guest={guest}
+                      />
                     )}
                   </div>
                 ) : (
@@ -258,12 +322,31 @@ const Booking = () => {
               result={result}
               confirmSubmit={confirmSubmit}
               setButget={setButget}
+              guest={guest}
+              totalPrice={totalPrice}
+              fndiffDay={fndiffDay}
             >
               {result.length != 0 ? (
                 <OrderCard
                   setShow={setShow}
                   result={result}
                   setResult={setResult}
+                  roomType={roomType}
+                  setRoomType={setRoomType}
+                  pack={pack}
+                  equipment={equipment}
+                  service={service}
+                />
+              ) : roomType.length != 0 ? (
+                <OrderCard
+                  setShow={setShow}
+                  result={result}
+                  setResult={setResult}
+                  roomType={roomType}
+                  setRoomType={setRoomType}
+                  setPack={setPack}
+                  equipment={equipment}
+                  service={service}
                 />
               ) : (
                 <>
@@ -282,7 +365,7 @@ const Booking = () => {
             setDetail={setDetail}
             register={register}
           />
-        </form>
+        </div>
       </div>
     </AdminLayout>
   );
@@ -349,7 +432,15 @@ const BookingTabs = ({ tab, setTab, register }) => {
   );
 };
 
-const BookingMeetingRooms = ({ result, setResult }) => {
+const BookingMeetingRooms = ({
+  result,
+  setResult,
+  pack,
+  setPack,
+  roomType,
+  setRoomType,
+  guest,
+}) => {
   const [meetingRooms, setMeetingRooms] = useState([]);
 
   useEffect(() => {
@@ -358,11 +449,205 @@ const BookingMeetingRooms = ({ result, setResult }) => {
       .then((res) => setMeetingRooms(res.data));
   }, []);
 
+  const btnDisable = (val) => {
+    const r = result.filter((v) => v.id === val.id);
+
+    if (r.length > 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const btnDisablePack = (val) => {
+    const r = pack.filter((v) => v.id === val.id);
+
+    if (result.length <= 0 || roomType.length <= 0) {
+      return false;
+    }
+
+    if (r.length > 0) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const findPackage = (p) => {
+    axios.get(`http://localhost:4000/packages/${p.id}`).then((res) => {
+      setResult(res.data.meeting_rooms);
+      setPack([res.data]);
+      setRoomType(res.data.roomtypes);
+    });
+  };
+
   return (
     <div className="container">
       {meetingRooms.length > 0 ? (
         <>
-          {meetingRooms.map((m) => {
+          {meetingRooms
+            .filter((m) => m.people >= guest)
+            .map((m) => {
+              return (
+                <div className="card mb-3" key={m.id}>
+                  <div className="card-content">
+                    <div className="media">
+                      <div className="media-left">
+                        <figure className="image is-128x128">
+                          <img
+                            src="https://bulma.io/images/placeholders/128x128.png"
+                            alt="Placeholder image"
+                          />
+                        </figure>
+                      </div>
+
+                      <div className="media-content">
+                        <div className="is-flex is-align-items-center is-justify-content-flex-start mb-1">
+                          <div className="title m-0 is-5">{m.name}</div>
+                        </div>
+
+                        <p className="subtitle is-6 has-text-grey mb-2">
+                          Suport <u>{m.people}</u> guest, <u>{m.table}</u> table
+                        </p>
+                        <p>
+                          Spacious rooms (32sqm) with panoramic city views,
+                          king-sized bed or convert to twin beds.
+                        </p>
+
+                        <u>
+                          <a className="pointer">detail</a>
+                        </u>
+                      </div>
+                    </div>
+
+                    <hr />
+
+                    <div className="content columns">
+                      <div className="column is-three-quarters">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Phasellus nec iaculis mauris.
+                      </div>
+                      <div className="column pr-5">
+                        <div className="has-text-right mb-2">{m.price} THB</div>
+                        <button
+                          type="button"
+                          className={`button is-primary is-fullwidth ${
+                            btnDisable(m) ? "is-static" : ""
+                          }`}
+                          onClick={() => setResult([...result, m])}
+                        >
+                          ADD
+                        </button>
+                      </div>
+                    </div>
+
+                    {m.packages.length != 0 && (
+                      <>
+                        <div className="title is-5 m-0">Packages</div>
+                        <hr className="mt-2" />
+                      </>
+                    )}
+
+                    {m.packages.map((p) => {
+                      return (
+                        <div key={p.id}>
+                          <div className="content columns">
+                            <div className="column is-three-quarters">
+                              <div className="title is-6 mb-2">{p.name}</div>
+                              <div className="mb-2">
+                                Start: {p.start} - Stop: {p.stop}
+                              </div>
+                              <u>
+                                <a className="pointer">detail</a>
+                              </u>
+                            </div>
+                            <div className="column pr-5">
+                              <div className="has-text-right">12,000 THB</div>
+                              <div className="has-text-right mb-2 has-text-grey">
+                                <strike>15,000 THB</strike>
+                              </div>
+                              <button
+                                type="button"
+                                className={`button is-primary is-fullwidth ${
+                                  btnDisablePack(p) ? "is-static" : ""
+                                }`}
+                                onClick={() => findPackage(p)}
+                              >
+                                ADD
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+        </>
+      ) : (
+        <>
+          <div className="notification is-warning is-light has-text-centered">
+            Loading...
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const BookingRooms = ({
+  pack,
+  setPack,
+  roomType,
+  setRoomType,
+  setResult,
+  result,
+  guest,
+}) => {
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/roomtypes`)
+      .then((res) => setRooms(res.data));
+  }, []);
+
+  const findPackage = (p) => {
+    axios.get(`http://localhost:4000/packages/${p.id}`).then((res) => {
+      setResult(res.data.meeting_rooms);
+      setPack([res.data]);
+      setRoomType(res.data.roomtypes);
+    });
+  };
+
+  const btnDisable = (val) => {
+    const r = roomType.filter((v) => v.id === val.id);
+
+    if (r.length > 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const btnDisablePack = (val) => {
+    const r = pack.filter((v) => v.id === val.id);
+
+    if (result.length <= 0 || roomType.length <= 0) {
+      return false;
+    }
+
+    if (r.length > 0) {
+      return true;
+    }
+
+    return false;
+  };
+
+  return (
+    <div className="container">
+      {rooms.length > 0 ? (
+        <>
+          {rooms.map((m) => {
             return (
               <div className="card mb-3" key={m.id}>
                 <div className="card-content">
@@ -385,7 +670,7 @@ const BookingMeetingRooms = ({ result, setResult }) => {
                       </div>
 
                       <p className="subtitle is-6 has-text-grey mb-2">
-                        Suport <u>{m.people}</u> guest, <u>{m.table}</u> table
+                        Suport <u>2</u> guest
                       </p>
                       <p>
                         Spacious rooms (32sqm) with panoramic city views,
@@ -406,11 +691,13 @@ const BookingMeetingRooms = ({ result, setResult }) => {
                       Phasellus nec iaculis mauris.
                     </div>
                     <div className="column pr-5">
-                      <div className="has-text-right mb-2">15,000 THB</div>
+                      <div className="has-text-right mb-2">0 THB</div>
                       <button
                         type="button"
-                        className="button is-primary is-fullwidth"
-                        onClick={() => setResult([...result, m])}
+                        className={`button is-primary is-fullwidth ${
+                          btnDisable(m) ? "is-static" : ""
+                        }`}
+                        onClick={() => setRoomType([...roomType, m])}
                       >
                         ADD
                       </button>
@@ -420,132 +707,38 @@ const BookingMeetingRooms = ({ result, setResult }) => {
                   <div className="title is-5 m-0">Packages</div>
                   <hr className="mt-2" />
 
-                  <div className="content columns">
-                    <div className="column is-three-quarters">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec iaculis mauris...{" "}
-                      <u>
-                        <a className="pointer">detail</a>
-                      </u>
-                    </div>
-                    <div className="column pr-5">
-                      <div className="has-text-right">12,000 THB</div>
-                      <div className="has-text-right mb-2 has-text-grey">
-                        <strike>15,000 THB</strike>
-                      </div>
-                      <button
-                        type="button"
-                        className="button is-primary is-fullwidth"
-                      >
-                        ADD
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </>
-      ) : (
-        <>
-          <div className="notification is-danger is-light has-text-centered">
-            No Data
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
-
-const BookingRooms = () => {
-  const [rooms, setRooms] = useState([]);
-
-  useEffect(() => {
-    axios.get(`http://localhost:4000/rooms`).then((res) => setRooms(res.data));
-  }, []);
-
-  return (
-    <div className="container">
-      {rooms.length > 0 ? (
-        <>
-          {rooms.map((m) => {
-            return (
-              <div className="card mb-3" key={m.id}>
-                <div className="card-content">
-                  <div className="media">
-                    <div className="media-left">
-                      <figure className="image is-128x128">
-                        <img
-                          src="https://bulma.io/images/placeholders/128x128.png"
-                          alt="Placeholder image"
-                        />
-                      </figure>
-                    </div>
-
-                    <div className="media-content">
-                      <div className="is-flex is-align-items-center is-justify-content-space-between mb-1">
-                        <div className="title m-0 is-5">Luna Meeting Room</div>
-                        <div className="has-text-success title m-0 is-5">
-                          10 Available
+                  {m.packages.map((p) => {
+                    return (
+                      <div key={p.id}>
+                        <div className="content columns">
+                          <div className="column is-three-quarters">
+                            <div className="title is-6 mb-2">{p.name}</div>
+                            <div className="mb-2">
+                              Start: {p.start} - Stop: {p.stop}
+                            </div>
+                            <u>
+                              <a className="pointer">detail</a>
+                            </u>
+                          </div>
+                          <div className="column pr-5">
+                            <div className="has-text-right">12,000 THB</div>
+                            <div className="has-text-right mb-2 has-text-grey">
+                              <strike>15,000 THB</strike>
+                            </div>
+                            <button
+                              type="button"
+                              className={`button is-primary is-fullwidth ${
+                                btnDisablePack(p) ? "is-static" : ""
+                              }`}
+                              onClick={() => findPackage(p)}
+                            >
+                              ADD
+                            </button>
+                          </div>
                         </div>
                       </div>
-
-                      <p className="subtitle is-6 has-text-grey mb-2">
-                        Suport <u>60</u> guest
-                      </p>
-                      <p>
-                        Spacious rooms (32sqm) with panoramic city views,
-                        king-sized bed or convert to twin beds.
-                      </p>
-
-                      <u>
-                        <a className="pointer">detail</a>
-                      </u>
-                    </div>
-                  </div>
-
-                  <hr />
-
-                  <div className="content columns">
-                    <div className="column is-three-quarters">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec iaculis mauris.
-                    </div>
-                    <div className="column pr-5">
-                      <div className="has-text-right mb-2">15,000 THB</div>
-                      <button
-                        type="button"
-                        className="button is-primary is-fullwidth"
-                      >
-                        ADD
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="title is-5 m-0">Packages</div>
-                  <hr className="mt-2" />
-
-                  <div className="content columns">
-                    <div className="column is-three-quarters">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Phasellus nec iaculis mauris...{" "}
-                      <u>
-                        <a className="pointer">detail</a>
-                      </u>
-                    </div>
-                    <div className="column pr-5">
-                      <div className="has-text-right">12,000 THB</div>
-                      <div className="has-text-right mb-2 has-text-grey">
-                        <strike>15,000 THB</strike>
-                      </div>
-                      <button
-                        type="button"
-                        className="button is-primary is-fullwidth"
-                      >
-                        ADD
-                      </button>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
             );
@@ -553,8 +746,8 @@ const BookingRooms = () => {
         </>
       ) : (
         <>
-          <div className="notification is-danger is-light has-text-centered">
-            No Data
+          <div className="notification is-warning is-light has-text-centered">
+            Loading...
           </div>
         </>
       )}
@@ -569,6 +762,9 @@ const BookingSummary = ({
   result,
   confirmSubmit,
   setButget,
+  guest,
+  totalPrice,
+  fndiffDay,
 }) => {
   const [show, setShow] = useState(false);
 
@@ -596,7 +792,8 @@ const BookingSummary = ({
         <div className="column p-0">
           {val.day_checkin} - {val.day_checkout}
         </div>
-        <div className="column p-0">{val.guest_number} Guest</div>
+        <div className="column p-0">{fndiffDay() || 0} Day</div>
+        <div className="column p-0">{guest} Guest</div>
       </div>
       <hr className="my-2" />
 
@@ -607,7 +804,7 @@ const BookingSummary = ({
           <strong>Total:</strong>
         </div>
         <div className="column has-text-right is-size-4">
-          <strong>{"0"} THB</strong>
+          <strong>{totalPrice()} THB</strong>
         </div>
       </div>
 
@@ -730,12 +927,21 @@ const DetailModal = ({ detail, setDetail, register }) => {
   );
 };
 
-const BookingEquipments = ({ setShow }) => {
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:4000/meeting_rooms`)
-  //     .then((res) => console.log(res.data));
-  // }, []);
+const BookingEquipments = ({ setShow, equipment, setEquipment }) => {
+  const [equipments, setEquipments] = useState([]);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/equipments`)
+      .then((res) => setEquipments(res.data));
+  }, []);
+
+  const addEquipment = (equi) => {
+    equi.amount = amount;
+    const eq = equipment.filter((q) => q.id != equi.id);
+    setEquipment([...eq, equi]);
+  };
 
   return (
     <div>
@@ -744,56 +950,79 @@ const BookingEquipments = ({ setShow }) => {
       </button>
       <hr className="my-3" />
 
-      <div className="card">
-        <div className="card-content">
-          <div className="media">
-            <div className="media-left">
-              <figure className="image 64x64">
-                <img
-                  src="https://bulma.io/images/placeholders/96x96.png"
-                  alt="Placeholder image"
-                />
-              </figure>
-            </div>
-
-            <div className="media-content">
-              <div className="is-flex is-align-items-center is-justify-content-space-between mb-2">
-                <div className="title m-0 is-4">
-                  Projector
-                  <div className="subtitle is-6">
-                    <strong className="has-text-grey">
-                      Price/item 100 THB
-                    </strong>
+      {equipments.map((v) => {
+        return (
+          <div key={v.id}>
+            <div className="card mb-3">
+              <div className="card-content">
+                <div className="media">
+                  <div className="media-left">
+                    <figure className="image 64x64">
+                      <img
+                        src="https://bulma.io/images/placeholders/96x96.png"
+                        alt="Placeholder image"
+                      />
+                    </figure>
                   </div>
-                </div>
-                <div className="title m-0 is-5">
-                  <input
-                    className="input"
-                    type="number"
-                    placeholder="0"
-                  ></input>
-                </div>
-              </div>
-              <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
-                <div>Equipments for Meeting Rooms</div>
-                <div>
-                  <button
-                    className="button is-primary is-fullwidth"
-                    type="button"
-                  >
-                    ADD
-                  </button>
+
+                  <div className="media-content">
+                    <div className="is-flex is-align-items-center is-justify-content-space-between mb-2">
+                      <div className="title m-0 is-4">
+                        {v.name}
+                        <div className="subtitle is-6">
+                          <strong className="has-text-grey">
+                            Price/item {v.price} THB
+                          </strong>
+                        </div>
+                      </div>
+                      <div className="title m-0 is-5">
+                        <input
+                          className="input"
+                          type="number"
+                          placeholder="amount: 0"
+                          onChange={(e) => setAmount(e.target.value)}
+                        ></input>
+                      </div>
+                    </div>
+                    <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
+                      <div>Equipments for Meeting Rooms</div>
+                      <div>
+                        <button
+                          className="button is-primary is-fullwidth"
+                          type="button"
+                          onClick={() => addEquipment(v)}
+                        >
+                          ADD
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        );
+      })}
     </div>
   );
 };
 
-const BookingServices = ({ setShow }) => {
+const BookingServices = ({ setShow, service, setService }) => {
+  const [services, setServices] = useState([]);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/services`)
+      .then((res) => setServices(res.data));
+  }, []);
+
+  const addServices = (equi) => {
+    equi.amount = amount;
+    const eq = service.filter((q) => q.id != equi.id);
+    setService([...eq, equi]);
+  };
+
   return (
     <div>
       <button className="button is-link is-light" onClick={() => setShow(null)}>
@@ -801,66 +1030,88 @@ const BookingServices = ({ setShow }) => {
       </button>
       <hr className="my-3" />
 
-      <div className="card">
-        <div className="card-content">
-          <div className="media">
-            <div className="media-left">
-              <figure className="image 64x64">
-                <img
-                  src="https://bulma.io/images/placeholders/96x96.png"
-                  alt="Placeholder image"
-                />
-              </figure>
-            </div>
-
-            <div className="media-content">
-              <div className="is-flex is-align-items-center is-justify-content-space-between mb-2">
-                <div className="title m-0 is-4">
-                  Break Small set
-                  <div className="subtitle is-6">
-                    <strong className="has-text-grey">
-                      Price/item 1,500 THB
-                    </strong>
+      {services.map((v) => {
+        return (
+          <div key={v.id}>
+            <div className="card mb-3">
+              <div className="card-content">
+                <div className="media">
+                  <div className="media-left">
+                    <figure className="image 64x64">
+                      <img
+                        src="https://bulma.io/images/placeholders/96x96.png"
+                        alt="Placeholder image"
+                      />
+                    </figure>
                   </div>
-                </div>
-                <div className="title m-0 is-5">
-                  <input
-                    className="input"
-                    type="number"
-                    placeholder="0"
-                  ></input>
-                </div>
-              </div>
-              <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
-                <div>Services for Meeting Rooms</div>
-                <div>
-                  <button
-                    className="button is-primary is-fullwidth"
-                    type="button"
-                  >
-                    ADD
-                  </button>
+
+                  <div className="media-content">
+                    <div className="is-flex is-align-items-center is-justify-content-space-between mb-2">
+                      <div className="title m-0 is-4">
+                        {v.name}
+                        <div className="subtitle is-6">
+                          <strong className="has-text-grey">
+                            Price/set {v.price} THB
+                          </strong>
+                        </div>
+                      </div>
+                      <div className="title m-0 is-5">
+                        <input
+                          className="input"
+                          type="number"
+                          placeholder="amount: 0"
+                          onChange={(e) => setAmount(e.target.value)}
+                        ></input>
+                      </div>
+                    </div>
+                    <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
+                      <div>Service for Meeting Rooms</div>
+                      <div>
+                        <button
+                          className="button is-primary is-fullwidth"
+                          type="button"
+                          onClick={() => addServices(v)}
+                        >
+                          ADD
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        );
+      })}
     </div>
   );
 };
 
-const OrderCard = ({ setShow, result, setResult }) => {
+const OrderCard = ({
+  setShow,
+  result,
+  setResult,
+  roomType,
+  setRoomType,
+  setPack,
+  equipment,
+  service,
+}) => {
   const handleRemoveItem = (e) => {
     const name = e.target.getAttribute("name");
     setResult(result.filter((item) => item.name !== name));
+  };
+
+  const handleRemoveRoom = (e) => {
+    const name = e.target.getAttribute("name");
+    setRoomType(roomType.filter((item) => item.name !== name));
   };
 
   return (
     <>
       {result.map((r, i) => {
         return (
-          <nav className="panel is-info message" key={i}>
+          <nav className="panel is-success message" key={i}>
             <p className="panel-heading message-header">
               {r.name}
               <button
@@ -871,14 +1122,48 @@ const OrderCard = ({ setShow, result, setResult }) => {
                 onClick={handleRemoveItem}
               ></button>
             </p>
+
             <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
-              <div>Nomal Package</div>
-              <div>{r.price} THB</div>
+              <div>Price</div>
+              <strong>{r.price} THB/Day</strong>
             </div>
-            <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
-              <div>Taxes & Fees</div>
-              <div>0 THB</div>
-            </div>
+
+            {equipment.map((q) => {
+              return (
+                <div key={q.id} className="has-background-warning-light">
+                  <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+                    <div>
+                      {q.name} {q.amount} item
+                    </div>
+                    <div>
+                      {"(" + parseInt(q.price) + "x" + parseInt(q.amount) + ")"}{" "}
+                      <strong>
+                        {parseInt(q.price) * parseInt(q.amount)} THB
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {service.map((q) => {
+              return (
+                <div key={q.id} className="has-background-danger-light">
+                  <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+                    <div>
+                      {q.name} {q.amount} item
+                    </div>
+                    <div>
+                      {"(" + parseInt(q.price) + "x" + parseInt(q.amount) + ")"}{" "}
+                      <strong>
+                        {parseInt(q.price) * parseInt(q.amount)} THB
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
             <div className="panel-block">
               <button
                 type="button"
@@ -898,6 +1183,42 @@ const OrderCard = ({ setShow, result, setResult }) => {
           </nav>
         );
       })}
+
+      {roomType !== undefined ? (
+        <>
+          {roomType.map((r, i) => {
+            return (
+              <nav className="panel is-warning message" key={i}>
+                <p className="panel-heading message-header">
+                  {r.name}
+                  <button
+                    type="button"
+                    className="delete"
+                    aria-label="delete"
+                    name={r.name}
+                    onClick={handleRemoveRoom}
+                  ></button>
+                </p>
+                <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+                  <div>Price</div>
+                  <div>{r.price} THB/Day</div>
+                </div>
+
+                <div className="panel-block">
+                  <button
+                    type="button"
+                    className="button is-link is-fullwidth ml-1"
+                  >
+                    Add-on Services
+                  </button>
+                </div>
+              </nav>
+            );
+          })}
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

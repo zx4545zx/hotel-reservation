@@ -13,9 +13,9 @@ const PaymentSlip = () => {
 
       <h1 className="is-size-4">Payment Method</h1>
       <div className="mt-6">
-        <label class="label">Mobile Banking</label>
+        <label className="label">Mobile Banking</label>
       </div>
-      <div class="select is-danger">
+      <div className="select is-danger">
         <select value={Bank} onChange={(e) => setBank(e.target.value)}>
           <option>Select Banking</option>
           <option value={"s"}>SCB</option>
@@ -39,23 +39,23 @@ const PaymentSlip = () => {
 
       <div className="mt-6">
         <h2>ส่งหลักฐานการโอนเงิน</h2>
-        <div class="file has-name is-right is-fullwidth">
-          <label class="file-label">
-            <input class="file-input" type="file" name="resume" />
-            <span class="file-cta">
-              <span class="file-icon">
-                <i class="fas fa-upload"></i>
+        <div className="file has-name is-right is-fullwidth">
+          <label className="file-label">
+            <input className="file-input" type="file" name="resume" />
+            <span className="file-cta">
+              <span className="file-icon">
+                <i className="fas fa-upload"></i>
               </span>
-              <span class="file-label">Choose a file…</span>
+              <span className="file-label">Choose a file…</span>
             </span>
-            <span class="file-name">
+            <span className="file-name">
               Screen Shot 2017-07-29 at 15.54.25.png
             </span>
           </label>
         </div>
-        <div class="column p-0 has-text-centered mt-6">
+        <div className="column p-0 has-text-centered mt-6">
           <button
-            class="button is-success is-rounded "
+            className="button is-success is-rounded "
             onClick={() => setModal(true)}
           >
             Confirm
