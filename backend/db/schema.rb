@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -135,6 +135,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   create_table "reservation_equipments", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "equipment_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_id"], name: "index_reservation_equipments_on_equipment_id"
@@ -152,8 +153,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   end
 
   create_table "reservation_packages", force: :cascade do |t|
-    t.bigint "reservation_id", null: false
-    t.bigint "package_id", null: false
+    t.bigint "reservation_id"
+    t.bigint "package_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["package_id"], name: "index_reservation_packages_on_package_id"
@@ -198,6 +199,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
     t.string "status", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "staff_id"
+    t.bigint "customer_id"
+    t.index ["customer_id"], name: "index_reservations_on_customer_id"
+    t.index ["staff_id"], name: "index_reservations_on_staff_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -288,6 +293,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   add_foreign_key "reservation_rooms", "rooms"
   add_foreign_key "reservation_services", "reservations"
   add_foreign_key "reservation_services", "services"
+  add_foreign_key "reservations", "customers"
+  add_foreign_key "reservations", "staffs"
   add_foreign_key "roles", "departments"
   add_foreign_key "roles", "positions"
   add_foreign_key "staffs", "roles"

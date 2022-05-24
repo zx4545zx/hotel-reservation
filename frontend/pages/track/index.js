@@ -27,17 +27,20 @@ const Track = () => {
           </div>
         </section>
 
-        <div class="columns">
-          <div class="column"></div>
-          <div class="column is-two-thirds">
-            <form class="field has-addons" onSubmit={handleSubmit(onSubmit)}>
-              <div class="control is-expanded">
-                <div class="is-fullwidth">
+        <div className="columns">
+          <div className="column"></div>
+          <div className="column is-two-thirds">
+            <form
+              className="field has-addons"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <div className="control is-expanded">
+                <div className="is-fullwidth">
                   <input className="input" {...register("tracking")} />
                 </div>
               </div>
-              <div class="control">
-                <button type="submit" class="button is-primary">
+              <div className="control">
+                <button type="submit" className="button is-primary">
                   Search
                 </button>
               </div>
@@ -61,7 +64,7 @@ const Track = () => {
                 })}
             </div>
           </div>
-          <div class="column"></div>
+          <div className="column"></div>
         </div>
       </main>
     </Layout>

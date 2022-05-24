@@ -11,7 +11,7 @@ const Navbar = ({ user }) => {
     axios
       .post(`/api/logout_customer`, user)
       .then((res) => {
-        window.location.replace("/")
+        window.location.replace("/");
       })
       .catch((e) => {
         console.log("error " + e);
@@ -89,7 +89,9 @@ const Navbar = ({ user }) => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button is-light">Track</a>
+              <Link href="/track" passHref>
+                <a className="button is-light">Track</a>
+              </Link>
 
               {user.isLoggedIn ? (
                 <>

@@ -6,13 +6,15 @@ class ReservationsController < ApplicationController
     @reservations = Reservation.all
 
     render json: @reservations,
-    include: [ :meeting_rooms, :reservation_meeting_rooms, :services, :reservation_services]
+    include: [ :meeting_rooms, :reservation_meeting_rooms,
+      :services, :reservation_services, :equipments, :reservation_equipments ]
   end
 
   # GET /reservations/1
   def show
     render json: @reservation,
-    include: [ :meeting_rooms, :reservation_meeting_rooms, :services, :reservation_services]
+    include: [ :meeting_rooms, :reservation_meeting_rooms,
+      :services, :reservation_services, :equipments, :reservation_equipments ]
   end
 
   # POST /reservations
@@ -48,6 +50,8 @@ class ReservationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def reservation_params
-      params.require(:reservation).permit(:guest, :check_in, :check_out, :price, :tracking, :queue, :status, :meeting_room_id)
+      params.require(:reservation).permit(
+        :guest, :check_in, :check_out, :price,
+        :tracking, :queue, :status, :staff_id, :customer_id)
     end
 end

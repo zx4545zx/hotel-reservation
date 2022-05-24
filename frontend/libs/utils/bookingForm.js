@@ -28,12 +28,5 @@ export const bookingForm = (
     butget: butget,
     customer_id: customer.id,
     staff_id: staff.id,
-    service_id: service.map(s=>s.id),
-    room_id: null,
-    roomtype_id: null,
-    meeting_room_id: meeting_room.map(s=>s.id),
-    equipment_id: equipment.map(s=>s.id),
-    addonserviceroom_id: null,
-    package_id: null,
   };
 };
