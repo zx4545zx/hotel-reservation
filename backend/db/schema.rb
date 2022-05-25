@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -301,29 +300,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "staff_id"
-    t.bigint "role_id", null: false
-    t.bigint "department_id"
-    t.bigint "position_id"
-    t.index ["department_id"], name: "index_staffs_on_department_id"
-    t.index ["position_id"], name: "index_staffs_on_position_id"
+    t.bigint "role_id"
     t.index ["role_id"], name: "index_staffs_on_role_id"
     t.index ["staff_id"], name: "index_staffs_on_staff_id"
   end
 
   add_foreign_key "list_package_equipments", "equipment"
-
-  add_foreign_key "list_package_equipments", "packages", column: "packages_id"
-  add_foreign_key "list_package_meetingrooms", "meeting_rooms", column: "meeting_rooms_id"
-  add_foreign_key "list_package_meetingrooms", "packages", column: "packages_id"
-  add_foreign_key "list_package_rooms", "packages", column: "packages_id"
-  add_foreign_key "list_package_rooms", "roomtypes", column: "roomtypes_id"
-  add_foreign_key "list_package_services", "packages", column: "packages_id"
-  add_foreign_key "list_package_services", "services", column: "services_id"
-  add_foreign_key "list_room_equipments", "equipmentsrooms"
-  add_foreign_key "list_room_equipments", "rooms"
-  add_foreign_key "list_room_services", "rooms"
-  add_foreign_key "list_room_services", "servicerooms"
-
   add_foreign_key "list_package_equipments", "packages"
   add_foreign_key "list_package_meetingrooms", "meeting_rooms"
   add_foreign_key "list_package_meetingrooms", "packages"
@@ -331,6 +313,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
   add_foreign_key "list_package_rooms", "roomtypes"
   add_foreign_key "list_package_services", "packages"
   add_foreign_key "list_package_services", "services"
+  add_foreign_key "list_room_equipments", "equipmentsrooms"
+  add_foreign_key "list_room_equipments", "rooms"
+  add_foreign_key "list_room_services", "rooms"
+  add_foreign_key "list_room_services", "servicerooms"
   add_foreign_key "quotations", "reservations"
   add_foreign_key "reservation_addonservicerooms", "addonservicerooms"
   add_foreign_key "reservation_addonservicerooms", "reservations"
@@ -352,8 +338,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
   add_foreign_key "roles", "positions"
   add_foreign_key "rooms", "bedtypes"
   add_foreign_key "rooms", "roomtypes"
-  add_foreign_key "staffs", "departments"
-  add_foreign_key "staffs", "positions"
   add_foreign_key "staffs", "roles"
   add_foreign_key "staffs", "staffs"
 end
