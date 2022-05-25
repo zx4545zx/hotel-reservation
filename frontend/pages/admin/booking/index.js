@@ -18,7 +18,6 @@ import Router from "next/router";
 
 const Booking = () => {
   const { user } = useUser({ redirectTo: "/admin/login" });
-  const { register, handleSubmit, setValue } = useForm();
   const [add, setAdd] = useState(false);
   const [modal, setModal] = useState(false);
   const [tab, setTab] = useState(true);
@@ -229,7 +228,7 @@ const Booking = () => {
             </thead>
 
             <tbody>
-              {customers.slice(0, 5).map((c) => {
+              {customers.slice(0, 4).map((c) => {
                 return (
                   <tr
                     key={c.id}
@@ -314,7 +313,6 @@ const Booking = () => {
 
           <div className="column">
             <BookingSummary
-              register={register}
               customer={customer}
               val={val}
               result={result}
@@ -358,11 +356,7 @@ const Booking = () => {
             </BookingSummary>
           </div>
 
-          <DetailModal
-            detail={detail}
-            setDetail={setDetail}
-            register={register}
-          />
+          <DetailModal detail={detail} setDetail={setDetail} />
         </div>
       </div>
     </AdminLayout>
@@ -412,7 +406,7 @@ const BookingHeader = ({ options, setDate, convertDate, setGuest }) => {
   );
 };
 
-const BookingTabs = ({ tab, setTab, register }) => {
+const BookingTabs = ({ tab, setTab }) => {
   return (
     <div className="tabs is-toggle is-fullwidth">
       <ul>
@@ -855,7 +849,7 @@ const BookingSummary = ({
   );
 };
 
-const DetailModal = ({ detail, setDetail, register }) => {
+const DetailModal = ({ detail, setDetail }) => {
   return (
     <>
       <div className={`modal ${detail ? "is-active" : ""}`}>
@@ -1285,12 +1279,12 @@ const CustomerList = ({
       ></button>
       <div className="modal-card card">
         <section className=" modal-card-body">
-          <p className="control has-icons-left">
+          {/* <p className="control has-icons-left">
             <input className="input block" type="text" placeholder="Search" />
             <span className="icon is-left">
               <FontAwesomeIcon icon={faSearch} className="mx-1" />
             </span>
-          </p>
+          </p> */}
           <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth mb-0">
             <thead>
               <tr>
@@ -1330,9 +1324,22 @@ const CustomerList = ({
 };
 
 const AddCustomer = ({ add, setAdd }) => {
+  const { register, handleSubmit, setValue } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    axios
+      .post(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/customers`, data)
+      .then((res) => {
+        setAdd(false);
+        window.location.reload();
+      });
+    return;
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={`modal ${add && "is-active"}`}>
           <div className="modal-background" onClick={() => setAdd(false)}></div>
           <button
@@ -1349,21 +1356,37 @@ const AddCustomer = ({ add, setAdd }) => {
               <div className="columns">
                 <div className="column">
                   First Name
-                  <input className="input" type="text"></input>
+                  <input
+                    className="input"
+                    type="text"
+                    {...register("first_name")}
+                  ></input>
                 </div>
                 <div className="column">
                   Last Name
-                  <input className="input" type="text"></input>
+                  <input
+                    className="input"
+                    type="text"
+                    {...register("last_name")}
+                  ></input>
                 </div>
               </div>
               <div className="columns">
                 <div className="column">
                   Email
-                  <input className="input" type="email"></input>
+                  <input
+                    className="input"
+                    type="email"
+                    {...register("email")}
+                  ></input>
                 </div>
                 <div className="column">
                   Phone Number
-                  <input className="input" type="tel"></input>
+                  <input
+                    className="input"
+                    type="tel"
+                    {...register("phone_number")}
+                  ></input>
                 </div>
               </div>
             </section>
