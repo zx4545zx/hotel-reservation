@@ -1,46 +1,59 @@
-const Modal = ({ modal1, setModal1 }) => {
-    return (
-        <div id="modal-js-example" className={`modal ${modal1 && "is-active"}`}>
-            <div className="modal-background" onClick={() => setModal1(false)}></div>
+import { useForm } from 'react-hook-form'
 
-            <div className="modal-content is-flex is-justify-content-center">
-                <form className="box">
-                    
-                        <label>MeetingRooms</label>
-                   
+const Modal = ({ modalequipments, setModalequipments, equipmentsrooms, setListequipments }) => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = data => {
+    const result = [];
+    for (const d of data.equipmentRoom) {
+      for (const r of equipmentsrooms) {
+        if (r.id == d.toString()) {
+          result.push(r);
+        }
+      }
+    }
+    setListequipments(result);
+    setModalequipments(false);
+  }
 
-                    <nav className="level">
-                        <label className="checkbox">
-                            <input
-                                type="checkbox"
-                            />
-                            Wednesday
-                        </label> 
-                    </nav>
-                    <nav className="level">
-                        <label className="checkbox">
-                            <input
-                                type="checkbox"
-                            />
-                            Wednesday
-                        </label> 
-                    </nav>
+  return (
+    <div id="modal-js-example" className={`modal ${modalequipments && "is-active"}`}>
+      <div className="modal-background" onClick={() => setModalequipments(false)}></div>
 
-                    <nav className="level">
-                        <button type="submit" className="button is-success ">
-                            Save
-                        </button>
-                    </nav>
-                </form>
-            </div>
+      <div className="modal-content is-flex is-justify-content-center">
+        <form className="box" onSubmit={handleSubmit(onSubmit)}>
+          <label>Equipments Rooms</label>
+          {equipmentsrooms.map((s) => {
+            return (
+              <div key={s.id}>
+                <nav className="level">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      {...register("equipmentRoom")}
+                      value={s.id}
+                    />
+                    {s.name}
+                  </label>
+                </nav>
+              </div>
+            )
+          })}
 
-            <button
-                className="modal-close is-large"
-                aria-label="close"
-                onClick={() => setModal1(false)}
-            ></button>
-        </div>
-    );
+          <nav className="level">
+            <button type="submit" className="button is-success ">
+              Save
+            </button>
+          </nav>
+        </form>
+      </div>
+
+      <button
+        className="modal-close is-large"
+        aria-label="close"
+        onClick={() => setModalequipments(false)}
+      ></button>
+    </div>
+  );
 };
 
 export default Modal;
