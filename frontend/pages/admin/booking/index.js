@@ -279,7 +279,7 @@ const Booking = () => {
 
             {val.length != 0 ? (
               <div>
-                <BookingTabs tab={tab} setTab={setTab} />
+                <BookingTabs tab={tab} setTab={setTab} register={register} />
                 {tab ? (
                   <BookingMeetingRooms
                     result={result}

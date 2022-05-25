@@ -1,39 +1,55 @@
-const ListTable = () => {
+import axios from "axios";
+
+const ListTable = ({ rooms }) => {
+
+  const deleteRoom=(id)=>{
+
+    axios.delete("http://localhost:4000/rooms/"+id)
+    .then(()=>{window.location.reload();})
+    
+  }
+
+  console.log("rooms", rooms)
   return (
     <table className="table is-bordered is-fullwidth">
       <thead>
         <tr>
           <th>
-            <abbr title="ID">ID</abbr>
+            <abbr title="ID">No</abbr>
           </th>
           <th>Name</th>
-          <th>Size</th>
+          <th>Building</th>
+          <th>Guest</th>
+          <th>Price</th>
           <th className="has-text-centered">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th>1</th>
-          <td>Standad Room</td>
-          <th>35 ตรม.</th>
-          <td className="has-text-centered">
-            <div className="buttons is-flex is-justify-content-center">
-              <button className="button is-success is-rounded">Edit</button>
-              <button className="button is-danger is-rounded">Delete</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th>2</th>
-          <td>Loving Room</td>
-          <th>45 ตรม.</th>
-          <td className="has-text-centered">
-            <div className="buttons is-flex is-justify-content-center">
-              <button className="button is-success is-rounded">Edit</button>
-              <button className="button is-danger is-rounded">Delete</button>
-            </div>
-          </td>
-        </tr>
+        {rooms.map((s, i) => {
+          return (
+            <tr key={s.id}>
+              <th>{i + 1}</th>
+              <td>{s.name}</td>
+              <th>{s.building}</th>
+              <th>{s.guest}</th>
+              <th>{s.price}</th>
+              <td className="has-text-centered">
+                <div className="buttons is-flex is-justify-content-center">
+                  <button className="button is-success mx-3" >Detail</button>
+                  <button className="button is-info mx-3">Edit</button>
+                  <button className="button is-danger mx-3" onClick={()=>deleteRoom(s.id)}>Delete</button>
+                </div>
+              </td>
+            </tr>
+
+
+          )
+        })}
+
+
+
+
+
       </tbody>
     </table>
   );
