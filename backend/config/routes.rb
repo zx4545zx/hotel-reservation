@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :reservation_equipments
 
   resources :customers
+  resources :quotations
 
   post '/staffs/login', to: 'staffs#login'
   post '/customers/login', to: 'customers#login'

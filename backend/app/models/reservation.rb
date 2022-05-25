@@ -32,5 +32,13 @@ class Reservation < ApplicationRecord
     has_many :reservation_packages
     has_many :packages, through: :reservation_packages
 
+    has_many :quotations
+
+    after_create :create_quotation
+
     private
+
+    def create_quotation
+        quotations.create!(butget: butget, reservation_id: id )
+      end
 end
