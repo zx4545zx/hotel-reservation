@@ -14,14 +14,14 @@ class CustomersController < ApplicationController
 
   # GET /customers
   def index
-    @customers = Customer.all
+    @customers = Customer.order(id: :asc)
 
-    render json: @customers
+    render json: @customers, include: [ :reservations ]
   end
 
   # GET /customers/1
   def show
-    render json: @customer
+    render json: @customer, include: [ :reservations ]
   end
 
   # POST /customers

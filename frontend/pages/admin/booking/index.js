@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "flatpickr/dist/themes/material_green.css";
+import Router from "next/router";
 
 const Booking = () => {
   const { user } = useUser({ redirectTo: "/admin/login" });
@@ -95,20 +96,25 @@ const Booking = () => {
       return 0;
     }
     if (pack.length == 0 || result.length == 0 || roomType.length == 0) {
+      let eq = 0;
+      let se = 0;
+
       result.map((v) => {
         sum += parseInt(v.price);
+
+        v.equipment.map((v) => {
+          eq += parseInt(v.price) * parseInt(v.amount);
+        });
+
+        v.service.map((v) => {
+          se += parseInt(v.price) * parseInt(v.amount);
+        });
       });
 
-      let s = sum * diffDay;
-      equipment.map((v) => {
-        s += parseInt(v.price) * parseInt(v.amount);
-      });
-      service.map((v) => {
-        s += parseInt(v.price) * parseInt(v.amount);
-      });
+      let ok = eq + se + sum * diffDay;
 
-      setTotal(s);
-      return s;
+      setTotal(ok);
+      return ok;
     }
 
     return sum;
@@ -158,17 +164,29 @@ const Booking = () => {
             amount: result.length,
           })
           .then((res) => console.log("reservation_meeting_room"));
+
+        b.service.map((b) => {
+          axios
+            .post("http://localhost:4000/reservation_services", {
+              reservation_id: res.data.id,
+              service_id: b.id,
+              amount: b.amount,
+            })
+            .then((res) => console.log("reservation_services"));
+        });
+
+        b.equipment.map((b) => {
+          axios
+            .post("http://localhost:4000/reservation_equipments", {
+              reservation_id: res.data.id,
+              equipment_id: b.id,
+              amount: b.amount,
+            })
+            .then((res) => console.log("reservation_equipments", b.amount));
+        });
       });
 
-      service.map((b) => {
-        axios
-          .post("http://localhost:4000/reservation_services", {
-            reservation_id: res.data.id,
-            service_id: b.id,
-            amount: b.amount,
-          })
-          .then((res) => console.log("reservation_services"));
-      });
+      Router.replace(`/admin/booking/${res.data.id}`);
     });
   };
 
@@ -260,56 +278,36 @@ const Booking = () => {
               />
             )}
 
-            {show === "e" ? (
-              <BookingEquipments
-                setShow={setShow}
-                equipment={equipment}
-                setEquipment={setEquipment}
-              />
-            ) : show === "s" ? (
-              <BookingServices
-                setShow={setShow}
-                service={service}
-                setService={setService}
-              />
+            {val.length != 0 ? (
+              <div>
+                <BookingTabs tab={tab} setTab={setTab} register={register} />
+                {tab ? (
+                  <BookingMeetingRooms
+                    result={result}
+                    setResult={setResult}
+                    pack={pack}
+                    setPack={setPack}
+                    roomType={roomType}
+                    setRoomType={setRoomType}
+                    guest={guest}
+                  />
+                ) : (
+                  <BookingRooms
+                    pack={pack}
+                    setPack={setPack}
+                    roomType={roomType}
+                    setRoomType={setRoomType}
+                    setResult={setResult}
+                    result={result}
+                    guest={guest}
+                  />
+                )}
+              </div>
             ) : (
               <>
-                {val.length != 0 ? (
-                  <div>
-                    <BookingTabs
-                      tab={tab}
-                      setTab={setTab}
-                      register={register}
-                    />
-                    {tab ? (
-                      <BookingMeetingRooms
-                        result={result}
-                        setResult={setResult}
-                        pack={pack}
-                        setPack={setPack}
-                        roomType={roomType}
-                        setRoomType={setRoomType}
-                        guest={guest}
-                      />
-                    ) : (
-                      <BookingRooms
-                        pack={pack}
-                        setPack={setPack}
-                        roomType={roomType}
-                        setRoomType={setRoomType}
-                        setResult={setResult}
-                        result={result}
-                        guest={guest}
-                      />
-                    )}
-                  </div>
-                ) : (
-                  <>
-                    <div className="notification has-text-centered">
-                      Please complete the information.
-                    </div>
-                  </>
-                )}
+                <div className="notification has-text-centered">
+                  Please complete the information.
+                </div>
               </>
             )}
           </div>
@@ -335,7 +333,9 @@ const Booking = () => {
                   setRoomType={setRoomType}
                   pack={pack}
                   equipment={equipment}
+                  setEquipment={setEquipment}
                   service={service}
+                  setService={setService}
                 />
               ) : roomType.length != 0 ? (
                 <OrderCard
@@ -345,8 +345,6 @@ const Booking = () => {
                   roomType={roomType}
                   setRoomType={setRoomType}
                   setPack={setPack}
-                  equipment={equipment}
-                  service={service}
                 />
               ) : (
                 <>
@@ -474,6 +472,8 @@ const BookingMeetingRooms = ({
 
   const findPackage = (p) => {
     axios.get(`http://localhost:4000/packages/${p.id}`).then((res) => {
+      res.data.meeting_rooms.equipment = [];
+      res.data.meeting_rooms.service = [];
       setResult(res.data.meeting_rooms);
       setPack([res.data]);
       setRoomType(res.data.roomtypes);
@@ -533,7 +533,11 @@ const BookingMeetingRooms = ({
                           className={`button is-primary is-fullwidth ${
                             btnDisable(m) ? "is-static" : ""
                           }`}
-                          onClick={() => setResult([...result, m])}
+                          onClick={() => {
+                            m.equipment = [];
+                            m.service = [];
+                            setResult([...result, m]);
+                          }}
                         >
                           ADD
                         </button>
@@ -927,7 +931,7 @@ const DetailModal = ({ detail, setDetail, register }) => {
   );
 };
 
-const BookingEquipments = ({ setShow, equipment, setEquipment }) => {
+const BookingEquipments = ({ eq, result, setResult }) => {
   const [equipments, setEquipments] = useState([]);
   const [amount, setAmount] = useState(0);
 
@@ -939,17 +943,14 @@ const BookingEquipments = ({ setShow, equipment, setEquipment }) => {
 
   const addEquipment = (equi) => {
     equi.amount = amount;
-    const eq = equipment.filter((q) => q.id != equi.id);
-    setEquipment([...eq, equi]);
+    const eqfilter = eq.equipment.filter((q) => q.id != equi.id);
+    eq.equipment = [...eqfilter, equi];
+    const r = result.filter((q) => q.id != eq.id);
+    setResult([...r, eq]);
   };
 
   return (
     <div>
-      <button className="button is-link is-light" onClick={() => setShow(null)}>
-        Back
-      </button>
-      <hr className="my-3" />
-
       {equipments.map((v) => {
         return (
           <div key={v.id}>
@@ -1007,7 +1008,7 @@ const BookingEquipments = ({ setShow, equipment, setEquipment }) => {
   );
 };
 
-const BookingServices = ({ setShow, service, setService }) => {
+const BookingServices = ({ se, result, setResult }) => {
   const [services, setServices] = useState([]);
   const [amount, setAmount] = useState(0);
 
@@ -1019,8 +1020,10 @@ const BookingServices = ({ setShow, service, setService }) => {
 
   const addServices = (equi) => {
     equi.amount = amount;
-    const eq = service.filter((q) => q.id != equi.id);
-    setService([...eq, equi]);
+    const eqfilter = se.service.filter((q) => q.id != equi.id);
+    se.service = [...eqfilter, equi];
+    const r = result.filter((q) => q.id != se.id);
+    setResult([...r, se]);
   };
 
   return (
@@ -1087,16 +1090,10 @@ const BookingServices = ({ setShow, service, setService }) => {
   );
 };
 
-const OrderCard = ({
-  setShow,
-  result,
-  setResult,
-  roomType,
-  setRoomType,
-  setPack,
-  equipment,
-  service,
-}) => {
+const OrderCard = ({ result, setResult, roomType, setRoomType, setPack }) => {
+  const [modal, setModal] = useState(null);
+  const [eq, setEq] = useState([]);
+  const [se, setSe] = useState([]);
   const handleRemoveItem = (e) => {
     const name = e.target.getAttribute("name");
     setResult(result.filter((item) => item.name !== name));
@@ -1105,6 +1102,16 @@ const OrderCard = ({
   const handleRemoveRoom = (e) => {
     const name = e.target.getAttribute("name");
     setRoomType(roomType.filter((item) => item.name !== name));
+  };
+
+  const addE = (r) => {
+    setModal("e");
+    setEq(r);
+  };
+
+  const addS = (r) => {
+    setModal("s");
+    setSe(r);
   };
 
   return (
@@ -1128,7 +1135,7 @@ const OrderCard = ({
               <strong>{r.price} THB/Day</strong>
             </div>
 
-            {equipment.map((q) => {
+            {r.equipment.map((q) => {
               return (
                 <div key={q.id} className="has-background-warning-light">
                   <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
@@ -1146,7 +1153,7 @@ const OrderCard = ({
               );
             })}
 
-            {service.map((q) => {
+            {r.service.map((q) => {
               return (
                 <div key={q.id} className="has-background-danger-light">
                   <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
@@ -1168,14 +1175,14 @@ const OrderCard = ({
               <button
                 type="button"
                 className="button is-link is- is-fullwidth mr-1"
-                onClick={() => setShow("e")}
+                onClick={() => addE(r)}
               >
                 Add Equipments
               </button>
               <button
                 type="button"
                 className="button is-link is-fullwidth ml-1"
-                onClick={() => setShow("s")}
+                onClick={() => addS(r)}
               >
                 Add Services
               </button>
@@ -1219,6 +1226,44 @@ const OrderCard = ({
       ) : (
         <></>
       )}
+
+      <div
+        id="modal-js-example"
+        className={`modal ${modal == "e" && "is-active"}`}
+      >
+        <div className="modal-background"></div>
+
+        <div className="modal-content">
+          <div className="box">
+            <BookingEquipments eq={eq} result={result} setResult={setResult} />
+          </div>
+        </div>
+
+        <button
+          className="modal-close is-large"
+          aria-label="close"
+          onClick={() => setModal(null)}
+        ></button>
+      </div>
+
+      <div
+        id="modal-js-example"
+        className={`modal ${modal == "s" && "is-active"}`}
+      >
+        <div className="modal-background"></div>
+
+        <div className="modal-content">
+          <div className="box">
+            <BookingServices se={se} result={result} setResult={setResult} />
+          </div>
+        </div>
+
+        <button
+          className="modal-close is-large"
+          aria-label="close"
+          onClick={() => setModal(null)}
+        ></button>
+      </div>
     </>
   );
 };

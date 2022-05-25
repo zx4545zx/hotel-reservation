@@ -1,4 +1,6 @@
 class Reservation < ApplicationRecord
+    belongs_to :staff
+    belongs_to :customer
 
     enum status: {
         pending: 'pending',
@@ -23,6 +25,9 @@ class Reservation < ApplicationRecord
 
     has_many :reservation_services
     has_many :services, through: :reservation_services
+
+    has_many :reservation_equipments
+    has_many :equipments, through: :reservation_equipments
 
     has_many :reservation_packages
     has_many :packages, through: :reservation_packages

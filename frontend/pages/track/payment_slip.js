@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AdminLayout from "../../compoment/Layout/AdminLayout";
+import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const PaymentSlip = () => {
   const [Bank, setBank] = useState("");

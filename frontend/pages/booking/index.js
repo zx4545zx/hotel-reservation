@@ -62,8 +62,8 @@ const Booking = () => {
   return (
     <Layout>
       <main className="py-5">
-        <div class="columns">
-          <div class="column">
+        <div className="columns">
+          <div className="column">
             <div className="mb-3">
               <BookingHeader
                 options={options}
@@ -82,7 +82,7 @@ const Booking = () => {
               ></BookingSummary>
             </div>
           </div>
-          <div class="column">
+          <div className="column">
             <div className="mb-3">
               <BookingRooms />
             </div>
