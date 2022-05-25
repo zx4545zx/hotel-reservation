@@ -7,14 +7,16 @@ class ReservationsController < ApplicationController
 
     render json: @reservations,
     include: [ :meeting_rooms, :reservation_meeting_rooms,
-      :services, :reservation_services, :equipments, :reservation_equipments ]
+      :services, :reservation_services, :equipments, :reservation_equipments,
+      :customer, :staff ]
   end
 
   # GET /reservations/1
   def show
     render json: @reservation,
     include: [ :meeting_rooms, :reservation_meeting_rooms,
-      :services, :reservation_services, :equipments, :reservation_equipments ]
+      :services, :reservation_services, :equipments, :reservation_equipments,
+      :customer, :staff ]
   end
 
   # POST /reservations

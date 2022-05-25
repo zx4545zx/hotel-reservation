@@ -93,7 +93,7 @@ const Navbar = ({ user }) => {
                 <a className="button is-light">Track</a>
               </Link>
 
-              {user.isLoggedIn ? (
+              {user.customer ? (
                 <>
                   <div className="button is-primary is-light navbar-item has-dropdown is-hoverable">
                     <div className="navbar-link">

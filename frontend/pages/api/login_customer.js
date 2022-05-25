@@ -29,6 +29,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     if (data) {
       const user = {
         isLoggedIn: true,
+        customer: true,
         id: data?.customer.id,
         email: data?.customer.email,
         fname: data?.customer.first_name,
