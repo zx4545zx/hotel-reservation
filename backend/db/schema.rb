@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -123,6 +123,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "quotations", force: :cascade do |t|
+    t.integer "butget"
+    t.string "status", default: "pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "reservation_id", null: false
+    t.index ["reservation_id"], name: "index_quotations_on_reservation_id"
+  end
+
   create_table "reservation_addonservicerooms", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "addonserviceroom_id"
@@ -196,6 +205,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
     t.decimal "price", null: false
     t.string "tracking", null: false
     t.integer "queue", null: false
+    t.integer "butget", null: false
     t.string "status", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -279,6 +289,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
   add_foreign_key "list_package_rooms", "roomtypes"
   add_foreign_key "list_package_services", "packages"
   add_foreign_key "list_package_services", "services"
+  add_foreign_key "quotations", "reservations"
   add_foreign_key "reservation_addonservicerooms", "addonservicerooms"
   add_foreign_key "reservation_addonservicerooms", "reservations"
   add_foreign_key "reservation_equipments", "equipment"

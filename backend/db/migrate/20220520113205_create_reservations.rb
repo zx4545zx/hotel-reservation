@@ -7,6 +7,7 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.decimal :price, null: false
       t.string :tracking, null: false
       t.integer :queue, null: false
+      t.integer :butget, null: false
       t.string :status, null: false, default: 'pending'
 
       t.timestamps
