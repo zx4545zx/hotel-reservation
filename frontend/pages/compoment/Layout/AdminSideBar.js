@@ -36,9 +36,6 @@ const AdminSideBar = () => {
               <Link href="/admin/customer/booking_status" passHref>
                 <a>Booking Status</a>
               </Link>
-              <Link href="/admin/customer/payment_slip" passHref>
-                <a>Payment Slip</a>
-              </Link>
             </ul>
           </li>
           <Link href="/admin/bills" passHref>

@@ -2,6 +2,7 @@ import Layout from "../compoment/Layout/Layout";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 const Track = () => {
   const { register, handleSubmit } = useForm();
@@ -97,6 +98,7 @@ const Track = () => {
                       />
                     </figure>
                   </div>
+
                   <div className="card-content">
                     <div className="content">
                       <div className="box">
@@ -278,6 +280,10 @@ const Track = () => {
                       </div>
                     </div>
                   </div>
+
+                  <Link href="/track/payment_slip" passHref>
+                    <a>Payment</a>
+                  </Link>
                 </div>
               </div>
             )}
