@@ -3,11 +3,11 @@ class PackagesController < ApplicationController
 
   def index
     @packages = Package.all
-    render json: @packages
+    render json: @packages, include: [ :roomtypes, :meeting_rooms, :equipments, :services ]
   end
 
   def show
-    render json: @package
+    render json: @package, include: [ :roomtypes, :meeting_rooms, :equipments, :services ]
   end
 
   def create

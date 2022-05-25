@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_24_154327) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,7 +24,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
 
   create_table "bedtypes", force: :cascade do |t|
     t.string "name"
-    t.decimal "size"
+    t.string "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "customers", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
+    t.string "email"
+    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -49,42 +60,42 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
   end
 
   create_table "list_package_equipments", force: :cascade do |t|
-    t.bigint "packages_id", null: false
+    t.bigint "package_id", null: false
     t.bigint "equipment_id", null: false
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_id"], name: "index_list_package_equipments_on_equipment_id"
-    t.index ["packages_id"], name: "index_list_package_equipments_on_packages_id"
+    t.index ["package_id"], name: "index_list_package_equipments_on_package_id"
   end
 
   create_table "list_package_meetingrooms", force: :cascade do |t|
-    t.bigint "packages_id", null: false
-    t.bigint "meeting_rooms_id", null: false
+    t.bigint "package_id", null: false
+    t.bigint "meeting_room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["meeting_rooms_id"], name: "index_list_package_meetingrooms_on_meeting_rooms_id"
-    t.index ["packages_id"], name: "index_list_package_meetingrooms_on_packages_id"
+    t.index ["meeting_room_id"], name: "index_list_package_meetingrooms_on_meeting_room_id"
+    t.index ["package_id"], name: "index_list_package_meetingrooms_on_package_id"
   end
 
   create_table "list_package_rooms", force: :cascade do |t|
-    t.bigint "packages_id", null: false
-    t.bigint "roomtypes_id", null: false
+    t.bigint "package_id", null: false
+    t.bigint "roomtype_id", null: false
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["packages_id"], name: "index_list_package_rooms_on_packages_id"
-    t.index ["roomtypes_id"], name: "index_list_package_rooms_on_roomtypes_id"
+    t.index ["package_id"], name: "index_list_package_rooms_on_package_id"
+    t.index ["roomtype_id"], name: "index_list_package_rooms_on_roomtype_id"
   end
 
   create_table "list_package_services", force: :cascade do |t|
-    t.bigint "packages_id", null: false
-    t.bigint "services_id", null: false
+    t.bigint "package_id", null: false
+    t.bigint "service_id", null: false
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["packages_id"], name: "index_list_package_services_on_packages_id"
-    t.index ["services_id"], name: "index_list_package_services_on_services_id"
+    t.index ["package_id"], name: "index_list_package_services_on_package_id"
+    t.index ["service_id"], name: "index_list_package_services_on_service_id"
   end
 
   create_table "list_room_equipments", force: :cascade do |t|
@@ -133,16 +144,86 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reservation_addonservicerooms", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "addonserviceroom_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["addonserviceroom_id"], name: "index_reservation_addonservicerooms_on_addonserviceroom_id"
+    t.index ["reservation_id"], name: "index_reservation_addonservicerooms_on_reservation_id"
+  end
+
+  create_table "reservation_equipments", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "equipment_id"
+    t.integer "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipment_id"], name: "index_reservation_equipments_on_equipment_id"
+    t.index ["reservation_id"], name: "index_reservation_equipments_on_reservation_id"
+  end
+
+  create_table "reservation_meeting_rooms", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "meeting_room_id"
+    t.integer "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meeting_room_id"], name: "index_reservation_meeting_rooms_on_meeting_room_id"
+    t.index ["reservation_id"], name: "index_reservation_meeting_rooms_on_reservation_id"
+  end
+
+  create_table "reservation_packages", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "package_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["package_id"], name: "index_reservation_packages_on_package_id"
+    t.index ["reservation_id"], name: "index_reservation_packages_on_reservation_id"
+  end
+
+  create_table "reservation_room_types", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "roomtype_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_reservation_room_types_on_reservation_id"
+    t.index ["roomtype_id"], name: "index_reservation_room_types_on_roomtype_id"
+  end
+
+  create_table "reservation_rooms", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_reservation_rooms_on_reservation_id"
+    t.index ["room_id"], name: "index_reservation_rooms_on_room_id"
+  end
+
+  create_table "reservation_services", force: :cascade do |t|
+    t.bigint "reservation_id"
+    t.bigint "service_id"
+    t.integer "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_reservation_services_on_reservation_id"
+    t.index ["service_id"], name: "index_reservation_services_on_service_id"
+  end
+
   create_table "reservations", force: :cascade do |t|
     t.integer "guest", null: false
-    t.datetime "check_in", null: false
-    t.datetime "check_out", null: false
+    t.string "check_in", null: false
+    t.string "check_out", null: false
     t.decimal "price", null: false
     t.string "tracking", null: false
     t.integer "queue", null: false
     t.string "status", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "staff_id"
+    t.bigint "customer_id"
+    t.index ["customer_id"], name: "index_reservations_on_customer_id"
+    t.index ["staff_id"], name: "index_reservations_on_staff_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -220,6 +301,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
   end
 
   add_foreign_key "list_package_equipments", "equipment"
+
   add_foreign_key "list_package_equipments", "packages", column: "packages_id"
   add_foreign_key "list_package_meetingrooms", "meeting_rooms", column: "meeting_rooms_id"
   add_foreign_key "list_package_meetingrooms", "packages", column: "packages_id"
@@ -231,6 +313,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
   add_foreign_key "list_room_equipments", "rooms"
   add_foreign_key "list_room_services", "rooms"
   add_foreign_key "list_room_services", "servicerooms"
+
+  add_foreign_key "list_package_equipments", "packages"
+  add_foreign_key "list_package_meetingrooms", "meeting_rooms"
+  add_foreign_key "list_package_meetingrooms", "packages"
+  add_foreign_key "list_package_rooms", "packages"
+  add_foreign_key "list_package_rooms", "roomtypes"
+  add_foreign_key "list_package_services", "packages"
+  add_foreign_key "list_package_services", "services"
+  add_foreign_key "reservation_addonservicerooms", "addonservicerooms"
+  add_foreign_key "reservation_addonservicerooms", "reservations"
+  add_foreign_key "reservation_equipments", "equipment"
+  add_foreign_key "reservation_equipments", "reservations"
+  add_foreign_key "reservation_meeting_rooms", "meeting_rooms"
+  add_foreign_key "reservation_meeting_rooms", "reservations"
+  add_foreign_key "reservation_packages", "packages"
+  add_foreign_key "reservation_packages", "reservations"
+  add_foreign_key "reservation_room_types", "reservations"
+  add_foreign_key "reservation_room_types", "roomtypes"
+  add_foreign_key "reservation_rooms", "reservations"
+  add_foreign_key "reservation_rooms", "rooms"
+  add_foreign_key "reservation_services", "reservations"
+  add_foreign_key "reservation_services", "services"
+  add_foreign_key "reservations", "customers"
+  add_foreign_key "reservations", "staffs"
+
   add_foreign_key "roles", "departments"
   add_foreign_key "roles", "positions"
   add_foreign_key "rooms", "bedtypes"

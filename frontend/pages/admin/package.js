@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const Packages = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
   const [modalMR, setModalMR] = useState(false);
   const [modalR, setModalR] = useState(false);
   const [modalEMR, setModalEMR] = useState(false);
@@ -76,6 +77,22 @@ const Packages = () => {
     //   .then((res) => setservices(res.data))
     // ;
   }, [])
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_package) {
+    return (
+      <AdminLayout>
+        <div className="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>
@@ -169,7 +186,8 @@ const Packages = () => {
           <button
             className="button is-warning "
             onClick={() => setModalSMR(true)}
-          >Service Meeting Rooms
+          >
+            Service Meeting Rooms
           </button>
         </div>
       </nav>
@@ -295,7 +313,6 @@ const Packages = () => {
           </button>
           <button className="button is-danger" title="Disabled button">
             Save
-
           </button>
         </div>
       </nav>
