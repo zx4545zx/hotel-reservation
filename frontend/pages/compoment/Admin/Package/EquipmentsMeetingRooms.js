@@ -50,7 +50,7 @@ const Modal = ({
                     {s.name}
                   </label>
                   <input
-                    class="level-item"
+                    className="level-item"
                     type="number"
                     onChange={(event) => (s.value = event.target.value)}
                   ></input>
