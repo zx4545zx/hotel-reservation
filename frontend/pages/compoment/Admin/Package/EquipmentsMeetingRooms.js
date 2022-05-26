@@ -56,13 +56,7 @@ const Modal = ({ modalEMR, setModalEMR, equipment, setListPackageEquipment}) => 
           aria-label="close"
           onClick={() => setModalEMR(false)}
         ></button>
-      </div>
-
-      <button
-        className="modal-close is-large"
-        aria-label="close"
-        onClick={() => setModalEMR(false)}
-      ></button>
+      
     </div>
   );
 };

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_27_032723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
 
   create_table "bedtypes", force: :cascade do |t|
     t.string "name"
-    t.string "size"
+    t.decimal "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -307,19 +307,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   end
 
   add_foreign_key "list_package_equipments", "equipment"
-
-  add_foreign_key "list_package_equipments", "packages", column: "packages_id"
-  add_foreign_key "list_package_meetingrooms", "meeting_rooms", column: "meeting_rooms_id"
-  add_foreign_key "list_package_meetingrooms", "packages", column: "packages_id"
-  add_foreign_key "list_package_rooms", "packages", column: "packages_id"
-  add_foreign_key "list_package_rooms", "roomtypes", column: "roomtypes_id"
-  add_foreign_key "list_package_services", "packages", column: "packages_id"
-  add_foreign_key "list_package_services", "services", column: "services_id"
-  add_foreign_key "list_room_equipments", "equipmentsrooms"
-  add_foreign_key "list_room_equipments", "rooms"
-  add_foreign_key "list_room_services", "rooms"
-  add_foreign_key "list_room_services", "servicerooms"
-
   add_foreign_key "list_package_equipments", "packages"
   add_foreign_key "list_package_meetingrooms", "meeting_rooms"
   add_foreign_key "list_package_meetingrooms", "packages"
@@ -348,7 +335,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   add_foreign_key "reservation_services", "services"
   add_foreign_key "reservations", "customers"
   add_foreign_key "reservations", "staffs"
-
   add_foreign_key "roles", "departments"
   add_foreign_key "roles", "positions"
   add_foreign_key "rooms", "bedtypes"
