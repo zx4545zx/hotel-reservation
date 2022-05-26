@@ -3,11 +3,11 @@ class ServicesController < ApplicationController
 
   def index
     @services = Service.all
-    render json: @services
+    render json: @services, include: [ :packages ]
   end
 
   def show
-    render json: @service
+    render json: @service, include: [ :packages ]
   end
 
   def create

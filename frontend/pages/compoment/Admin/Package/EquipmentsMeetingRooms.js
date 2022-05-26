@@ -57,8 +57,14 @@ const Modal = ({ modalEMR, setModalEMR, equipment, setListPackageEquipment}) => 
           onClick={() => setModalEMR(false)}
         ></button>
       </div>
-    );
-  };
-  
-  export default Modal;
-  
+
+      <button
+        className="modal-close is-large"
+        aria-label="close"
+        onClick={() => setModalEMR(false)}
+      ></button>
+    </div>
+  );
+};
+
+export default Modal;

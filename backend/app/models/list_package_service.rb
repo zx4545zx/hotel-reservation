@@ -1,4 +1,4 @@
 class ListPackageService < ApplicationRecord
-  belongs_to :packages
-  belongs_to :services
+  belongs_to :package
+  belongs_to :service
 end

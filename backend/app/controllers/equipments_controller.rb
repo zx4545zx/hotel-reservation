@@ -1,16 +1,14 @@
-class EquipmentController < ApplicationController
+class EquipmentsController < ApplicationController
   before_action :set_equipment, only: %i[ show update destroy ]
 
-  # GET /equipment
   def index
-    @equipment = Equipment.all
-
-    render json: @equipment
+    @equipments = Equipment.all
+    render json: @equipments, include: [ :packages ]
   end
 
   # GET /equipment/1
   def show
-    render json: @equipment
+    render json: @equipment, include: [ :packages ]
   end
 
   # POST /equipment

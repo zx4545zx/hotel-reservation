@@ -54,9 +54,6 @@ const Rooms = ({ modalR, setModalR, room, setListPackageRoom }) => {
               </tr>)
           })}
 
-
-
-
           <button type="submit" className="button is-success">
             Save
           </button>

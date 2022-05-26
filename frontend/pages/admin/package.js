@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const Packages = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
   const [modalMR, setModalMR] = useState(false);
   const [modalR, setModalR] = useState(false);
   const [modalEMR, setModalEMR] = useState(false);
@@ -268,7 +269,8 @@ const Packages = () => {
           <button
             className="button is-warning "
             onClick={() => setModalSMR(true)}
-          >Service Meeting Rooms
+          >
+            Service Meeting Rooms
           </button>
         </div>
       </nav>

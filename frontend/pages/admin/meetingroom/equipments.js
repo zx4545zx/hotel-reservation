@@ -11,7 +11,7 @@ const EquipmentsMeetingRooms = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/equipment")
+      .get("http://localhost:4000/equipments")
       .then((res) => setequipments(res.data));
   }, []);
 
