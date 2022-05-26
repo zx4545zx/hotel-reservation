@@ -12,7 +12,7 @@ class ListPackageEquipmentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create list_package_equipment" do
     assert_difference("ListPackageEquipment.count") do
-      post list_package_equipments_url, params: { list_package_equipment: { equipment_id: @list_package_equipment.equipment_id, packages_id: @list_package_equipment.packages_id, value: @list_package_equipment.value } }, as: :json
+      post list_package_equipments_url, params: { list_package_equipment: { equipments_id: @list_package_equipment.equipments_id, packages_id: @list_package_equipment.packages_id, value: @list_package_equipment.value } }, as: :json
     end
 
     assert_response :created
@@ -24,7 +24,7 @@ class ListPackageEquipmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update list_package_equipment" do
-    patch list_package_equipment_url(@list_package_equipment), params: { list_package_equipment: { equipment_id: @list_package_equipment.equipment_id, packages_id: @list_package_equipment.packages_id, value: @list_package_equipment.value } }, as: :json
+    patch list_package_equipment_url(@list_package_equipment), params: { list_package_equipment: { equipments_id: @list_package_equipment.equipments_id, packages_id: @list_package_equipment.packages_id, value: @list_package_equipment.value } }, as: :json
     assert_response :success
   end
 

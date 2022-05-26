@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Modalforequipments from "../../compoment/Admin/room/Allequipments";
 import Modalforservice from "../../compoment/Admin/room/Allservice";
-import Modal from "../../compoment/Admin/Room/index/Modal";
 import ListTable from "../../compoment/Admin/Room/index/ListTable";
 import { useForm } from "react-hook-form";
 
@@ -9,7 +8,7 @@ import axios from "axios";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const Rooms = () => {
-  const { register, handleSubmit, watch, setValue } = useForm();
+  const { register, handleSubmit} = useForm();
   const [modalservice, setModalservice] = useState(false);
   const [modalequipments, setModalequipments] = useState(false);
   const [serviceroom, setserviceroom] = useState([]);
@@ -197,7 +196,6 @@ const Rooms = () => {
 
       <div className="buttons is-flex is-justify-content-center">
         <button className="button is-primary" onClick={() => createRoom()}>Create Room</button>
-        <button className="button is-link">Cancle</button>
       </div>
 
       <div className="is-flex is-justify-content-space-between is-align-items-flex-end">

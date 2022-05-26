@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_26_133604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,8 +35,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
   end
 
   create_table "equipment", force: :cascade do |t|
-    t.string "name", null: false
-    t.decimal "price", null: false
+    t.string "name"
+    t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -116,14 +116,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
   end
 
   create_table "packages", force: :cascade do |t|
-    t.string "name"
-    t.integer "days"
-    t.date "start"
-    t.date "stop"
+    t.string "name", null: false
+    t.integer "days", null: false
+    t.decimal "price", null: false
+    t.decimal "dis_price", null: false
+    t.date "start", null: false
+    t.date "stop", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "price"
-    t.decimal "dis_price"
   end
 
   create_table "positions", force: :cascade do |t|
@@ -173,6 +173,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
     t.string "building"
     t.integer "guest"
     t.decimal "price"
+    t.string "status", default: "empty", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "roomtype_id", null: false
@@ -210,11 +211,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "staff_id"
-    t.bigint "role_id", null: false
-    t.bigint "department_id"
-    t.bigint "position_id"
-    t.index ["department_id"], name: "index_staffs_on_department_id"
-    t.index ["position_id"], name: "index_staffs_on_position_id"
+    t.bigint "role_id"
     t.index ["role_id"], name: "index_staffs_on_role_id"
     t.index ["staff_id"], name: "index_staffs_on_staff_id"
   end
@@ -235,8 +232,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_24_141604) do
   add_foreign_key "roles", "positions"
   add_foreign_key "rooms", "bedtypes"
   add_foreign_key "rooms", "roomtypes"
-  add_foreign_key "staffs", "departments"
-  add_foreign_key "staffs", "positions"
   add_foreign_key "staffs", "roles"
   add_foreign_key "staffs", "staffs"
 end

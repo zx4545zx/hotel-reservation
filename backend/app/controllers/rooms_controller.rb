@@ -3,11 +3,11 @@ class RoomsController < ApplicationController
 
   def index
     @rooms = Room.all
-    render json: @rooms
+    render json: @rooms, include: [ :servicerooms, :equipmentsrooms]
   end
 
   def show
-    render json: @room
+    render json: @room, include: [ :servicerooms, :equipmentsrooms]
   end
 
   def create
@@ -39,6 +39,6 @@ class RoomsController < ApplicationController
     end
 
     def room_params
-      params.require(:room).permit(:name, :building, :guest, :price, :roomtype_id, :bedtype_id)
+      params.require(:room).permit(:name, :building, :guest, :price, :roomtype_id, :bedtype_id, :status)
     end
 end

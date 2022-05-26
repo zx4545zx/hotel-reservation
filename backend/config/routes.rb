@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
+  resources :list_package_equipments
+  resources :equipment
   resources :list_room_services
   resources :list_room_equipments
-  resources :list_package_equipments
+  
   resources :list_package_services
   resources :list_package_rooms
   resources :list_package_meetingrooms
   resources :packages
   resources :services
-  resources :equipment
+
   resources :meeting_rooms
 
   resources :positions

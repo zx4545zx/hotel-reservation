@@ -1,4 +1,4 @@
 class ListPackageMeetingroom < ApplicationRecord
-  belongs_to :packages
-  belongs_to :meeting_rooms
+  belongs_to :package
+  belongs_to :meeting_room
 end
