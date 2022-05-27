@@ -46,6 +46,6 @@ class QuotationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def quotation_params
-      params.require(:quotation).permit(:butget, :status)
+      params.require(:quotation).permit(:butget, :status, :reservation_id)
     end
 end

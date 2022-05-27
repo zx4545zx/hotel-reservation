@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   resources :reservation_meeting_rooms
   resources :reservation_services
   resources :reservation_equipments
+  resources :reservation_addonservicerooms
+  resources :reservation_room_types
 
   resources :customers
   resources :quotations
