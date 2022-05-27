@@ -8,7 +8,8 @@ class ReservationsController < ApplicationController
     render json: @reservations,
     include: [ :meeting_rooms, :reservation_meeting_rooms,
       :services, :reservation_services, :equipments, :reservation_equipments,
-      :customer, :staff ]
+      :customer, :staff, :quotations, :reservation_rooms, :rooms, :reservation_room_types,
+      :roomtypes, :addonservicerooms ]
   end
 
   # GET /reservations/1
@@ -16,7 +17,8 @@ class ReservationsController < ApplicationController
     render json: @reservation,
     include: [ :meeting_rooms, :reservation_meeting_rooms,
       :services, :reservation_services, :equipments, :reservation_equipments,
-      :customer, :staff ]
+      :customer, :staff, :quotations, :reservation_rooms, :reservation_room_types,
+      :rooms, :roomtypes, :addonservicerooms, :reservation_addonservicerooms]
   end
 
   # POST /reservations
@@ -24,7 +26,11 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
 
     if @reservation.save
-      render json: @reservation, status: :created, location: @reservation
+      render json: @reservation,
+      include: [ :meeting_rooms, :reservation_meeting_rooms,
+        :services, :reservation_services, :equipments, :reservation_equipments,
+        :customer, :staff, :quotations, :reservation_rooms, :rooms,
+        :reservation_room_types, :roomtypes, :addonservicerooms ]
     else
       render json: @reservation.errors, status: :unprocessable_entity
     end

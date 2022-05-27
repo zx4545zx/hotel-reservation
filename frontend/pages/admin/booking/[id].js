@@ -16,6 +16,14 @@ const Reservation = () => {
   const [services, setService] = useState([]);
   const [serAmount, setSerAmount] = useState([]);
   const [customer, setCustomer] = useState([]);
+  const [quotations, setQuotations] = useState([]);
+  const [roomType, setRoomType] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [roomTypeAmount, setRoomTypeAmount] = useState([]);
+  const [addon, setAddon] = useState([]);
+  const [addonAmount, setAddonAmount] = useState([]);
+  const [butget, setButget] = useState(0);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -28,9 +36,21 @@ const Reservation = () => {
         services,
         reservation_services,
         customer,
+        quotations,
+        roomtypes,
+        reservation_room_types,
+        addonservicerooms,
+        reservation_addonservicerooms,
       } = res.data;
 
-      console.log(res.data);
+      axios.get("http://localhost:4000/rooms").then((res) => {
+        let a;
+        if (roomtypes[0]) {
+          a = res.data.filter((v) => v.roomtype_id == roomtypes[0].id);
+        }
+        // console.log(a);
+        setRooms(res.data);
+      });
 
       setReservation(res.data);
       setMeetingRooms(meeting_rooms);
@@ -43,8 +63,55 @@ const Reservation = () => {
       let Samount = reservation_services.map((v) => v.amount);
       setSerAmount(Samount);
       setService(services);
+
+      let Ramount = reservation_room_types.map((v) => v.amount);
+      setRoomTypeAmount(Ramount);
+      setRoomType(roomtypes);
+
+      setQuotations(quotations);
+
+      let Aamount = reservation_addonservicerooms.map((v) => v.amount);
+      setAddonAmount(Aamount);
+      setAddon(addonservicerooms);
     });
   }, [router.isReady]);
+
+  const ApprovQuot = (data) => {
+    data.status = "approved";
+    axios
+      .patch("http://localhost:4000/quotations/" + data.id, data)
+      .then((res) => window.location.reload());
+  };
+
+  const CancelQuot = (data) => {
+    data.status = "cancelled";
+    axios
+      .patch("http://localhost:4000/quotations/" + data.id, data)
+      .then((res) => window.location.reload());
+  };
+
+  const RewindQuot = (data) => {
+    data.status = "pending";
+    axios
+      .patch("http://localhost:4000/quotations/" + data.id, data)
+      .then((res) => window.location.reload());
+  };
+
+  const CreateQuot = () => {
+    let data = { butget: butget, reservation_id: id };
+    axios.post("http://localhost:4000/quotations", data).then((res) => {
+      setModal(false);
+      window.location.reload();
+    });
+  };
+
+  const PaymentDone = () => {
+    let data = reservation;
+    data.status = "paid";
+    axios
+      .patch("http://localhost:4000/reservations/" + id, data)
+      .then((res) => window.location.reload());
+  };
 
   return (
     <AdminLayout>
@@ -144,6 +211,17 @@ const Reservation = () => {
                 </div>
 
                 <hr />
+
+                {reservation.status != "paid" && (
+                  <div className="is-flex is-justify-content-flex-end">
+                    <button
+                      className="button is-success"
+                      onClick={() => PaymentDone()}
+                    >
+                      Paid
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="columns">
@@ -159,6 +237,7 @@ const Reservation = () => {
                           <th>Room Name</th>
                           <th>Type</th>
                           <th>Price</th>
+                          <th>status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -168,6 +247,18 @@ const Reservation = () => {
                               <td>{m.name}</td>
                               <td>{`Meeting Room`}</td>
                               <td>{m.price}</td>
+                              <td>{m.status}</td>
+                            </tr>
+                          );
+                        })}
+
+                        {rooms.slice(0, roomTypeAmount[0]).map((m, i) => {
+                          return (
+                            <tr key={m.id}>
+                              <td>{m.name}</td>
+                              <td>{m.roomtype.name}</td>
+                              <td>{m.price}</td>
+                              <td>{m.status}</td>
                             </tr>
                           );
                         })}
@@ -219,16 +310,125 @@ const Reservation = () => {
                         })}
                       </tbody>
                     </table>
+
+                    <hr />
+
+                    <table className="table is-fullwidth">
+                      <thead>
+                        <tr>
+                          <th>Add-on Service</th>
+                          <th>Amount</th>
+                          <th>Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {addon.map((m, i) => {
+                          return (
+                            <tr key={m.id}>
+                              <td>{m.name}</td>
+                              <td>{addonAmount[i]}</td>
+                              <td>{m.price}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
+
                 <div className="column">
                   <div>
-                    <h1 className="title is-5 m-0">Quotations</h1>
+                    <div className="is-flex is-justify-content-space-between">
+                      <h1 className="title is-5 m-0">Quotations</h1>
+                      <button
+                        className="button is-success is-small"
+                        onClick={() => setModal(true)}
+                      >
+                        New
+                      </button>
+                    </div>
 
                     <hr className="my-2" />
 
-                    <div className="block box"></div>
+                    {quotations.map((q) => {
+                      return (
+                        <div key={q.id}>
+                          <div className="block box">
+                            <div className="is-flex is-justify-content-space-between is-align-items-center mb-3">
+                              <h1 className="m-0">Butget: {q.butget} THB</h1>
+                              <h1
+                                className={`m-0 tag is-large ${
+                                  q.status == "pending"
+                                    ? "is-warning"
+                                    : q.status == "approved"
+                                    ? "is-success"
+                                    : "is-danger"
+                                }`}
+                              >
+                                {q.status}
+                              </h1>
+                            </div>
+
+                            {q.status == "pending" ? (
+                              <div className="buttons">
+                                <button
+                                  className="button is-success is-fullwidth"
+                                  onClick={() => ApprovQuot(q)}
+                                >
+                                  Approv
+                                </button>
+                                <button
+                                  className="button is-danger is-fullwidth"
+                                  onClick={() => CancelQuot(q)}
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            ) : (
+                              <button
+                                className="button is-warning is-fullwidth"
+                                onClick={() => RewindQuot(q)}
+                              >
+                                Rewind
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
+                </div>
+
+                <div className={`modal ${modal && "is-active"}`}>
+                  <div
+                    className="modal-background"
+                    onClick={() => setModal(false)}
+                  ></div>
+                  <div className="modal-content">
+                    <div className="box">
+                      <label htmlFor="butget" className="mb-3">
+                        Butget
+                      </label>
+                      <input
+                        className="input mb-3"
+                        name="butget"
+                        type="number"
+                        placeholder="0"
+                        onChange={(e) => setButget(e.target.value)}
+                      />
+                      <button
+                        className="button is-success"
+                        onClick={() => CreateQuot()}
+                      >
+                        New
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    className="modal-close is-large"
+                    aria-label="close"
+                    onClick={() => setModal(false)}
+                  ></button>
                 </div>
               </div>
             </div>

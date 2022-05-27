@@ -4,11 +4,11 @@ class RoomtypesController < ApplicationController
   def index
     @roomtypes = Roomtype.all
 
-    render json: @roomtypes, include: [ :packages ]
+    render json: @roomtypes, include: [ :packages, :rooms ]
   end
 
   def show
-    render json: @roomtype, include: [ :packages ]
+    render json: @roomtype, include: [ :packages, :rooms ]
   end
 
   def create

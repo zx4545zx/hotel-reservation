@@ -32,12 +32,11 @@ const Booking = () => {
   const [date, setDate] = useState([]);
   const [guest, setGuest] = useState(0);
   const [butget, setButget] = useState(0);
-  const [equipment, setEquipment] = useState([]);
-  const [service, setService] = useState([]);
 
   const [val, setVal] = useState([]);
   const [result, setResult] = useState([]);
   const [total, setTotal] = useState(0);
+  const [amountRooms, setAmountRooms] = useState(1);
 
   const options = {
     mode: "range",
@@ -97,6 +96,7 @@ const Booking = () => {
     if (pack.length == 0 || result.length == 0 || roomType.length == 0) {
       let eq = 0;
       let se = 0;
+      let ad = 0;
 
       result.map((v) => {
         sum += parseInt(v.price);
@@ -110,7 +110,15 @@ const Booking = () => {
         });
       });
 
-      let ok = eq + se + sum * diffDay;
+      roomType.map((v) => {
+        sum += parseInt(v.price) * parseInt(v.amountRooms);
+
+        v.addon.map((v) => {
+          ad += parseInt(v.price) * parseInt(v.amount);
+        });
+      });
+
+      let ok = eq + se + ad + sum * diffDay;
 
       setTotal(ok);
       return ok;
@@ -120,12 +128,6 @@ const Booking = () => {
   };
 
   const confirmSubmit = () => {
-    console.log("roomType-----------");
-    console.log(roomType);
-    console.log("packages-----------");
-    console.log(pack);
-    console.log("--------------");
-
     const ci = new Date(date[0]);
     const co = new Date(date[1]);
     ci.setHours(15, 0, 0);
@@ -142,19 +144,10 @@ const Booking = () => {
       total,
       butget,
       customer,
-      user,
-      service,
-      "",
-      "",
-      result,
-      equipment
+      user
     );
 
-    console.log(body);
-
     axios.post("http://localhost:4000/reservations", body).then((res) => {
-      console.log(res.data);
-
       result.map((b) => {
         axios
           .post("http://localhost:4000/reservation_meeting_rooms", {
@@ -183,6 +176,34 @@ const Booking = () => {
             })
             .then((res) => console.log("reservation_equipments", b.amount));
         });
+      });
+
+      roomType.map((b) => {
+        axios
+          .post("http://localhost:4000/reservation_room_types", {
+            reservation_id: res.data.id,
+            roomtype_id: b.roomtype.id,
+            amount: roomType.length,
+          })
+          .then((res) => console.log("rooms_type"));
+
+        b.addon.map((b) => {
+          axios
+            .post("http://localhost:4000/reservation_addonservicerooms", {
+              reservation_id: res.data.id,
+              addonserviceroom_id: b.id,
+              amount: b.amount,
+            })
+            .then((res) => console.log("addon"));
+        });
+      });
+
+      res.data.meeting_rooms.map((v) => {
+        axios
+          .patch(`http://localhost:4000/meeting_rooms/${v.id}`, {
+            status: "booking",
+          })
+          .then((res) => console.log(res.data));
       });
 
       Router.replace(`/admin/booking/${res.data.id}`);
@@ -279,7 +300,7 @@ const Booking = () => {
 
             {val.length != 0 ? (
               <div>
-                <BookingTabs tab={tab} setTab={setTab} register={register} />
+                <BookingTabs tab={tab} setTab={setTab} />
                 {tab ? (
                   <BookingMeetingRooms
                     result={result}
@@ -324,25 +345,21 @@ const Booking = () => {
             >
               {result.length != 0 ? (
                 <OrderCard
-                  setShow={setShow}
                   result={result}
                   setResult={setResult}
                   roomType={roomType}
                   setRoomType={setRoomType}
                   pack={pack}
-                  equipment={equipment}
-                  setEquipment={setEquipment}
-                  service={service}
-                  setService={setService}
+                  setAmountRooms={setAmountRooms}
                 />
               ) : roomType.length != 0 ? (
                 <OrderCard
-                  setShow={setShow}
                   result={result}
                   setResult={setResult}
                   roomType={roomType}
                   setRoomType={setRoomType}
                   setPack={setPack}
+                  setAmountRooms={setAmountRooms}
                 />
               ) : (
                 <>
@@ -466,11 +483,19 @@ const BookingMeetingRooms = ({
 
   const findPackage = (p) => {
     axios.get(`http://localhost:4000/packages/${p.id}`).then((res) => {
-      res.data.meeting_rooms.equipment = [];
-      res.data.meeting_rooms.service = [];
+      res.data.meeting_rooms.map((v) => {
+        return (v.equipment = res.data.equipments);
+      });
+      res.data.meeting_rooms.map((v) => {
+        return (v.service = res.data.services);
+      });
       setResult(res.data.meeting_rooms);
-      setPack([res.data]);
-      setRoomType(res.data.roomtypes);
+      // setPack([...pack, res.data]);
+
+      // axios.get(`http://localhost:4000/roomtypes/${res.data.roomtypes[0].id}`).then(res => {
+      //   setRoomType(res.data);
+        
+      // })
     });
   };
 
@@ -559,9 +584,9 @@ const BookingMeetingRooms = ({
                               </u>
                             </div>
                             <div className="column pr-5">
-                              <div className="has-text-right">12,000 THB</div>
+                              <div className="has-text-right">{p.dis_price} THB</div>
                               <div className="has-text-right mb-2 has-text-grey">
-                                <strike>15,000 THB</strike>
+                                <strike>{p.price} THB</strike>
                               </div>
                               <button
                                 type="button"
@@ -604,10 +629,21 @@ const BookingRooms = ({
 }) => {
   const [rooms, setRooms] = useState([]);
 
+  const removeDuplicates = (data, key) => {
+    return [...new Map(data.map((item) => [key(item), item])).values()];
+  };
+
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/roomtypes`)
-      .then((res) => setRooms(res.data));
+    axios.get(`http://localhost:4000/rooms`).then((res) => {
+      const roomsFilter = removeDuplicates(
+        res.data,
+        (item) => item.roomtype_id && item.bedtype_id
+      );
+
+      console.log(roomsFilter);
+
+      setRooms(roomsFilter);
+    });
   }, []);
 
   const findPackage = (p) => {
@@ -661,14 +697,14 @@ const BookingRooms = ({
 
                     <div className="media-content">
                       <div className="is-flex is-align-items-center is-justify-content-space-between mb-1">
-                        <div className="title m-0 is-5">{m.name}</div>
-                        <div className="has-text-success title m-0 is-5">
-                          10 Available
+                        <div className="title m-0 is-5">
+                          {m.roomtype.name} {m.bedtype.name}
                         </div>
+                        <div className="has-text-success title m-0 is-5"></div>
                       </div>
 
                       <p className="subtitle is-6 has-text-grey mb-2">
-                        Suport <u>2</u> guest
+                        Suport <u>{m.guest}</u> guest
                       </p>
                       <p>
                         Spacious rooms (32sqm) with panoramic city views,
@@ -689,13 +725,17 @@ const BookingRooms = ({
                       Phasellus nec iaculis mauris.
                     </div>
                     <div className="column pr-5">
-                      <div className="has-text-right mb-2">0 THB</div>
+                      <div className="has-text-right mb-2">{m.price} THB</div>
                       <button
                         type="button"
                         className={`button is-primary is-fullwidth ${
                           btnDisable(m) ? "is-static" : ""
                         }`}
-                        onClick={() => setRoomType([...roomType, m])}
+                        onClick={() => {
+                          m.addon = [];
+                          m.amountRooms = 1;
+                          setRoomType([...roomType, m]);
+                        }}
                       >
                         ADD
                       </button>
@@ -705,7 +745,7 @@ const BookingRooms = ({
                   <div className="title is-5 m-0">Packages</div>
                   <hr className="mt-2" />
 
-                  {m.packages.map((p) => {
+                  {/* {m.packages.map((p) => {
                     return (
                       <div key={p.id}>
                         <div className="content columns">
@@ -736,7 +776,7 @@ const BookingRooms = ({
                         </div>
                       </div>
                     );
-                  })}
+                  })} */}
                 </div>
               </div>
             );
@@ -806,45 +846,43 @@ const BookingSummary = ({
         </div>
       </div>
 
-      {result.length > 0 && (
-        <>
-          {show ? (
-            <>
-              <hr className="m-0" />
+      <>
+        {show ? (
+          <>
+            <hr className="m-0" />
 
-              <div className="columns p-3">
-                <div className="column">Butget:</div>
-                <div className="column has-text-right">
-                  <input
-                    className="input is-small"
-                    type="number"
-                    placeholder="0 THB"
-                    onChange={(e) => setButget(e.target.value)}
-                  />
-                </div>
+            <div className="columns p-3">
+              <div className="column">Butget:</div>
+              <div className="column has-text-right">
+                <input
+                  className="input is-small"
+                  type="number"
+                  placeholder="0 THB"
+                  onChange={(e) => setButget(e.target.value)}
+                />
               </div>
-            </>
-          ) : (
-            <div className="is-flex is-justify-content-flex-end">
-              <button
-                className="button is-small is-light is-fullwidth mb-3"
-                type="button"
-                onClick={() => setShow(true)}
-              >
-                Bargain
-              </button>
             </div>
-          )}
+          </>
+        ) : (
+          <div className="is-flex is-justify-content-flex-end">
+            <button
+              className="button is-small is-light is-fullwidth mb-3"
+              type="button"
+              onClick={() => setShow(true)}
+            >
+              Bargain
+            </button>
+          </div>
+        )}
 
-          <button
-            className="button is-success is-fullwidth"
-            type="button"
-            onClick={confirmSubmit}
-          >
-            Confirm
-          </button>
-        </>
-      )}
+        <button
+          className="button is-success is-fullwidth"
+          type="button"
+          onClick={confirmSubmit}
+        >
+          Confirm
+        </button>
+      </>
     </div>
   );
 };
@@ -1022,11 +1060,6 @@ const BookingServices = ({ se, result, setResult }) => {
 
   return (
     <div>
-      <button className="button is-link is-light" onClick={() => setShow(null)}>
-        Back
-      </button>
-      <hr className="my-3" />
-
       {services.map((v) => {
         return (
           <div key={v.id}>
@@ -1084,10 +1117,95 @@ const BookingServices = ({ se, result, setResult }) => {
   );
 };
 
-const OrderCard = ({ result, setResult, roomType, setRoomType, setPack }) => {
+const BookingAddonServices = ({ ad, roomType, setRoomType }) => {
+  const [services, setServices] = useState([]);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/addonservicerooms`)
+      .then((res) => setServices(res.data));
+  }, []);
+
+  const addServices = (equi) => {
+    equi.amount = amount;
+    const eqfilter = ad.addon.filter((q) => q.id != equi.id);
+    ad.addon = [...eqfilter, equi];
+    const r = roomType.filter((q) => q.id != ad.id);
+    setRoomType([...r, ad]);
+  };
+
+  return (
+    <div>
+      {services.map((v) => {
+        return (
+          <div key={v.id}>
+            <div className="card mb-3">
+              <div className="card-content">
+                <div className="media">
+                  <div className="media-left">
+                    <figure className="image 64x64">
+                      <img
+                        src="https://bulma.io/images/placeholders/96x96.png"
+                        alt="Placeholder image"
+                      />
+                    </figure>
+                  </div>
+
+                  <div className="media-content">
+                    <div className="is-flex is-align-items-center is-justify-content-space-between mb-2">
+                      <div className="title m-0 is-4">
+                        {v.name}
+                        <div className="subtitle is-6">
+                          <strong className="has-text-grey">
+                            Price/set {v.price} THB
+                          </strong>
+                        </div>
+                      </div>
+                      <div className="title m-0 is-5">
+                        <input
+                          className="input"
+                          type="number"
+                          placeholder="amount: 0"
+                          onChange={(e) => setAmount(e.target.value)}
+                        ></input>
+                      </div>
+                    </div>
+                    <div className="is-flex is-align-items-flex-end is-justify-content-space-between">
+                      <div>Service for Meeting Rooms</div>
+                      <div>
+                        <button
+                          className="button is-primary is-fullwidth"
+                          type="button"
+                          onClick={() => addServices(v)}
+                        >
+                          ADD
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const OrderCard = ({
+  result,
+  setResult,
+  roomType,
+  setRoomType,
+  setPack,
+  setAmountRooms,
+}) => {
   const [modal, setModal] = useState(null);
   const [eq, setEq] = useState([]);
   const [se, setSe] = useState([]);
+  const [ad, setAd] = useState([]);
   const handleRemoveItem = (e) => {
     const name = e.target.getAttribute("name");
     setResult(result.filter((item) => item.name !== name));
@@ -1108,8 +1226,29 @@ const OrderCard = ({ result, setResult, roomType, setRoomType, setPack }) => {
     setSe(r);
   };
 
+  const addA = (r) => {
+    setModal("a");
+    setAd(r);
+  };
+
+  const changeAmount = (e, r) => {
+    const roo = roomType.filter((v) => v.id !== r.id);
+    r.amountRooms = e.target.value;
+
+    if (
+      e.target.value == "" ||
+      e.target.value == undefined ||
+      e.target.value == 0
+    ) {
+      r.amountRooms = 1;
+    }
+
+    setRoomType([...roo, r]);
+  };
+
   return (
     <>
+      {console.log(result)}
       {result.map((r, i) => {
         return (
           <nav className="panel is-success message" key={i}>
@@ -1188,10 +1327,11 @@ const OrderCard = ({ result, setResult, roomType, setRoomType, setPack }) => {
       {roomType !== undefined ? (
         <>
           {roomType.map((r, i) => {
+            console.log(roomType)
             return (
               <nav className="panel is-warning message" key={i}>
                 <p className="panel-heading message-header">
-                  {r.name}
+                  {r.roomtype.name} {r.bedtype.name}
                   <button
                     type="button"
                     className="delete"
@@ -1204,11 +1344,46 @@ const OrderCard = ({ result, setResult, roomType, setRoomType, setPack }) => {
                   <div>Price</div>
                   <div>{r.price} THB/Day</div>
                 </div>
+                <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+                  <div>Amount</div>
+                  <div>
+                    <input
+                      className="input is-small"
+                      type="number"
+                      placeholder="0"
+                      defaultValue={1}
+                      onChange={(e) => changeAmount(e, r)}
+                    />
+                  </div>
+                </div>
+
+                {r.addon.map((q) => {
+                  return (
+                    <div key={q.id} className="has-background-danger-light">
+                      <div className="panel-block is-flex is-align-items-flex-start is-justify-content-space-between">
+                        <div>
+                          {q.name} {q.amount} item
+                        </div>
+                        <div>
+                          {"(" +
+                            parseInt(q.price) +
+                            "x" +
+                            parseInt(q.amount) +
+                            ")"}{" "}
+                          <strong>
+                            {parseInt(q.price) * parseInt(q.amount)} THB
+                          </strong>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
 
                 <div className="panel-block">
                   <button
                     type="button"
                     className="button is-link is-fullwidth ml-1"
+                    onClick={() => addA(r)}
                   >
                     Add-on Services
                   </button>
@@ -1249,6 +1424,29 @@ const OrderCard = ({ result, setResult, roomType, setRoomType, setPack }) => {
         <div className="modal-content">
           <div className="box">
             <BookingServices se={se} result={result} setResult={setResult} />
+          </div>
+        </div>
+
+        <button
+          className="modal-close is-large"
+          aria-label="close"
+          onClick={() => setModal(null)}
+        ></button>
+      </div>
+
+      <div
+        id="modal-js-example"
+        className={`modal ${modal == "a" && "is-active"}`}
+      >
+        <div className="modal-background"></div>
+
+        <div className="modal-content">
+          <div className="box">
+            <BookingAddonServices
+              ad={ad}
+              roomType={roomType}
+              setRoomType={setRoomType}
+            />
           </div>
         </div>
 

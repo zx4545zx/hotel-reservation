@@ -155,6 +155,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   create_table "reservation_addonservicerooms", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "addonserviceroom_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addonserviceroom_id"], name: "index_reservation_addonservicerooms_on_addonserviceroom_id"
@@ -184,6 +185,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   create_table "reservation_packages", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "package_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["package_id"], name: "index_reservation_packages_on_package_id"
@@ -193,6 +195,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   create_table "reservation_room_types", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "roomtype_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reservation_id"], name: "index_reservation_room_types_on_reservation_id"
@@ -265,8 +268,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "roomtype_id", null: false
-    t.bigint "bedtype_id", null: false
+    t.bigint "roomtype_id"
+    t.bigint "bedtype_id"
     t.index ["bedtype_id"], name: "index_rooms_on_bedtype_id"
     t.index ["roomtype_id"], name: "index_rooms_on_roomtype_id"
   end

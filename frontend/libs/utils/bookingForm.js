@@ -8,13 +8,6 @@ export const bookingForm = (
   butget,
   customer,
   staff,
-  service,
-  room,
-  roomtype,
-  meeting_room,
-  equipment,
-  addon,
-  pack
 ) => {
   const uid = new ShortUniqueId({ length: 10 });
 
