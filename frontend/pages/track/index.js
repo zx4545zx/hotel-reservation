@@ -282,7 +282,7 @@ const Track = () => {
                   </div>
 
                   <Link href="/track/payment_slip" passHref>
-                    <a>Payment</a>
+                    <a className="button is-primary is-fullwidth">Payment</a>
                   </Link>
                 </div>
               </div>

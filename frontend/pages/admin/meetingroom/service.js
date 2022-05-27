@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import useUser from "../../../libs/useUser";
 import Modal from "../../compoment/Admin/MeetingRoom/Service/Modal";
 import ListTable from "../../compoment/Admin/MeetingRoom/Service/ListTable";
 
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const ServiceMeetingRooms = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
   const [modal, setModal] = useState(false);
   const [services, setServices] = useState([]);
 
@@ -15,6 +16,22 @@ const ServiceMeetingRooms = () => {
       .get("http://localhost:4000/services")
       .then((res) => setServices(res.data));
   },[])
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_meet_ser) {
+    return (
+      <AdminLayout>
+        <div className="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>

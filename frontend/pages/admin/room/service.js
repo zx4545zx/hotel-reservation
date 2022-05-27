@@ -4,8 +4,10 @@ import Modal from "../../compoment/Admin/Room/Service/Modal";
 import ListTable from "../../compoment/Admin/Room/Service/ListTable";
 
 import AdminLayout from "../../compoment/Layout/AdminLayout";
+import useUser from "../../../libs/useUser";
 
 const ServiceRooms = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
   const [modal, setModal] = useState(false);
   const [servicerooms, setServicerooms] = useState([]);
 
@@ -14,6 +16,22 @@ const ServiceRooms = () => {
       setServicerooms(res.data);
     });
   },[]);
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_room_ser) {
+    return (
+      <AdminLayout>
+        <div className="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>

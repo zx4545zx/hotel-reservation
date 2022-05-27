@@ -4,11 +4,13 @@ import Modalforservice from "../../compoment/Admin/room/Allservice";
 import Modal from "../../compoment/Admin/Room/index/Modal";
 import ListTable from "../../compoment/Admin/Room/index/ListTable";
 import { useForm } from "react-hook-form";
+import useUser from "../../../libs/useUser";
 
 import axios from "axios";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
 const Rooms = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
   const { register, handleSubmit, watch, setValue } = useForm();
   const [modalservice, setModalservice] = useState(false);
   const [modalequipments, setModalequipments] = useState(false);
@@ -48,6 +50,22 @@ const Rooms = () => {
         }
         window.location.reload();
       })
+  }
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_room) {
+    return (
+      <AdminLayout>
+        <div className="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
   }
 
   useEffect(() => {

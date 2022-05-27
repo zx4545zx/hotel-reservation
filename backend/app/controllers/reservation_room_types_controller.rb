@@ -46,6 +46,6 @@ class ReservationRoomTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def reservation_room_type_params
-      params.require(:reservation_room_type).permit(:reservation_id, :roomtype_id)
+      params.require(:reservation_room_type).permit(:reservation_id, :roomtype_id, :amount)
     end
 end

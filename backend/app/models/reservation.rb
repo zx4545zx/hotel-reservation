@@ -18,7 +18,7 @@ class Reservation < ApplicationRecord
     has_many :meeting_rooms, through: :reservation_meeting_rooms
 
     has_many :reservation_room_types
-    has_many :room_types, through: :reservation_room_types
+    has_many :roomtypes, through: :reservation_room_types
 
     has_many :reservation_rooms
     has_many :rooms, through: :reservation_rooms

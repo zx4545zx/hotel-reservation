@@ -1,7 +1,7 @@
 import AdminLayout from "../compoment/Layout/AdminLayout";
 import useUser from "../../libs/useUser";
 
-const Reservations = () => {
+const Home = () => {
   return (
     <AdminLayout>
       <div>
@@ -12,4 +12,4 @@ const Reservations = () => {
   );
 };
 
-export default Reservations;
+export default Home;

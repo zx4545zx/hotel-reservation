@@ -11,6 +11,12 @@ const Staff = () => {
   const [staffs, setStaffs] = useState([]);
   const { user } = useUser({ redirectTo: "/admin/login" });
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs`)
+      .then((res) => setStaffs(res.data));
+  }, []);
+
   if (!user || user.isLoggedIn === false) {
     return (
       <progress className="progress is-small is-primary" max="100"></progress>
@@ -26,12 +32,6 @@ const Staff = () => {
       </AdminLayout>
     );
   }
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs`)
-      .then((res) => setStaffs(res.data));
-  }, []);
 
   return (
     <AdminLayout>
