@@ -7,7 +7,7 @@ const Offer = () => {
         <section className="block card hero is-info">
           <div className="hero-body">
             <p className="title">Offer</p>
-            <p className="subtitle">offer</p>
+            <p className="subtitle">FACILITIES AND SERVICES</p>
           </div>
         </section>
       </main>
