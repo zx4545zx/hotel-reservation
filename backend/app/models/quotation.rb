@@ -27,5 +27,5 @@ class Quotation < ApplicationRecord
                 q.status = 'cancelled'
                 q.save
             end
-          end
+        end
 end
