@@ -46,6 +46,6 @@ class ReservationEquipmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def reservation_equipment_params
-      params.require(:reservation_equipment).permit(:reservation_id, :equipment_id)
+      params.require(:reservation_equipment).permit(:reservation_id, :equipment_id, :amount)
     end
 end

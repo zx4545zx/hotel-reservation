@@ -6,13 +6,19 @@ class ReservationsController < ApplicationController
     @reservations = Reservation.all
 
     render json: @reservations,
-    include: [ :meeting_rooms, :reservation_meeting_rooms, :services, :reservation_services]
+    include: [ :meeting_rooms, :reservation_meeting_rooms,
+      :services, :reservation_services, :equipments, :reservation_equipments,
+      :customer, :staff, :quotations, :reservation_rooms, :rooms, :reservation_room_types,
+      :roomtypes, :addonservicerooms ]
   end
 
   # GET /reservations/1
   def show
     render json: @reservation,
-    include: [ :meeting_rooms, :reservation_meeting_rooms, :services, :reservation_services]
+    include: [ :meeting_rooms, :reservation_meeting_rooms,
+      :services, :reservation_services, :equipments, :reservation_equipments,
+      :customer, :staff, :quotations, :reservation_rooms, :reservation_room_types,
+      :rooms, :roomtypes, :addonservicerooms, :reservation_addonservicerooms]
   end
 
   # POST /reservations
@@ -20,7 +26,11 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
 
     if @reservation.save
-      render json: @reservation, status: :created, location: @reservation
+      render json: @reservation,
+      include: [ :meeting_rooms, :reservation_meeting_rooms,
+        :services, :reservation_services, :equipments, :reservation_equipments,
+        :customer, :staff, :quotations, :reservation_rooms, :rooms,
+        :reservation_room_types, :roomtypes, :addonservicerooms ]
     else
       render json: @reservation.errors, status: :unprocessable_entity
     end
@@ -48,6 +58,8 @@ class ReservationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def reservation_params
-      params.require(:reservation).permit(:guest, :check_in, :check_out, :price, :tracking, :queue, :status, :meeting_room_id)
+      params.require(:reservation).permit(
+        :guest, :check_in, :check_out, :price,
+        :tracking, :queue,:butget, :status, :staff_id, :customer_id)
     end
 end

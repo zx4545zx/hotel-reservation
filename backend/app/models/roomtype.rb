@@ -4,4 +4,6 @@ class Roomtype < ApplicationRecord
 
     has_many :reservation_room_types
     has_many :reservations, through: :reservation_room_types
+
+    has_many :rooms
 end

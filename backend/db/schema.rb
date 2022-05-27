@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,6 +97,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
     t.index ["service_id"], name: "index_list_package_services_on_service_id"
   end
 
+  create_table "list_room_equipments", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "equipmentsroom_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipmentsroom_id"], name: "index_list_room_equipments_on_equipmentsroom_id"
+    t.index ["room_id"], name: "index_list_room_equipments_on_room_id"
+  end
+
+  create_table "list_room_services", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "serviceroom_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_list_room_services_on_room_id"
+    t.index ["serviceroom_id"], name: "index_list_room_services_on_serviceroom_id"
+  end
+
   create_table "meeting_rooms", force: :cascade do |t|
     t.string "name", null: false
     t.decimal "price", null: false
@@ -114,6 +132,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
     t.date "stop"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "price"
+    t.decimal "dis_price"
   end
 
   create_table "positions", force: :cascade do |t|
@@ -123,9 +143,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "quotations", force: :cascade do |t|
+    t.integer "butget"
+    t.string "status", default: "pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "reservation_id", null: false
+    t.index ["reservation_id"], name: "index_quotations_on_reservation_id"
+  end
+
   create_table "reservation_addonservicerooms", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "addonserviceroom_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addonserviceroom_id"], name: "index_reservation_addonservicerooms_on_addonserviceroom_id"
@@ -135,6 +165,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   create_table "reservation_equipments", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "equipment_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["equipment_id"], name: "index_reservation_equipments_on_equipment_id"
@@ -152,8 +183,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   end
 
   create_table "reservation_packages", force: :cascade do |t|
-    t.bigint "reservation_id", null: false
-    t.bigint "package_id", null: false
+    t.bigint "reservation_id"
+    t.bigint "package_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["package_id"], name: "index_reservation_packages_on_package_id"
@@ -163,6 +195,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   create_table "reservation_room_types", force: :cascade do |t|
     t.bigint "reservation_id"
     t.bigint "roomtype_id"
+    t.integer "amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["reservation_id"], name: "index_reservation_room_types_on_reservation_id"
@@ -195,9 +228,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
     t.decimal "price", null: false
     t.string "tracking", null: false
     t.integer "queue", null: false
+    t.integer "butget", null: false
     t.string "status", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "staff_id"
+    t.bigint "customer_id"
+    t.index ["customer_id"], name: "index_reservations_on_customer_id"
+    t.index ["staff_id"], name: "index_reservations_on_staff_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -230,6 +268,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "roomtype_id"
+    t.bigint "bedtype_id"
+    t.index ["bedtype_id"], name: "index_rooms_on_bedtype_id"
+    t.index ["roomtype_id"], name: "index_rooms_on_roomtype_id"
   end
 
   create_table "roomtypes", force: :cascade do |t|
@@ -274,6 +316,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   add_foreign_key "list_package_rooms", "roomtypes"
   add_foreign_key "list_package_services", "packages"
   add_foreign_key "list_package_services", "services"
+  add_foreign_key "list_room_equipments", "equipmentsrooms"
+  add_foreign_key "list_room_equipments", "rooms"
+  add_foreign_key "list_room_services", "rooms"
+  add_foreign_key "list_room_services", "servicerooms"
+  add_foreign_key "quotations", "reservations"
   add_foreign_key "reservation_addonservicerooms", "addonservicerooms"
   add_foreign_key "reservation_addonservicerooms", "reservations"
   add_foreign_key "reservation_equipments", "equipment"
@@ -288,8 +335,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_23_082430) do
   add_foreign_key "reservation_rooms", "rooms"
   add_foreign_key "reservation_services", "reservations"
   add_foreign_key "reservation_services", "services"
+  add_foreign_key "reservations", "customers"
+  add_foreign_key "reservations", "staffs"
   add_foreign_key "roles", "departments"
   add_foreign_key "roles", "positions"
+  add_foreign_key "rooms", "bedtypes"
+  add_foreign_key "rooms", "roomtypes"
   add_foreign_key "staffs", "roles"
   add_foreign_key "staffs", "staffs"
 end

@@ -9,6 +9,12 @@ const Department = () => {
   const [departments, setDepartments] = useState([]);
   const { user } = useUser({ redirectTo: "/admin/login" });
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments`)
+      .then((res) => setDepartments(res.data));
+  }, [departments]);
+
   if (!user || user.isLoggedIn === false) {
     return (
       <progress className="progress is-small is-primary" max="100"></progress>
@@ -24,12 +30,6 @@ const Department = () => {
       </AdminLayout>
     );
   }
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments`)
-      .then((res) => setDepartments(res.data));
-  }, [departments]);
 
   return (
     <AdminLayout>

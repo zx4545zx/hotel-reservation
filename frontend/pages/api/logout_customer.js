@@ -6,6 +6,7 @@ export default withIronSessionApiRoute(async (req, res) => {
   try {
     const user = {
       isLoggedIn: false,
+      customer: false,
       email: "",
       id: "",
       fname: "",

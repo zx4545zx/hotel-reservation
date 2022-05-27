@@ -1,4 +1,6 @@
 class Reservation < ApplicationRecord
+    belongs_to :staff
+    belongs_to :customer
 
     enum status: {
         pending: 'pending',
@@ -16,7 +18,7 @@ class Reservation < ApplicationRecord
     has_many :meeting_rooms, through: :reservation_meeting_rooms
 
     has_many :reservation_room_types
-    has_many :room_types, through: :reservation_room_types
+    has_many :roomtypes, through: :reservation_room_types
 
     has_many :reservation_rooms
     has_many :rooms, through: :reservation_rooms
@@ -24,8 +26,19 @@ class Reservation < ApplicationRecord
     has_many :reservation_services
     has_many :services, through: :reservation_services
 
+    has_many :reservation_equipments
+    has_many :equipments, through: :reservation_equipments
+
     has_many :reservation_packages
     has_many :packages, through: :reservation_packages
 
+    has_many :quotations
+
+    after_create :create_quotation
+
     private
+
+    def create_quotation
+        quotations.create!(butget: butget, reservation_id: id )
+      end
 end
