@@ -1,10 +1,22 @@
 import Link from "next/link";
+import Router from "next/router";
+import axios from "axios";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArchway } from "@fortawesome/free-solid-svg-icons";
+import { faArchway, faUser } from "@fortawesome/free-solid-svg-icons";
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const [burger, setBurger] = useState(false);
+  const LogOut = () => {
+    axios
+      .post(`/api/logout_customer`, user)
+      .then((res) => {
+        window.location.replace("/");
+      })
+      .catch((e) => {
+        console.log("error " + e);
+      });
+  };
 
   return (
     <nav
@@ -77,13 +89,41 @@ const Navbar = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button is-light">Track</a>
-              <Link href="/login" passHref>
-                <a className="button is-light">Sign in</a>
+              <Link href="/track" passHref>
+                <a className="button is-light">Track</a>
               </Link>
-              <a className="button is-primary">
-                <strong>BOOK NOW</strong>
-              </a>
+
+              {user.customer ? (
+                <>
+                  <div className="button is-primary is-light navbar-item has-dropdown is-hoverable">
+                    <div className="navbar-link">
+                      <FontAwesomeIcon icon={faUser} className="mx-1" />
+                      {user.fname}
+                    </div>
+                    <div className="navbar-dropdown">
+                      <Link href="/profile" passHref>
+                        <a className="navbar-item">Profile</a>
+                      </Link>
+                      <hr className="navbar-divider" />
+                      <a className="navbar-item" onClick={() => LogOut()}>
+                        Sign Out
+                      </a>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" passHref>
+                    <a className="button is-light">Sign in</a>
+                  </Link>
+                </>
+              )}
+
+              <Link href="/booking" passHref>
+                <a className="button is-primary">
+                  <strong>BOOK NOW</strong>
+                </a>
+              </Link>
             </div>
           </div>
         </div>

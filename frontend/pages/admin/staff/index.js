@@ -11,6 +11,12 @@ const Staff = () => {
   const [staffs, setStaffs] = useState([]);
   const { user } = useUser({ redirectTo: "/admin/login" });
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs`)
+      .then((res) => setStaffs(res.data));
+  }, []);
+
   if (!user || user.isLoggedIn === false) {
     return (
       <progress className="progress is-small is-primary" max="100"></progress>
@@ -20,18 +26,12 @@ const Staff = () => {
   if (!user.role.acess_cust) {
     return (
       <AdminLayout>
-        <div class="notification is-danger has-text-centered is-size-3">
+        <div className="notification is-danger has-text-centered is-size-3">
           You are not allowed on this page.
         </div>
       </AdminLayout>
     );
   }
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs`)
-      .then((res) => setStaffs(res.data));
-  }, []);
 
   return (
     <AdminLayout>

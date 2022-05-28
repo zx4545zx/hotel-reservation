@@ -3,11 +3,11 @@ class PackagesController < ApplicationController
 
   def index
     @packages = Package.all
-    render json: @packages
+    render json: @packages, include: [ :roomtypes, :meeting_rooms, :equipments, :services ]
   end
 
   def show
-    render json: @package
+    render json: @package, include: [ :roomtypes, :meeting_rooms, :equipments, :services ]
   end
 
   def create
@@ -38,6 +38,6 @@ class PackagesController < ApplicationController
     end
 
     def package_params
-      params.require(:package).permit(:name, :days, :start, :stop)
+      params.require(:package).permit(:name, :days, :start, :stop, :price, :dis_price)
     end
 end

@@ -9,6 +9,12 @@ const Department = () => {
   const [departments, setDepartments] = useState([]);
   const { user } = useUser({ redirectTo: "/admin/login" });
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments`)
+      .then((res) => setDepartments(res.data));
+  }, [departments]);
+
   if (!user || user.isLoggedIn === false) {
     return (
       <progress className="progress is-small is-primary" max="100"></progress>
@@ -18,18 +24,12 @@ const Department = () => {
   if (!user.role.acess_cust) {
     return (
       <AdminLayout>
-        <div class="notification is-danger has-text-centered is-size-3">
+        <div className="notification is-danger has-text-centered is-size-3">
           You are not allowed on this page.
         </div>
       </AdminLayout>
     );
   }
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/departments`)
-      .then((res) => setDepartments(res.data));
-  }, [departments]);
 
   return (
     <AdminLayout>
@@ -180,7 +180,9 @@ const ListTable = ({ departments }) => {
         </tbody>
       </table>
 
-      {modal && <Modal modal={modal} setModal={setModal} departmen={departmen} />}
+      {modal && (
+        <Modal modal={modal} setModal={setModal} departmen={departmen} />
+      )}
     </>
   );
 };

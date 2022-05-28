@@ -15,22 +15,6 @@ const RoleAcsses = () => {
   const [positions, setPositions] = useState([]);
   const { user } = useUser({ redirectTo: "/admin/login" });
 
-  if (!user || user.isLoggedIn === false) {
-    return (
-      <progress className="progress is-small is-primary" max="100"></progress>
-    );
-  }
-
-  if (!user.role.acess_cust) {
-    return (
-      <AdminLayout>
-        <div class="notification is-danger has-text-centered is-size-3">
-          You are not allowed on this page.
-        </div>
-      </AdminLayout>
-    );
-  }
-
   useEffect(() => {
     if (!Router.isReady) return;
 
@@ -49,9 +33,25 @@ const RoleAcsses = () => {
     axios
       .post(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/staffs`, body)
       .then((res) => {
-        Router.replace("/admin/staff")
+        Router.replace("/admin/staff");
       });
   };
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_cust) {
+    return (
+      <AdminLayout>
+        <div className="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>

@@ -33,7 +33,7 @@ const Modal = ({ modal, setModal, item }) => {
 
   return (
     <div id="modal-js-example" className={`modal ${modal && "is-active"}`}>
-      <div className="modal-background" onClick={() => setModa(false)}></div>
+      <div className="modal-background" onClick={() => setModal(false)}></div>
 
       <div className="modal-content is-flex is-justify-content-center">
         <form className="box" onSubmit={handleSubmit(onSubmit)}>

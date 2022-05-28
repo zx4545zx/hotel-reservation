@@ -3,8 +3,10 @@ import Modal from "../../compoment/Admin/Room/roomtype/Modal";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
+import useUser from "../../../libs/useUser";
 
 const RoomType = () => {
+  const { user } = useUser({ redirectTo: "/admin/login" });
   const [modal, setModal] = useState(false);
   const [roomtype, setRoomtypes] = useState([]);
 
@@ -13,6 +15,22 @@ const RoomType = () => {
       setRoomtypes(res.data);
     });
   },[]);
+
+  if (!user || user.isLoggedIn === false) {
+    return (
+      <progress className="progress is-small is-primary" max="100"></progress>
+    );
+  }
+
+  if (!user.role.acess_room_type) {
+    return (
+      <AdminLayout>
+        <div className="notification is-danger has-text-centered is-size-3">
+          You are not allowed on this page.
+        </div>
+      </AdminLayout>
+    );
+  }
   
   return (
     <AdminLayout>

@@ -9,6 +9,12 @@ const Position = () => {
   const [positions, setPositions] = useState([]);
   const { user } = useUser({ redirectTo: "/admin/login" });
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/positions`)
+      .then((res) => setPositions(res.data));
+  }, [positions]);
+
   if (!user || user.isLoggedIn === false) {
     return (
       <progress className="progress is-small is-primary" max="100"></progress>
@@ -18,18 +24,12 @@ const Position = () => {
   if (!user.role.acess_cust) {
     return (
       <AdminLayout>
-        <div class="notification is-danger has-text-centered is-size-3">
+        <div className="notification is-danger has-text-centered is-size-3">
           You are not allowed on this page.
         </div>
       </AdminLayout>
     );
   }
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_DORADORA_API_URL}/positions`)
-      .then((res) => setPositions(res.data));
-  }, [positions]);
 
   return (
     <AdminLayout>

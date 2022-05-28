@@ -15,17 +15,20 @@ const AdminSideBar = () => {
           <Link href="/admin/reservations" passHref>
             <a>Reservations</a>
           </Link>
-          <Link href="/admin/quotation" passHref>
-            <a>Quotations</a>
-          </Link>
-          <Link href="/admin/customer" passHref>
-            <a>Customers</a>
-          </Link>
+          <li>
+            <Link href="/admin/quotation" passHref>
+              <a className="list-quotation">Quotations</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/customer" passHref>
+              <a className="list-customer">Customers</a>
+            </Link>
+          </li>
           <Link href="/admin/bills" passHref>
             <a>Bills</a>
           </Link>
         </ul>
-
         <p className="menu-label">Management</p>
         <ul className="menu-list">
           <li>
@@ -45,11 +48,11 @@ const AdminSideBar = () => {
             </ul>
           </li>
           <li>
-          <Link href="/admin/room" passHref>
-          <a className="list-room">Rooms</a>
-          </Link>
-          <ul>
-          <Link href="/admin/room/roomtype" passHref>
+            <Link href="/admin/room" passHref>
+              <a className="list-room">Rooms</a>
+            </Link>
+            <ul>
+              <Link href="/admin/room/roomtype" passHref>
                 <a>Roomtype</a>
               </Link>
               <Link href="/admin/room/bedtype" passHref>
