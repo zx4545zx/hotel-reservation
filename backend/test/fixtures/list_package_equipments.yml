@@ -2,10 +2,10 @@
 
 one:
   packages: one
-  equipment: one
+  equipments: one
   value: 1
 
 two:
   packages: two
-  equipment: two
+  equipments: two
   value: 1

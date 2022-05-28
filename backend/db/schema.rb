@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_27_032723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
 
   create_table "bedtypes", force: :cascade do |t|
     t.string "name"
-    t.string "size"
+    t.decimal "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,8 +45,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   end
 
   create_table "equipment", force: :cascade do |t|
-    t.string "name", null: false
-    t.decimal "price", null: false
+    t.string "name"
+    t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -126,14 +126,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
   end
 
   create_table "packages", force: :cascade do |t|
-    t.string "name"
-    t.integer "days"
-    t.date "start"
-    t.date "stop"
+    t.string "name", null: false
+    t.integer "days", null: false
+    t.decimal "price", null: false
+    t.decimal "dis_price", null: false
+    t.date "start", null: false
+    t.date "stop", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "price"
-    t.decimal "dis_price"
   end
 
   create_table "positions", force: :cascade do |t|
@@ -266,6 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_122901) do
     t.string "building"
     t.integer "guest"
     t.decimal "price"
+    t.string "status", default: "empty", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "roomtype_id"

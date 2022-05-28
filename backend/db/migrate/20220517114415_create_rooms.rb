@@ -5,7 +5,7 @@ class CreateRooms < ActiveRecord::Migration[7.0]
       t.string :building
       t.integer :guest
       t.decimal :price
-
+      t.string :status , null: false, default: "empty"
       t.timestamps
     end
   end

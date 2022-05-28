@@ -58,19 +58,6 @@ const Modal = ({ modalSMR, setModalSMR, services, setListPackageServices }) => {
           </button>
         </form>
       </div>
-
-      <button
-        className="modal-close is-large"
-        aria-label="close"
-        onClick={() => setModalSMR(false)}
-      ></button>
-
-      <button
-        className="modal-close is-large"
-        aria-label="close"
-        onClick={() => setModalSMR(false)}
-      ></button>
-    </div>
   );
 };
 

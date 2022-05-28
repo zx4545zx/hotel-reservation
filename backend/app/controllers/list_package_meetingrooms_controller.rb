@@ -3,7 +3,6 @@ class ListPackageMeetingroomsController < ApplicationController
 
   def index
     @list_package_meetingrooms = ListPackageMeetingroom.all
-
     render json: @list_package_meetingrooms
   end
 

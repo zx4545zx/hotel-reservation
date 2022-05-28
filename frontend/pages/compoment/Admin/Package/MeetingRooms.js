@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form'
-import axios from "axios";
 
 const MeetingRooms = ({ modalMR, setModalMR, meetingroom, setList }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();

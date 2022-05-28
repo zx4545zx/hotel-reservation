@@ -1,4 +1,4 @@
 class ListPackageEquipment < ApplicationRecord
-  belongs_to :package
-  belongs_to :equipment
+  belongs_to :packages
+  belongs_to :equipments
 end

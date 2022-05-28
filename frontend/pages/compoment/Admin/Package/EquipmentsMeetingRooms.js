@@ -58,24 +58,18 @@ const Modal = ({
               </tr>
             );
           })}
-
-          <button type="submit" className="button is-success">
-            Save
-          </button>
-        </form>
-      </div>
-
-      <button
-        className="modal-close is-large"
-        aria-label="close"
-        onClick={() => setModalEMR(false)}
-      ></button>
-
-      <button
-        className="modal-close is-large"
-        aria-label="close"
-        onClick={() => setModalEMR(false)}
-      ></button>
+           
+            <button type="submit" className="button is-success">
+              Save
+            </button>
+          </form>
+        </div>
+  
+        <button
+          className="modal-close is-large"
+          aria-label="close"
+          onClick={() => setModalEMR(false)}
+        ></button>
     </div>
   );
 };
