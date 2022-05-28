@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import AdminLayout from "../../compoment/Layout/AdminLayout";
 
-const AddonServiceRooms = () => {
+const RoomType = () => {
   const [modal, setModal] = useState(false);
-  const [roomtypes, setRoomtypes] = useState([]);
+  const [roomtype, setRoomtypes] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:4000/roomtypes").then((res) => {
@@ -35,9 +35,9 @@ const AddonServiceRooms = () => {
 
       <hr className="mt-0" />
 
-      <ListTable roomtypes={roomtypes} />
+      <ListTable roomtype={roomtype} />
     </AdminLayout>
   );
 };
 
-export default AddonServiceRooms;
+export default RoomType;

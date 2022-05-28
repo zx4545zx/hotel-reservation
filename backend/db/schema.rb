@@ -186,7 +186,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_124327) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "staff_id"
-    t.bigint "role_id", null: false
+    t.bigint "role_id"
     t.index ["role_id"], name: "index_staffs_on_role_id"
     t.index ["staff_id"], name: "index_staffs_on_staff_id"
   end

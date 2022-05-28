@@ -19,10 +19,9 @@ class StaffsController < ApplicationController
 
   # GET /staffs
   def index
-    staffs = Staff.order(id: :asc)
+    @staffs = Staff.order(id: :asc)
 
-    render json: staffs, include: [ :role ]
-    # render json: staffs, include: [ :department, :position ]
+    render json: @staffs, include: [ :role, :department, :position ]
   end
 
   # GET /staffs/1
@@ -35,7 +34,7 @@ class StaffsController < ApplicationController
     @staff = Staff.new(staff_params)
 
     if @staff.save
-        render json: @staff
+        render json: @staff, include: [ :role, :department, :position ]
     else
       render json: @staff.errors, status: :unprocessable_entity
     end
@@ -44,7 +43,7 @@ class StaffsController < ApplicationController
   # PATCH/PUT /staffs/1
   def update
     if @staff.update(staff_params)
-      render json: @staff
+      render json: @staff, include: [ :role, :department, :position ]
     else
       render json: @staff.errors, status: :unprocessable_entity
     end
@@ -65,6 +64,16 @@ class StaffsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def staff_params
-      params.require(:staff).permit(:first_name, :last_name, :phone_number, :email, :password, :status, :department_id, :position_id)
+      params.require(:staff).permit(
+        :first_name, :last_name, :phone_number,
+        :email, :password, :status, :role_id,
+        role_attributes: [:department_id, :position_id,
+          :acess_reserv, :acess_quot, :acess_cust, :acess_meet,
+          :acess_meet_equi, :acess_meet_ser, :acess_room,
+          :acess_room_type, :acess_bed_type, :acess_room_equi,
+          :acess_room_ser, :acess_room_add_on_ser,
+          :acess_package, :acess_staff,
+        ]
+      )
     end
 end

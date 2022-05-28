@@ -1,5 +1,16 @@
-const ListTable = () => {
+import Modal from "./Modal";
+import { useState } from "react";
+import axios from "axios";
+
+const ListTable = ({ roomtype }) => {
+  const [item, setItem] = useState([]);
+  const [modal, setModal] = useState(false);
+
+  const DeleteService = (id) => {
+    axios.delete("http://localhost:4000/roomtypes/"+id).then(res => console.log('ok'))
+  }
     return (
+      <>
       <table className="table is-bordered is-fullwidth">
         <thead>
           <tr>
@@ -11,28 +22,28 @@ const ListTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>1</th>
-            <td>Standad Room</td>
+        {roomtype.map((r) => {
+          return (
+            <tr key={r.id}>
+              <th>{r.id}</th>
+              <td>{r.name}</td>
             <td className="has-text-centered">
             <div className="buttons is-flex is-justify-content-center">
-              <button className="button is-success is-rounded">Edit</button>
-              <button className="button is-danger is-rounded">Delete</button>
+              <button className="button is-success is-rounded" onClick={() => {
+                    setItem(r)
+                    setModal(true);
+                  }}>Edit</button>
+              <button className="button is-danger is-rounded" onClick={()=> DeleteService(r.id)}>Delete</button>
             </div>
             </td>
           </tr>
-          <tr>
-            <th>2</th>
-            <td>Loving Room</td>
-            <td className="has-text-centered">
-            <div className="buttons is-flex is-justify-content-center">
-              <button className="button is-success is-rounded">Edit</button>
-              <button className="button is-danger is-rounded">Delete</button>
-            </div>
-            </td>
-          </tr>
+         );
+        })}  
         </tbody>
       </table>
+
+      <Modal modal={modal} setModal={setModal} item={item}/>
+      </>
     );
   };
   
