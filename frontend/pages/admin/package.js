@@ -10,7 +10,6 @@ import ListTable from "../compoment/Admin/Package/ListTable";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import useUser from "../../libs/useUser";
-
 import AdminLayout from "../compoment/Layout/AdminLayout";
 
 const Packages = () => {
@@ -28,17 +27,14 @@ const Packages = () => {
   const [listPackageRoom, setListPackageRoom] = useState([]);
   const [listPackageEquipment, setListPackageEquipment] = useState([]);
   const [listPackageServices, setListPackageServices] = useState([]);
-  const [disOption, setDisOption] = useState(0);
   const [disInput, setDisInput] = useState(0);
-  const [packagePrices, setPackagePrice] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [start, setStart] = useState(new Date());
+  const [stop, setStop] = useState(new Date());
+  const [dataForm1, setDataForm1] = useState({});
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
-  
   let i = 1;
   let totalPrice = 0;
-  //let disOption=0;
-  //let disInput=0;
-  let discount=0;
   const options = {
     mode: "range",
     minDate: "today",
@@ -72,87 +68,173 @@ const Packages = () => {
       .get("http://localhost:4000/services")
       .then((res) => setservices(res.data))
       ;
-
-    // axios
-    //   .get("http://localhost:4000/services")
-    //   .then((res) => setservices(res.data))
-    // ;
   }, [])
 
-  if (!user || user.isLoggedIn === false) {
-    return (
-      <progress className="progress is-small is-primary" max="100"></progress>
-    );
+  const onChange1=(x)=>{
+    setDataForm1(x);
   }
+  const onChange2=(x)=>{
+    setDataForm2(x);
+  }
+  const createPackage = () => {
+    const data={...dataForm1};
+    let days = '';
+    for (const day of data.allday) {
+      days += day
+    }
+    delete data.allday
+    data.days=days;
+    data.price = totalPrice;
+    data.dis_price = (totalPrice - discount);
+    data.start=start;
+    data.stop=stop;
 
-  if (!user.role.acess_package) {
-    return (
-      <AdminLayout>
-        <div className="notification is-danger has-text-centered is-size-3">
-          You are not allowed on this page.
-        </div>
-      </AdminLayout>
-    );
+    axios
+      .post("http://localhost:4000/packages", data)
+      .then((res) => {
+          for (const meetingroom of list) {
+            const saveMeetingRoom = {
+              packages_id: res.data.id,
+              meeting_rooms_id: meetingroom.id
+            };
+            axios
+              .post("http://localhost:4000/list_package_meetingrooms", saveMeetingRoom)
+              .then((res)=>{
+                console.log('list_package_meetingrooms',saveMeetingRoom)
+                console.log('list_package_meetingrooms res',res.data)
+              })
+          }
+          for (const room of listPackageRoom) {
+            const saveRoom = {
+              packages_id: res.data.id,
+              roomtypes_id: room.id,
+              value: room.value
+            };
+            axios
+              .post("http://localhost:4000/list_package_rooms", saveRoom)
+              .then((res)=>{
+                console.log('list_package_equipments',saveRoom)
+                console.log('list_package_equipments res',res.data)
+              })
+          }
+          for (const equipment of listPackageEquipment) {
+            const saveEquipment = {
+              packages_id: res.data.id,
+              equipment_id: equipment.id,
+              value: equipment.value
+            };
+            axios
+              .post("http://localhost:4000/list_package_equipments", saveEquipment)
+              .then((res)=>{
+                console.log('list_package_equipments',saveEquipment)
+                console.log('list_package_equipments res',res.data)
+              })
+          }
+          for (const services of listPackageServices) {
+            const saveServices = {
+              packages_id: res.data.id,
+              services_id: services.id,
+              value: services.value
+            };
+            axios
+              .post("http://localhost:4000/list_package_services", saveServices)
+              .then((res)=>{
+                console.log('list_package_services',saveServices)
+                console.log('list_package_services res',res.data)
+              })
+          }
+        
+      })
   }
 
   return (
     <AdminLayout>
-      <div className="title m-3 has-text-centered notification is-light">
-        Packages
-      </div>
-      <label>Package Name</label>
-      <input className="input" type="text" placeholder="Package Name"></input>
+      <form className="box" onChange={handleSubmit(onChange1)}>
+        <div className="title m-3 has-text-centered notification is-light">
+          Packages
+        </div>
 
-      <div className="mt-5">Date Package</div>
-      <nav className="level">
-        <div className="level-item has-text-centered">
-          <label className="checkbox">
-            <input type="checkbox" />
-            Sunday
-          </label>
-        </div>
-        <div className="level-item has-text-centered">
-          <label className="checkbox">
-            <input type="checkbox" />
-            Monday
-          </label>
-        </div>
-        <div className="level-item has-text-centered">
-          <label className="checkbox">
-            <input type="checkbox" />
-            Tuesday
-          </label>
-        </div>
-        <div className="level-item has-text-centered">
-          <label className="checkbox">
-            <input type="checkbox" />
-            Wednesday
-          </label>
-        </div>
-        <div className="level-item has-text-centered">
-          <label className="checkbox">
-            <input type="checkbox" />
-            Thurday
-          </label>
-        </div>
-        <div className="level-item has-text-centered">
-          <label className="checkbox">
-            <input type="checkbox" />
-            Friday
-          </label>
-        </div>
-        <div className="level-item has-text-centered">
-          <label className="checkbox">
-            <input type="checkbox" />
-            Saturday
-          </label>
-        </div>
-      </nav>
-      <nav className="level">
-        <div className="level-item">
-          <Flatpickr options={options} />
-        </div>
-      </nav>
+        <label>Package Name</label>
+        <input className="input" type="text" placeholder="Package Name" {...register("name")}></input>
+
+        <div className="mt-5">Date Package</div>
+        <nav className="level">
+          <div className="level-item has-text-centered">
+            <label className="checkbox">
+              <input type="checkbox"
+                {...register("allday")}
+                value="1"
+              />
+              Sunday
+            </label>
+          </div>
+          <div className="level-item has-text-centered">
+            <label className="checkbox">
+              <input type="checkbox"
+                {...register("allday")}
+                value="2"
+              />
+              Monday
+            </label>
+          </div>
+          <div className="level-item has-text-centered">
+            <label className="checkbox">
+              <input type="checkbox"
+                {...register("allday")}
+                value="3"
+              />
+              Tuesday
+            </label>
+          </div>
+          <div className="level-item has-text-centered">
+            <label className="checkbox">
+              <input type="checkbox"
+                {...register("allday")}
+                value="4"
+              />
+              Wednesday
+            </label>
+          </div>
+          <div className="level-item has-text-centered">
+            <label className="checkbox">
+              <input type="checkbox"
+                {...register("allday")}
+                value="5"
+              />
+              Thurday
+            </label>
+          </div>
+          <div className="level-item has-text-centered">
+            <label className="checkbox">
+              <input type="checkbox"
+                {...register("allday")}
+                value="6"
+              />
+              Friday
+            </label>
+          </div>
+          <div className="level-item has-text-centered">
+            <label className="checkbox">
+              <input type="checkbox"
+                {...register("allday")}
+                value="7"
+              />
+              Saturday
+            </label>
+          </div>
+        </nav>
+        <nav className="level">
+          <div className="level-item">
+            <Flatpickr options={options}
+              onChange={([start, stop]) => {
+                setStart(start);
+                setStop(stop);
+              }}
+            />
+          </div>
+        </nav>
+      </form>
+
 
       <ModalMeetingRooms modalMR={modalMR} setModalMR={setModalMR} meetingroom={meetingroom} list={list} setList={setList} />
       <nav className="level ">
@@ -192,131 +274,128 @@ const Packages = () => {
           </button>
         </div>
       </nav>
-
-      <label>Summary</label>
-
-
-      <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>List</th>
-            <th>Value</th>
-            <th>Price</th>
-            <th>Total price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {list.map((s) => {
-            totalPrice += parseFloat(s.price);
-            return (
-              <tr key={i}>
-                <td>{i++}</td>
-                <td>{s.name}</td>
-                <td>{1}</td>
-                <td>{s.price}</td>
-                <td>{s.price}</td>
-              </tr>
-            )
-          })}
-          {listPackageRoom.map((s) => {
-            totalPrice += parseFloat(s.price * s.value);
-            return (
-              <tr key={i}>
-                <td>{i++}</td>
-                <td>{s.name}</td>
-                <td>{s.value ? s.value : s.value = 1}</td>
-                <td>{s.price}</td>
-                <td>{(s.price * s.value).toFixed(1)}</td>
-              </tr>
-            )
-          })}
-          {listPackageEquipment.map((s) => {
-            totalPrice += parseFloat(s.price * s.value);
-            return (
-              <tr key={i}>
-                <td>{i++}</td>
-                <td>{s.name}</td>
-                <td>{s.value ? s.value : s.value = 1}</td>
-                <td>{s.price}</td>
-                <td>{(s.price * s.value).toFixed(1)}</td>
-              </tr>
-            )
-          })}
-          {listPackageServices.map((s) => {
-            totalPrice += parseFloat(s.price * s.value);
-            return (
-              <tr key={i}>
-                <td>{i++}</td>
-                <td>{s.name}</td>
-                <td>{s.value ? s.value : s.value = 1}</td>
-                <td>{s.price}</td>
-                <td>{(s.price * s.value).toFixed(1)}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+        <label>Summary</label>
 
 
+        <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>List</th>
+              <th>Value</th>
+              <th>Price</th>
+              <th>Total price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((s) => {
+              totalPrice += parseFloat(s.price);
+              return (
+                <tr key={i}>
+                  <td>{i++}</td>
+                  <td>{s.name}</td>
+                  <td>{1}</td>
+                  <td>{s.price}</td>
+                  <td>{s.price}</td>
+                </tr>
+              )
+            })}
+            {listPackageRoom.map((s) => {
+              totalPrice += parseFloat(s.price * s.value);
+              return (
+                <tr key={i}>
+                  <td>{i++}</td>
+                  <td>{s.name}</td>
+                  <td>{s.value ? s.value : s.value = 1}</td>
+                  <td>{s.price}</td>
+                  <td>{(s.price * s.value).toFixed(1)}</td>
+                </tr>
+              )
+            })}
+            {listPackageEquipment.map((s) => {
+              totalPrice += parseFloat(s.price * s.value);
+              return (
+                <tr key={i}>
+                  <td>{i++}</td>
+                  <td>{s.name}</td>
+                  <td>{s.value ? s.value : s.value = 1}</td>
+                  <td>{s.price}</td>
+                  <td>{(s.price * s.value).toFixed(1)}</td>
+                </tr>
+              )
+            })}
+            {listPackageServices.map((s) => {
+              totalPrice += parseFloat(s.price * s.value);
+              return (
+                <tr key={i}>
+                  <td>{i++}</td>
+                  <td>{s.name}</td>
+                  <td>{s.value ? s.value : s.value = 1}</td>
+                  <td>{s.price}</td>
+                  <td>{(s.price * s.value).toFixed(1)}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
 
-      <nav className="level mt-5">
-        <p className="level-item">
-          <a>Total price</a>
-        </p>
-        <p className="level-item">
-          <a>{totalPrice.toFixed(1)}</a>
-        </p>
-        <p className="level-item">
-          <a>Baht</a>
-        </p>
-      </nav>
 
-      <nav className="level ">
-        <p className="level-item">
-          <a>Discount</a>
-        </p>
 
-        <input className="level-item" type="number" onChange={(event) => setDisInput(event.target.value)}></input>
-        <div className="level-item">
-          <div className="select">
-            <select onChange={(event) => setDisOption(event.target.value)}>
-              <option value={0}>Percentage</option>
-              <option value={1}>Baht</option>
-            </select>
+        <nav className="level mt-5">
+          <p className="level-item">
+            <a>Total price</a>
+          </p>
+          <p className="level-item">
+            <a>{totalPrice.toFixed(1)}</a>
+          </p>
+          <p className="level-item">
+            <a>Baht</a>
+          </p>
+        </nav>
+
+        <nav className="level ">
+          <p className="level-item">
+            <a>Discount</a>
+          </p>
+
+          <input className="level-item" type="number" onChange={(event) => {
+            setDisInput(event.target.value);
+          }}></input>
+          <div className="level-item">
+            <div className="select">
+              <select onChange={(event) => {
+                const x = event.target.value;
+                if (x == 0) setDiscount(totalPrice * (disInput / 100));
+                else if (x == 1) setDiscount(disInput);
+                else setDiscount(0)
+              }}>
+                <option>Please choose</option>
+                <option value={0}>Percentage</option>
+                <option value={1}>Baht</option>
+              </select>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      <div className="level-item has-text-centered mb-5">
-        <button className="button is-primary " title="Disabled button" 
-        onClick={()=>{disOption==0 ? ( setPackagePrice(totalPrice*(disInput/100)))
-        :(setPackagePrice(disInput))}}>
-          Calculate Package price
-        </button>
-      </div>
-
-      <nav className="level mt-5">
-        <p className="level-item">
-          <a>Package price</a>
-        </p>
-        <p className="level-item">
-          <a>{(totalPrice-packagePrices).toFixed(1)}</a>
-        </p>
-        <p className="level-item">
-          <a>Baht</a>
-        </p>
-      </nav>
+        <nav className="level mt-5">
+          <p className="level-item">
+            <a>Package price</a>
+          </p>
+          <p className="level-item">
+            <a>{(totalPrice - discount).toFixed(1)}</a>
+          </p>
+          <p className="level-item">
+            <a>Baht</a>
+          </p>
+        </nav>
       <nav className="level">
         <div className="level-item has-text-centered">
-          <button className="button is-link" title="Disabled button">
-            Cancel
-          </button>
-          <button className="button is-danger" title="Disabled button">
-            Save
+          <button className="button is-primary" title="Disabled button" onClick={() => createPackage()}>
+            Create Package
           </button>
         </div>
       </nav>
+
 
       <h1 className="is-size-4">List</h1>
       <hr className="mt-0" />

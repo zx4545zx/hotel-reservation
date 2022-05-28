@@ -15,7 +15,7 @@ class ListPackageServicesController < ApplicationController
     @list_package_service = ListPackageService.new(list_package_service_params)
 
     if @list_package_service.save
-      render json: @list_package_service, status: :created, location: @list_package_service
+      render json: @list_package_service
     else
       render json: @list_package_service.errors, status: :unprocessable_entity
     end
